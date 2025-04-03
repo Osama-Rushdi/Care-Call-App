@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Care Call App</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Care Call</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="go_to_home">Go To Home
+    </string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="medical_services">Medical Services</string>
+    <string name="support">Support</string>
+    <string name="your_services">Your Sevices\n</string>
+    <string name="hello">Hello,</string>
+    <string name="manage_medical_services">Manage Medical Services</string>
+
+    <string name="add_medical_services">add Medical Services</string>
+    <string name="not_found_any_accounts">Not Found Any Accounts</string>
+    <string name="ambulances">Ambulances</string>
+    <string name="doctors">Doctors</string>
+</resources>
