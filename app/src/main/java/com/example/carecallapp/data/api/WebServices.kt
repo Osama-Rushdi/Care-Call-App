@@ -3,6 +3,7 @@ package com.example.carecallapp.data.api
 
 import com.example.carecallapp.data.model.hospital_accountsDM.PersonServiceResponseDM
 import com.example.carecallapp.data.model.hospital_profileDM.HospitalResponseDM
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PUT
@@ -23,8 +24,6 @@ interface WebServices {
     @PUT("/api/Hospital/UpdateHospitalDetails")
     suspend fun updateHospitalDetails(
         @Query("hospitalId") hospitalId: String,
-        @Body hospitalResponseDM: HospitalResponseDM
-    ): HospitalResponseDM?
-
+        @Body hospitalResponseDM: HospitalResponseDM): Response<HospitalResponseDM>
 
 }

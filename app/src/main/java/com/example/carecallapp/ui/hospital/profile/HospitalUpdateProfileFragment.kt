@@ -8,14 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.annotation.RequiresApi
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import com.example.carecallapp.data.mappers.toHospitalResponse
-import com.example.carecallapp.data.mappers.toHospitalResponseDM
 import com.example.carecallapp.data.repository.view_models.MyProfileViewModel
 import com.example.carecallapp.data.repository.view_models.ProfileStateShow
-import com.example.carecallapp.databinding.FragmentHospitalProfileBinding
 import com.example.carecallapp.databinding.FragmentHospitalUpdateProfileBinding
 import com.example.carecallapp.domain.model.hospital_profile.HospitalResponse
 import com.example.carecallapp.ui.utils.Constants
@@ -38,6 +33,7 @@ class HospitalUpdateProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initProfileDetails(getBundleHospitalDetails())
         initListeners()
+        observeState()
     }
 
     private fun initListeners() {
@@ -60,34 +56,34 @@ class HospitalUpdateProfileFragment : Fragment() {
             } catch (e: Exception) {
                 Log.d("kkk", "initListeners:${e.message} ")
             }
-            viewModel.stateShow.observe(viewLifecycleOwner) {
-                when (it) {
-                    is ProfileStateShow.IsSuccess -> {
-                        parentFragmentManager.popBackStack()
-                        Toast.makeText(
-                            requireContext(),
-                            "Done",
-                            Toast.LENGTH_SHORT
-                        ).show()
-
-                    }
-
-                    ProfileStateShow.Loading -> {
-                        Toast.makeText(
-                            requireContext(),
-                            "Loading",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-
-                    is ProfileStateShow.ShowError -> Log.d("kkk", "initListeners:${it.errorMessage} ")
-                }
-            }
         }
         binding.btnCansel.setOnClickListener {
             parentFragmentManager.popBackStack()
         }
+    }
 
+    private fun observeState() {
+        viewModel.stateShow.observe(viewLifecycleOwner) {
+            when (it) {
+                is ProfileStateShow.Loading -> {
+                    Toast.makeText(requireContext(), "Loading...", Toast.LENGTH_SHORT).show()
+                }
+
+                is ProfileStateShow.IsSuccess -> {
+                    Toast.makeText(requireContext(), "Done", Toast.LENGTH_SHORT).show()
+                    parentFragmentManager.popBackStack()
+                }
+
+                is ProfileStateShow.ShowError -> {
+                    Log.d("kkk", "Error: ${it.errorMessage}")
+                    Toast.makeText(
+                        requireContext(),
+                        "Error: ${it.errorMessage}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }
     }
 
     private fun getBundleHospitalDetails(): HospitalResponse {

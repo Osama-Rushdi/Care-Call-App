@@ -23,8 +23,22 @@ class RemoteDataSourceImpl @Inject constructor(private val webServices: WebServi
         return webServices.getHospitalDetails(hospitalId)!!.toHospitalResponse()
     }
 
-    override suspend fun updateHospitalDetails(hospitalId: String,hospitalResponse: HospitalResponse): HospitalResponse {
-        return webServices.updateHospitalDetails(hospitalId,hospitalResponse.toHospitalResponseDM())!!.toHospitalResponse()
+    override suspend fun updateHospitalDetails(
+        hospitalId: String,
+        hospitalResponse: HospitalResponse
+    ): HospitalResponse {
+        val response = webServices.updateHospitalDetails(
+            hospitalId,
+            hospitalResponse.toHospitalResponseDM()
+        )
+
+        return if (response.isSuccessful) {
+            response.body()?.toHospitalResponse() ?: hospitalResponse
+        } else {
+            val errorCode = response.code()
+            val errorBody = response.errorBody()?.string()
+            throw Exception("Update failed: $errorCode\n$errorBody")
+        }
     }
 
 
