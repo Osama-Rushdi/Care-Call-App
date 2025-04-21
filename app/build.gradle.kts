@@ -68,6 +68,8 @@ dependencies {
     implementation(libs.androidx.annotation)
     ksp(libs.hilt.compiler)
 
+    //lottie for animation
+    implementation ("com.airbnb.android:lottie:6.0.0")
 
     //unit testing
     testImplementation(libs.junit)

@@ -1,13 +1,14 @@
 package com.example.carecallapp.ui.hospital
 
 import android.os.Bundle
-import android.window.OnBackInvokedDispatcher
-import androidx.activity.OnBackPressedDispatcher
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.example.carecallapp.R
 import com.example.carecallapp.databinding.ActivityHospitalBinding
+import com.example.carecallapp.ui.hospital.home.HomeFragment
 import com.example.carecallapp.ui.hospital.medical_services.MedicalServicesFragment
+import com.example.carecallapp.ui.hospital.profile.HospitalProfileFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -52,6 +53,10 @@ class HospitalActivity : AppCompatActivity() {
                 }
             }
         }
+        binding.navView.getHeaderView(0).findViewById<ImageView>(R.id.profileImageView)
+            .setOnClickListener {
+                showFragment(HospitalProfileFragment())
+            }
     }
 
     @Deprecated(

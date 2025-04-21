@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.carecallapp.R
 import com.example.carecallapp.databinding.MedicalServicesItemBinding
-import com.example.carecallapp.domain.model.hospital_accounts.PersonService
+import com.example.carecallapp.domain.model.hospital_accounts.PersonServiceResponse
 
 class MedicalServicesAdapter(
-    private var accounts: List<PersonService?>?,
+    private var accounts: List<PersonServiceResponse?>?,
     private val callSelectIfDoctor: () -> Boolean
 ) :
     Adapter<MedicalServicesAdapter.ViewHolder>() {

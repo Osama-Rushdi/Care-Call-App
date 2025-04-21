@@ -1,4 +1,4 @@
-package com.example.carecallapp.ui.hospital
+package com.example.carecallapp.ui.hospital.home
 
 import android.os.Bundle
 import android.view.LayoutInflater

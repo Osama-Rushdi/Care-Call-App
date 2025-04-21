@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.carecallapp.data.repository.view_model.MyAccountsViewModel
-import com.example.carecallapp.data.repository.view_model.StateShow
+import com.example.carecallapp.data.repository.view_models.MyAccountsViewModel
+import com.example.carecallapp.data.repository.view_models.AccountsStateShow
 import com.example.carecallapp.databinding.FragmentMedicalServicesBinding
 import com.example.carecallapp.domain.Types
 import com.example.carecallapp.ui.hospital.medical_services.utils.MedicalServicesAdapter
@@ -45,13 +45,13 @@ class MedicalServicesFragment : Fragment() {
         }
         viewModel.stateShow.observe(viewLifecycleOwner) {
             when (it) {
-                is StateShow.IsSuccess -> {
+                is AccountsStateShow.IsSuccess -> {
                     binding.AccountsRecyclerView.isVisible = true
                     viewModel.initAdapter.value = it.accounts
                 }
 
-                StateShow.Loading -> showLoading(true)
-                is StateShow.ShowError -> {
+                AccountsStateShow.Loading -> showLoading(true)
+                is AccountsStateShow.ShowError -> {
                     showError(it.errorMessage)
                     showLoading(false)
                 }
@@ -74,7 +74,7 @@ class MedicalServicesFragment : Fragment() {
     }
 
     private fun showLoading(isVisible: Boolean) {
-        binding.loadingProgressBar.isVisible = isVisible
+        binding.AccountLoadingProgressBar.isVisible = isVisible
     }
     private fun showError(message: String) {
         AlertDialog.Builder(requireContext())
