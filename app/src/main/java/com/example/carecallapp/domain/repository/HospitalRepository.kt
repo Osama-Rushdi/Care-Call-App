@@ -1,7 +1,10 @@
 package com.example.carecallapp.domain.repository
 
-import com.example.carecallapp.domain.model.hospital_accounts.Accounts
+import com.example.carecallapp.domain.model.hospital_accounts.PersonService
 
 interface HospitalRepository {
-   fun getAccounts(sourceId: String?, token: String?):List<Accounts>
+    suspend fun getPeopleAccounts(
+        accountType: String, hospitalId: String
+    ): List<PersonService>
+
 }

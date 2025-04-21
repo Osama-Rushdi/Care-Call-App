@@ -4,8 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.medical_services.MedicalServicesFragment">
-
+    tools:context=".ui.hospital.medical_services.MedicalServicesFragment">
+    <ProgressBar
+        android:id="@+id/loadingProgressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/doctorSelectCV"
         android:layout_width="200dp"
@@ -74,12 +81,24 @@
         android:layout_marginVertical="16dp"
         android:background="@color/white"
         android:orientation="vertical"
-        tools:itemCount="5"
         android:padding="16dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/doctorSelectCV"
+        tools:itemCount="5"
         tools:listitem="@layout/medical_services_item" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddAccountBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="32dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:contentDescription="@string/add_accounts"
+        android:src="@android:drawable/ic_input_add"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="28dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

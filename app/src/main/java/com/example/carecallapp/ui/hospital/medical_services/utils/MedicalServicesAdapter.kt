@@ -1,4 +1,4 @@
-package com.example.carecallapp.ui.medical_services.utils
+package com.example.carecallapp.ui.hospital.medical_services.utils
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.carecallapp.R
 import com.example.carecallapp.databinding.MedicalServicesItemBinding
-import com.example.carecallapp.domain.model.hospital_accounts.Accounts
+import com.example.carecallapp.domain.model.hospital_accounts.PersonService
 
 class MedicalServicesAdapter(
-    private val accounts: List<Accounts>,
+    private var accounts: List<PersonService?>?,
     private val callSelectIfDoctor: () -> Boolean
 ) :
     Adapter<MedicalServicesAdapter.ViewHolder>() {
@@ -22,23 +22,22 @@ class MedicalServicesAdapter(
         return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = accounts.size
-
+    override fun getItemCount(): Int = accounts!!.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         changeIcon(holder, position)
     }
 
     private fun changeIcon(holder: ViewHolder, position: Int) {
-        val account = accounts[position]
+        val account = accounts?.get(position)
 
         if (callSelectIfDoctor()) {
             holder.binding.iconAccountItem.setImageResource(R.drawable.ic_doctor)
-            holder.binding.accountNameTv.text = account.doctors[position].name
+            holder.binding.accountNameTv.text = account?.userName
 
         } else {
             holder.binding.iconAccountItem.setImageResource(R.drawable.ic_ambulance)
-            holder.binding.accountNameTv.text = account.ambulances[position].name
+            holder.binding.accountNameTv.text = account?.userName
         }
     }
 

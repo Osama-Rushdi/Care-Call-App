@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.carecallapp.ui.home.HomeFragment"
+        android:name="com.example.carecallapp.ui.hospital.HomeFragment"
         tools:layout="@layout/fragment_home" />
 
 
     <fragment
         android:id="@+id/addMedicalServices"
-        android:name="com.example.carecallapp.ui.medical_services.MedicalServicesFragment"
+        android:name="com.example.carecallapp.ui.hospital.medical_services.MedicalServicesFragment"
         android:label="@string/medical_services"
         tools:layout="@layout/fragment_medical_services" />
 </navigation>

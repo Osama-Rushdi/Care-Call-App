@@ -1,19 +1,23 @@
-package com.example.carecallapp
+package com.example.carecallapp.ui.hospital
 
 import android.os.Bundle
+import android.window.OnBackInvokedDispatcher
+import androidx.activity.OnBackPressedDispatcher
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.example.carecallapp.databinding.ActivityMainBinding
-import com.example.carecallapp.ui.home.HomeFragment
-import com.example.carecallapp.ui.medical_services.MedicalServicesFragment
+import com.example.carecallapp.R
+import com.example.carecallapp.databinding.ActivityHospitalBinding
+import com.example.carecallapp.ui.hospital.medical_services.MedicalServicesFragment
+import dagger.hilt.android.AndroidEntryPoint
 
-class MainActivity : AppCompatActivity() {
+@AndroidEntryPoint
+class HospitalActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityHospitalBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityHospitalBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initListener()
         showFragment(HomeFragment())
@@ -24,7 +28,6 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, fragment)
             .commit()
-
     }
 
     private fun initListener() {
@@ -51,11 +54,20 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    @Deprecated(
+        "This method has been deprecated in favor of using the\n    " +
+                "  {@link OnBackPressedDispatcher} via {@link #getOnBackPressedDispatcher()}.\n  " +
+                "    The OnBackPressedDispatcher controls how back button events are dispatched\n   " +
+                "   to one or more {@link OnBackPressedCallback} objects."
+    )
     override fun onBackPressed() {
         if (binding.drawerLayout.isOpen) {
             binding.drawerLayout.close()
             return
         }
         super.onBackPressed()
+        super.onBackPressedDispatcher.onBackPressed()
     }
+
+
 }

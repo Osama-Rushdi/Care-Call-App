@@ -1,10 +1,9 @@
 package com.example.carecallapp.domain.di
 
-import RemoteDataSourceImpl
+import com.example.carecallapp.data.repository.data_sources.remote_data_source.RemoteDataSourceImpl
 import com.example.carecallapp.data.repository.HospitalRepositoryImpl
 import com.example.carecallapp.data.repository.data_sources.remote_data_source.RemoteDataSource
 import com.example.carecallapp.domain.repository.HospitalRepository
-
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -23,6 +22,4 @@ abstract class HiltModule {
     abstract fun bindHospitalRepository(
         hospitalRepositoryImpl: HospitalRepositoryImpl
     ): HospitalRepository
-
-
 }

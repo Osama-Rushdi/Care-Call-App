@@ -65,6 +65,7 @@ dependencies {
 
     //Hilt Dagger
     implementation(libs.hilt.android)
+    implementation(libs.androidx.annotation)
     ksp(libs.hilt.compiler)
 
 
