@@ -8,6 +8,7 @@
     <color name="colorSecondary">#1F1F1F</color>
     <color name="colorSecondaryVariant">#77818F</color>
     <color name="colorOnSecondary">#000000</color>
-    <color name="colorHome">#DAE0ED</color> <!-- Assuming @color/black is #000000 -->
+    <color name="colorHome">#DAE0ED</color>
+    <color name="red">#FF0000</color>
 
 </resources>

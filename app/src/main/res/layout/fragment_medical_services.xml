@@ -4,15 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.hospital.medical_services.MedicalServicesFragment">
-    <ProgressBar
+    android:background="@color/white"
+    tools:context=".ui.hospital.emergency_services.MedicalServicesFragment">
+
+    <include
         android:id="@+id/AccountLoadingProgressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        layout="@layout/loading"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/doctorSelectCV"
         android:layout_width="200dp"
@@ -42,6 +44,7 @@
         android:layout_width="200dp"
         android:layout_height="40dp"
         android:layout_marginStart="176dp"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/doctorSelectCV"
         app:layout_constraintHorizontal_chainStyle="packed"
@@ -59,18 +62,12 @@
             android:text="@string/ambulances" />
     </com.google.android.material.card.MaterialCardView>
 
-    <TextView
-        android:id="@+id/isFoundAccountsTv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+    <include
+        android:id="@+id/notFoundAccountsTv"
+        layout="@layout/not_found_items"
         android:text="@string/not_found_any_accounts"
-        android:textAlignment="center"
-        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -99,6 +96,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:maxImageSize="28dp" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

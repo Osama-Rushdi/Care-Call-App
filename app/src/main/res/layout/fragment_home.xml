@@ -8,75 +8,67 @@
 
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/bloodItemCD"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
+        android:contentDescription="@string/blood_cd"
         android:focusable="true"
-        app:layout_constraintEnd_toStartOf="@+id/imageView7"
+        app:layout_constraintEnd_toStartOf="@+id/emergencyRoomCD"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/servicesTV"
         app:srcCompat="@drawable/ic_blood" />
 
     <ImageView
-        android:id="@+id/imageView7"
+        android:id="@+id/emergencyRoomCD"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
+        android:contentDescription="@string/room_cd"
         android:focusable="true"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintBottom_toBottomOf="@+id/bloodItemCD"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/imageView2"
+        app:layout_constraintStart_toEndOf="@+id/bloodItemCD"
         app:layout_constraintStart_toStartOf="@+id/guideline6"
-        app:layout_constraintTop_toTopOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="@+id/bloodItemCD"
         app:srcCompat="@drawable/ic_emergency" />
 
-
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/nurseryCD"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:clickable="true"
+        android:contentDescription="@string/nursery_cd"
         android:focusable="true"
-        app:layout_constraintStart_toStartOf="@+id/imageView2"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        app:layout_constraintStart_toStartOf="@+id/bloodItemCD"
+        app:layout_constraintTop_toBottomOf="@+id/bloodItemCD"
         app:srcCompat="@drawable/ic_nicu" />
 
-
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:scaleType="centerCrop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/supportFabBtn"
         android:layout_width="78dp"
         android:layout_height="76dp"
         android:layout_margin="32dp"
-        android:background="#993333"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="200dp"
         app:cardElevation="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:strokeColor="@color/white">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:adjustViewBounds="true"
             android:clickable="true"
+            android:contentDescription="@string/support"
             android:focusable="true"
             android:scaleType="centerInside"
             app:srcCompat="@drawable/ic_support" />
-    </androidx.cardview.widget.CardView>
-
+    </com.google.android.material.card.MaterialCardView>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -89,12 +81,13 @@
         android:id="@+id/imageView5"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:contentDescription="@string/home_image"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/group_239141" />
 
     <LinearLayout
@@ -121,19 +114,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingHorizontal="8dp"
-            tools:text="AL Salam"
             android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold"
-
             app:layout_constraintEnd_toStartOf="@+id/guideline6"
+
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/servicesTV"
-            app:layout_constraintTop_toTopOf="@+id/guideline4" />
+            app:layout_constraintTop_toTopOf="@+id/guideline4"
+            tools:text="AL Salam" />
 
 
     </LinearLayout>
-
 
     <TextView
         android:id="@+id/HowCan"

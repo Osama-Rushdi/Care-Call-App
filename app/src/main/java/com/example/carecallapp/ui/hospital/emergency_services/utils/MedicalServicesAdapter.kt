@@ -1,4 +1,4 @@
-package com.example.carecallapp.ui.hospital.medical_services.utils
+package com.example.carecallapp.ui.hospital.emergency_services.utils
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.carecallapp.R
 import com.example.carecallapp.databinding.MedicalServicesItemBinding
 import com.example.carecallapp.domain.model.hospital_accounts.PersonServiceResponse
+import com.example.carecallapp.ui.hospital.hospital_sevices.blood_bank.utils.BloodBankAdapter
 
 class MedicalServicesAdapter(
     private var accounts: List<PersonServiceResponse?>?,

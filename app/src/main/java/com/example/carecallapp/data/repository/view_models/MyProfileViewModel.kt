@@ -48,7 +48,6 @@ open class MyProfileViewModel @Inject constructor(
             }
         }
     }
-
 }
 
 sealed class ProfileStateShow {

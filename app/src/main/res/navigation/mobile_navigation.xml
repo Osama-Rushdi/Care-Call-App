@@ -13,7 +13,7 @@
 
     <fragment
         android:id="@+id/addMedicalServices"
-        android:name="com.example.carecallapp.ui.hospital.medical_services.MedicalServicesFragment"
+        android:name="com.example.carecallapp.ui.hospital.emergency_services.MedicalServicesFragment"
         android:label="@string/medical_services"
         tools:layout="@layout/fragment_medical_services" />
 </navigation>

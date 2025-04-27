@@ -15,8 +15,8 @@ import javax.inject.Inject
 open class MyAccountsViewModel @Inject constructor(
     private val getPeopleAccountsUseCase: GetPeopleAccountsUseCase
 ) : ViewModel() {
-    val stateShow = MutableLiveData<AccountsStateShow>()
-    val initAdapter = MutableLiveData<List<PersonServiceResponse?>?>()
+    val accountStateShow = MutableLiveData<AccountsStateShow>()
+    val initAccountAdapter = MutableLiveData<List<PersonServiceResponse?>?>()
 
     fun showAccounts(type: String, hospitalId: String? = ApiManager.FAKE_HOSPITAL_ID) {
         if (hospitalId.isNullOrBlank()) {
@@ -24,16 +24,16 @@ open class MyAccountsViewModel @Inject constructor(
             return
         }
         viewModelScope.launch {
-            stateShow.postValue(AccountsStateShow.Loading)
+            accountStateShow.postValue(AccountsStateShow.Loading)
             try {
                 val accounts = getPeopleAccountsUseCase.execute(type, hospitalId)
                 Log.d("kkk", "accounts: $accounts")
-                stateShow.postValue(AccountsStateShow.IsSuccess(accounts))
-                initAdapter.postValue(accounts)
+                accountStateShow.postValue(AccountsStateShow.IsSuccess(accounts))
+                initAccountAdapter.postValue(accounts)
 
             } catch (e: Exception) {
                 Log.e("kkk", "Error in showAccounts: ${e.message}", e)
-                stateShow.postValue(AccountsStateShow.ShowError(e.message.toString()))
+                accountStateShow.postValue(AccountsStateShow.ShowError(e.message.toString()))
             }
         }
     }}

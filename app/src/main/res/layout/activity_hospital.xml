@@ -22,22 +22,24 @@
         <FrameLayout
             android:id="@+id/fragmentContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            />
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
-        app:itemTextAppearance="@style/text18BlackBold"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:itemIconSize="30dp"
-        app:itemRippleColor="@color/colorPrimary"
+        android:background="@color/white"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/nav_menu"
+        app:itemIconSize="30dp"
+        app:itemIconTint="@color/black"
+        app:itemTextColor="@color/black"
+        app:itemRippleColor="@color/colorPrimary"
+        app:itemTextAppearance="@style/text18BlackBold"
         app:itemVerticalPadding="12dp"
+        app:menu="@menu/nav_menu"
         tools:visibility="visible" />
 </androidx.drawerlayout.widget.DrawerLayout>

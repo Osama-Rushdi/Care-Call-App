@@ -1,6 +1,4 @@
 package com.example.carecallapp.domain.model.hospital_content
 
-
-
-    data class BloodBag(val bloodBagNumber: String, val bloodType: String)
+data class BloodBag(val id :Int=0,val bloodType: String,val bloodBagQuantity: Int=0)
 

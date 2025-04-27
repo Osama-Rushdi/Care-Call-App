@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import com.example.carecallapp.R
 import com.example.carecallapp.databinding.ActivityHospitalBinding
 import com.example.carecallapp.ui.hospital.home.HomeFragment
-import com.example.carecallapp.ui.hospital.medical_services.MedicalServicesFragment
+import com.example.carecallapp.ui.hospital.emergency_services.MedicalServicesFragment
 import com.example.carecallapp.ui.hospital.profile.HospitalProfileFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,14 +15,12 @@ import dagger.hilt.android.AndroidEntryPoint
 class HospitalActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHospitalBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHospitalBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initListener()
         showFragment(HomeFragment())
-
     }
 
     private fun showFragment(fragment: Fragment) {

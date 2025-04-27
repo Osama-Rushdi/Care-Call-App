@@ -1,4 +1,4 @@
-package com.example.carecallapp.ui.hospital.medical_services
+package com.example.carecallapp.ui.hospital.emergency_services
 
 import android.app.AlertDialog
 import android.graphics.Color
@@ -13,7 +13,8 @@ import com.example.carecallapp.data.repository.view_models.MyAccountsViewModel
 import com.example.carecallapp.data.repository.view_models.AccountsStateShow
 import com.example.carecallapp.databinding.FragmentMedicalServicesBinding
 import com.example.carecallapp.domain.Types
-import com.example.carecallapp.ui.hospital.medical_services.utils.MedicalServicesAdapter
+import com.example.carecallapp.ui.hospital.emergency_services.utils.MedicalServicesAdapter
+import com.example.carecallapp.ui.hospital.hospital_sevices.blood_bank.utils.BloodBankAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,19 +38,18 @@ class MedicalServicesFragment : Fragment() {
 
         initListeners()
 
-        viewModel.initAdapter.observe(viewLifecycleOwner) { accounts ->
+        viewModel.initAccountAdapter.observe(viewLifecycleOwner) { accounts ->
             adapter = MedicalServicesAdapter(accounts) {
                 selectItem()
             }
             binding.AccountsRecyclerView.adapter = adapter
         }
-        viewModel.stateShow.observe(viewLifecycleOwner) {
+        viewModel.accountStateShow.observe(viewLifecycleOwner) {
             when (it) {
                 is AccountsStateShow.IsSuccess -> {
                     binding.AccountsRecyclerView.isVisible = true
-                    viewModel.initAdapter.value = it.accounts
+                    viewModel.initAccountAdapter.value = it.accounts
                 }
-
                 AccountsStateShow.Loading -> showLoading(true)
                 is AccountsStateShow.ShowError -> {
                     showError(it.errorMessage)
@@ -74,8 +74,9 @@ class MedicalServicesFragment : Fragment() {
     }
 
     private fun showLoading(isVisible: Boolean) {
-        binding.AccountLoadingProgressBar.isVisible = isVisible
+        binding.AccountLoadingProgressBar.root.isVisible = isVisible
     }
+
     private fun showError(message: String) {
         AlertDialog.Builder(requireContext())
             .setTitle("Error")

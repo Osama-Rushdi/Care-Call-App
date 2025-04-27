@@ -1,7 +1,7 @@
 package com.example.carecallapp.domain.di
 
 import com.example.carecallapp.data.repository.data_sources.remote_data_source.RemoteDataSourceImpl
-import com.example.carecallapp.data.repository.HospitalRepositoryImpl
+import com.example.carecallapp.data.repository.repository_imp.HospitalRepositoryImpl
 import com.example.carecallapp.data.repository.data_sources.remote_data_source.RemoteDataSource
 import com.example.carecallapp.domain.repository.HospitalRepository
 import dagger.Binds

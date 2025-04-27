@@ -1,5 +1,6 @@
 package com.example.carecallapp.data.repository.data_sources.remote_data_source
 import com.example.carecallapp.domain.model.hospital_accounts.PersonServiceResponse
+import com.example.carecallapp.domain.model.hospital_content.BloodBag
 import com.example.carecallapp.domain.model.hospital_profile.HospitalResponse
 
 
@@ -11,5 +12,10 @@ interface RemoteDataSource {
     suspend fun getHospitalDetails( hospitalId: String): HospitalResponse
 
     suspend fun updateHospitalDetails( hospitalId: String,hospitalResponse: HospitalResponse): HospitalResponse
+    suspend fun getBloodAll(): List<BloodBag>
+    suspend fun getBloodById(id: Int): BloodBag
+    suspend fun addBlood(blood: BloodBag): BloodBag
+    suspend fun updateBlood(id: Int, blood: BloodBag): BloodBag
+    suspend fun deleteBlood(id: Int): Boolean
 
 }

@@ -46,7 +46,7 @@ object NetworkModule {
         val sharedPreferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
         //  val token = sharedPreferences.getString("token", "") ?: ""
         val token =
-            ("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImQxNGY1ODM2LWNhODEtNGE0ZS05MzAwLTgyYTQyNjkzM2ZmMiIsImlkIjoiZDE0ZjU4MzYtY2E4MS00YTRlLTkzMDAtODJhNDI2OTMzZmYyIiwibmFtZSI6Imhvc3BpdGFsIiwianRpIjoiY2IxY2MzNzUtZWYxYS00YjU0LWFiMjktMGE2MzMwOWZjOWU0IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiSG9zcGl0YWwiLCJleHAiOjE3NTAzOTcxODksImlzcyI6IkNhcmUgQ2FsbCJ9.9N3Z8qxanMUwhYTT2SvI9Xqyai8DoKjVuCI7VCzBhmA").trimMargin()
+            ("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImQxNGY1ODM2LWNhODEtNGE0ZS05MzAwLTgyYTQyNjkzM2ZmMiIsImlkIjoiZDE0ZjU4MzYtY2E4MS00YTRlLTkzMDAtODJhNDI2OTMzZmYyIiwibmFtZSI6ImhhbWFkYSIsImp0aSI6ImY0NTFiMTkzLTMxNzQtNDI5NS05ZWJkLTE3Zjc3YmQ0NjY5NiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6Ikhvc3BpdGFsIiwiZXhwIjoxNzUwODgyMDgyLCJpc3MiOiJDYXJlIENhbGwifQ.0NYI0qkiWL_NGsj0x5BzO7lhAj5Xnez8HfEGeWQ47I8").trimMargin()
         val authInterceptor = AuthInterceptor(token)
 
         return OkHttpClient.Builder()

@@ -1,17 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
     <style name="Theme.CareCallApp" parent="Theme.Material3.Dark.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
-        <item name="colorOnPrimary">@color/colorOnPrimary</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/colorSecondary</item>
-        <item name="colorSecondaryVariant">@color/colorPrimary</item>
-        <item name="colorOnSecondary">@color/white</item>
-        <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
+        <item name="android:windowBackground">@color/white</item>
 
     </style>
 
@@ -21,7 +11,4 @@
         <item name="statusBarForeground">@color/colorPrimary</item>
     </style>
 
-    <style name="Theme.CareCallApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.CareCallApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

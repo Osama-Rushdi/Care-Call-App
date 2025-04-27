@@ -71,6 +71,8 @@ dependencies {
     //lottie for animation
     implementation ("com.airbnb.android:lottie:6.0.0")
 
+    //swipe
+    implementation(libs.swipelayout)
     //unit testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

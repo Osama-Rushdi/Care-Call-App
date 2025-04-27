@@ -9,4 +9,15 @@
             android:id="@+id/manage_medical_services_iconMenu"
             android:icon="@android:drawable/ic_menu_manage"
             android:title="@string/manage_medical_services" />
+
+        <item
+            android:id="@+id/aboutUs_iconMenu"
+            android:icon="@android:drawable/ic_dialog_alert"
+            android:title="@string/about_us" />
+
+        <item
+            android:id="@+id/Log_out_iconMenu"
+            android:icon="@android:drawable/sym_call_outgoing"
+            android:title="@string/log_out" />
+
 </menu>
