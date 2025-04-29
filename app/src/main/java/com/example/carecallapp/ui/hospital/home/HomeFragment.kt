@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.carecallapp.R
 import com.example.carecallapp.databinding.FragmentHomeBinding
+import com.example.carecallapp.domain.model.hospital_content.RoomType
 import com.example.carecallapp.ui.hospital.hospital_sevices.blood_bank.BloodBankFragment
+import com.example.carecallapp.ui.hospital.hospital_sevices.room_and_nursery.RoomFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -23,9 +25,7 @@ class HomeFragment : Fragment() {
     ): View {
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        return root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -34,14 +34,19 @@ class HomeFragment : Fragment() {
     }
 
     private fun initListeners() {
-        binding.nurseryCD.setOnClickListener { }
+        binding.nurseryCD.setOnClickListener { showFragment(RoomFragment(RoomType.Nursery)) }
+        binding.emergencyRoomCD.setOnClickListener { showFragment(RoomFragment(RoomType.ICU)) }
+
         binding.bloodItemCD.setOnClickListener {
-          parentFragmentManager
-                .beginTransaction()
-              .replace(R.id.fragmentContainer,BloodBankFragment())
-                .commit()
+            showFragment(BloodBankFragment())
         }
-        binding.emergencyRoomCD.setOnClickListener { }
+    }
+
+    private fun showFragment(fragment: Fragment) {
+        parentFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragmentContainer, fragment)
+            .commit()
     }
 
     override fun onDestroyView() {

@@ -13,7 +13,6 @@ import com.example.carecallapp.R
 import com.example.carecallapp.data.repository.view_models.BloodStateShow
 import com.example.carecallapp.data.repository.view_models.MyBloodBankViewModel
 import com.example.carecallapp.databinding.FragmentBloodBankBinding
-import com.example.carecallapp.domain.model.hospital_content.BloodBag
 import com.example.carecallapp.ui.hospital.hospital_sevices.blood_bank.utils.BloodBankAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -34,11 +33,10 @@ class BloodBankFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = BloodBankAdapter(emptyList(), {
+        adapter = BloodBankAdapter(emptyList(), { id ->
             deleteItem(id)
-            viewModel.getAllBloodBag() }) {id,blood->
+        }) { id, blood ->
             EditBloodDialogSheet(idBlood = id) {
-                viewModel.getAllBloodBag()
             }.show(parentFragmentManager, null)
         }
         binding.bloodBankRecyclerView.adapter = adapter
@@ -66,11 +64,16 @@ class BloodBankFragment : Fragment() {
 
                 }
 
-                is BloodStateShow.IsBloodSuccess -> {}
                 BloodStateShow.IsFound -> {
                     notFound(true)
                     showLoading(false)
                 }
+
+                is BloodStateShow.IsDeleteSuccess -> {
+                  //  viewModel.getAllBloodBag()
+                }
+                else -> {}
+
             }
         }
         binding.fabAddBloodBtn.setOnClickListener {

@@ -10,5 +10,7 @@
     <color name="colorOnSecondary">#000000</color>
     <color name="colorHome">#DAE0ED</color>
     <color name="red">#FF0000</color>
+    <color name="green">#029B17</color>
+    <color name="nile_color">#E507489E</color>
 
 </resources>

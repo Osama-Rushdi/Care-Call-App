@@ -1,4 +1,4 @@
-package com.example.carecallapp.ui.hospital.hospital_sevices.blood_bank
+package com.example.carecallapp.ui.hospital.hospital_sevices.room_and_nursery
 
 
 import android.R
@@ -18,7 +18,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EditBloodDialogSheet( private val idBlood:Int,private val reload: () -> Unit) :
+class EditRoomDialogSheet(private val idBlood: Int, private val reload: () -> Unit) :
     BottomSheetDialogFragment() {
     private lateinit var binding: EditBloodDialogSheetBinding
     private val viewModel: MyBloodBankViewModel by viewModels()
@@ -55,11 +55,16 @@ class EditBloodDialogSheet( private val idBlood:Int,private val reload: () -> Un
                     showLoading(false)
                 }
 
+                BloodStateShow.IsFound -> {}
+                is BloodStateShow.IsAddSuccess -> {
+
+                }
+
+                is BloodStateShow.IsDeleteSuccess -> {}
                 is BloodStateShow.IsUpdateSuccess -> {
                     dismiss()
                     reload()
                 }
-                else->{}
             }
         }
     }
@@ -75,10 +80,11 @@ class EditBloodDialogSheet( private val idBlood:Int,private val reload: () -> Un
 
     private fun editBlood() {
         val blood = BloodBag(
-          bloodType =   binding.bloodTypeDropDown.text.toString(),
-          bloodBagQuantity =   binding.bloodDescriptionTextLayout.editText!!.text.toString().toInt(),
+            bloodType = binding.bloodTypeDropDown.text.toString(),
+            bloodBagQuantity = binding.bloodDescriptionTextLayout.editText!!.text.toString()
+                .toInt(),
         )
-        viewModel.updateBloodBag(idBlood,blood)
+        viewModel.updateBloodBag(idBlood, blood)
     }
 
     private fun showLoading(isVisible: Boolean) {

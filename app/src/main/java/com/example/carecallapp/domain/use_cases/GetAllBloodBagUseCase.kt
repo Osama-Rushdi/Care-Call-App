@@ -7,7 +7,7 @@ import javax.inject.Inject
 class GetAllBloodBagUseCase  @Inject constructor(private val repository: HospitalRepository)  {
 
     suspend fun execute(): List<BloodBag> {
-        return repository.getAll()
+        return repository.getAllBloodBags()
     }
 
 

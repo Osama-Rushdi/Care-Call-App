@@ -56,12 +56,13 @@ class DialogSheetAddBlood(private val reload: () -> Unit) :
                     showLoading(false)
                 }
 
-                is BloodStateShow.IsBloodSuccess -> {
+                BloodStateShow.IsFound -> {}
+                is BloodStateShow.IsAddSuccess -> {
                     dismiss()
                     reload()
                 }
 
-                BloodStateShow.IsFound -> {}
+                else -> {}
             }
         }
     }
@@ -77,8 +78,9 @@ class DialogSheetAddBlood(private val reload: () -> Unit) :
 
     private fun editBlood() {
         val blood = BloodBag(
-          bloodType =   binding.bloodTypeDropDown.text.toString(),
-          bloodBagQuantity =   binding.bloodDescriptionTextLayout.editText!!.text.toString().toInt(),
+            bloodType = binding.bloodTypeDropDown.text.toString(),
+            bloodBagQuantity = binding.bloodDescriptionTextLayout.editText!!.text.toString()
+                .toInt(),
         )
         viewModel.addBloodBag(blood)
     }

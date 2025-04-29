@@ -50,7 +50,7 @@ open class MyBloodBankViewModel @Inject constructor(
             try {
                 val bloodBag = addBloodUseCase.execute(blood)
                 Log.d("kkk", "addBloodUseCase: $bloodBag")
-                bloodStateShow.postValue(BloodStateShow.IsBloodSuccess(bloodBag))
+                bloodStateShow.postValue(BloodStateShow.IsAddSuccess(bloodBag))
 
             } catch (e: Exception) {
                 Log.e("kkk", "Error in addBloodUseCase: ${e.message}", e)
@@ -64,7 +64,7 @@ open class MyBloodBankViewModel @Inject constructor(
             try {
                 val bloodBags = updateBloodUseCase.execute(id, blood)
                 Log.d("kkk", "updateBloodUseCase: $bloodBags")
-                bloodStateShow.postValue(BloodStateShow.IsBloodSuccess(bloodBags))
+                bloodStateShow.postValue(BloodStateShow.IsUpdateSuccess(bloodBags))
             } catch (e: Exception) {
                 Log.e("kkk", "Error in showAccounts: ${e.message}", e)
                 bloodStateShow.postValue(BloodStateShow.ShowError(e.message.toString()))
@@ -76,8 +76,10 @@ open class MyBloodBankViewModel @Inject constructor(
         viewModelScope.launch {
             bloodStateShow.postValue(BloodStateShow.Loading)
             try {
-               val bloodBags= deleteBloodUseCase.execute(id)
+                val bloodBags = deleteBloodUseCase.execute(id)
                 Log.d("kkk", "deleteBloodUseCase: $bloodBags")
+                bloodStateShow.postValue(BloodStateShow.IsDeleteSuccess(bloodBags))
+                getAllBloodBag()
             } catch (e: Exception) {
                 Log.e("kkk", "Error in deleteBloodUseCase: ${e.message} $id")
                 bloodStateShow.postValue(BloodStateShow.ShowError(e.message.toString()))
@@ -87,10 +89,13 @@ open class MyBloodBankViewModel @Inject constructor(
 }
 
 sealed class BloodStateShow {
-    data object Loading : BloodStateShow()
-    class IsBloodSuccess(val bag :BloodBag):BloodStateShow()
+
+    class IsAddSuccess(val blood: BloodBag) : BloodStateShow()
+    class IsDeleteSuccess(val isSuccess: Boolean) : BloodStateShow()
+    class IsUpdateSuccess(val isSuccess: BloodBag) : BloodStateShow()
     class IsSuccess(val bags: List<BloodBag>) : BloodStateShow()
     data class ShowError(val errorMessage: String) : BloodStateShow()
     data object IsFound : BloodStateShow()
+    data object Loading : BloodStateShow()
 
 }

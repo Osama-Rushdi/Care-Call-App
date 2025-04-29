@@ -80,4 +80,12 @@
     <string name="delete">delete</string>
     <string name="edit_blood_bag">Edit Blood Bag</string>
     <string name="add_blood_bag">Add Blood Bag</string>
+    <string name="emergency_rooms">Emergency Rooms</string>
+    <string name="status">Status</string>
+    <string name="edit_room">edit room</string>
+    <string name="room_number">Room Number</string>
+    <string name="available">Available</string>
+    <string name="are_you_confirm_to_delete_this_room">are you confirm to delete this room</string>
+    <string name="number_of_room">number of room</string>
+    <string name="add_room">add room</string>
 </resources>

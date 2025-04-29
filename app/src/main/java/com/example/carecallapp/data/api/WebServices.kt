@@ -4,6 +4,7 @@ package com.example.carecallapp.data.api
 import com.example.carecallapp.data.model.hospital_accountsDM.PersonServiceResponseDM
 import com.example.carecallapp.data.model.hospital_profileDM.HospitalResponseDM
 import com.example.carecallapp.data.model.hospital_services.BloodBagDM
+import com.example.carecallapp.data.model.hospital_services.RoomAndNurseryDM
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -16,11 +17,14 @@ import retrofit2.http.Url
 
 interface WebServices {
 
+    //ambulance and doctor accounts
     @GET
     suspend fun getPeopleAccounts(
         @Url url: String,
         @Query("hospitalId") hospitalId: String
     ): List<PersonServiceResponseDM>
+
+    //profile
 
     @PUT("api/Hospital/GetHospitalDetails")
     suspend fun getHospitalDetails(@Query("hospitalId") hospitalId: String): HospitalResponseDM?
@@ -30,11 +34,13 @@ interface WebServices {
         @Query("hospitalId") hospitalId: String,
         @Body hospitalResponseDM: HospitalResponseDM): Response<Unit> //because not any return data
 
+
+    //blood bank
     @GET("api/BloodBank")
-    suspend fun getAll(): List<BloodBagDM>
+    suspend fun getAllBloodBags(): List<BloodBagDM>
 
     @GET("api/BloodBank/{id}")
-    suspend fun getById(@Path("id") id: Int): BloodBagDM
+    suspend fun getBloodById(@Path("id") id: Int): BloodBagDM
 
     @POST("api/BloodBank")
     suspend fun addBlood(@Body blood: BloodBagDM): Response<BloodBagDM>
@@ -44,10 +50,22 @@ interface WebServices {
         @Query("id") id: Int,
         @Body blood: BloodBagDM
     ): Response<Unit>
-
     @DELETE("api/BloodBank")
     suspend fun deleteBlood(@Query("id") id: Int): Response<Unit>
 
+
+    //room and nursery
+    @GET("api/Bed")
+    suspend fun getAllRoomsAndNurseries(): List<RoomAndNurseryDM>
+
+    @GET("api/Bed/{id}")
+    suspend fun getRoomAndNurseryById(@Path("id") id: Int): RoomAndNurseryDM
+
+    @POST("api/Bed")
+    suspend fun addRoomAndNursery(@Body blood: RoomAndNurseryDM): Response<RoomAndNurseryDM>
+
+    @DELETE("api/Bed")
+    suspend fun deleteRoomOrNursery(@Query("id") id: Int): Response<Unit>
 
 
 }

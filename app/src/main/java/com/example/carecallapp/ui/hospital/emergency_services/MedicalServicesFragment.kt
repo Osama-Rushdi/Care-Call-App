@@ -14,7 +14,6 @@ import com.example.carecallapp.data.repository.view_models.AccountsStateShow
 import com.example.carecallapp.databinding.FragmentMedicalServicesBinding
 import com.example.carecallapp.domain.Types
 import com.example.carecallapp.ui.hospital.emergency_services.utils.MedicalServicesAdapter
-import com.example.carecallapp.ui.hospital.hospital_sevices.blood_bank.utils.BloodBankAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
