@@ -1,6 +1,5 @@
 package com.example.carecallapp.data.api
 
-
 import com.example.carecallapp.data.model.hospital_accountsDM.PersonServiceResponseDM
 import com.example.carecallapp.data.model.hospital_profileDM.HospitalResponseDM
 import com.example.carecallapp.data.model.hospital_services.BloodBagDM
@@ -25,15 +24,18 @@ interface WebServices {
     ): List<PersonServiceResponseDM>
 
     //profile
-
     @PUT("api/Hospital/GetHospitalDetails")
     suspend fun getHospitalDetails(@Query("hospitalId") hospitalId: String): HospitalResponseDM?
 
     @PUT("api/Hospital/UpdateHospitalDetails")
     suspend fun updateHospitalDetails(
         @Query("hospitalId") hospitalId: String,
-        @Body hospitalResponseDM: HospitalResponseDM): Response<Unit> //because not any return data
+        @Body hospitalResponseDM: HospitalResponseDM
+    ): Response<Unit> //because not any return data
 
+    //services
+//    @GET("api/Services")
+//    suspend fun getAllServices(): List<BloodBagDM>
 
     //blood bank
     @GET("api/BloodBank")
@@ -50,9 +52,9 @@ interface WebServices {
         @Query("id") id: Int,
         @Body blood: BloodBagDM
     ): Response<Unit>
+
     @DELETE("api/BloodBank")
     suspend fun deleteBlood(@Query("id") id: Int): Response<Unit>
-
 
     //room and nursery
     @GET("api/Bed")
@@ -66,6 +68,5 @@ interface WebServices {
 
     @DELETE("api/Bed")
     suspend fun deleteRoomOrNursery(@Query("id") id: Int): Response<Unit>
-
 
 }

@@ -9,6 +9,7 @@ import com.example.carecallapp.domain.model.hospital_content.RoomType
 import com.example.carecallapp.domain.use_cases.AddRoomAndNurseryUseCase
 import com.example.carecallapp.domain.use_cases.DeleteRoomOrNurseryUseCase
 import com.example.carecallapp.domain.use_cases.GetAllRoomsAndNurseriesUseCase
+import com.example.carecallapp.domain.use_cases.GetRoomAndNurseryByIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,8 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 open class MyRoomAndNurseryViewModel @Inject constructor(
     private val getAllEmergencyRoomUseCase: GetAllRoomsAndNurseriesUseCase,
-//    private val getRoomByIdUseCase: GetRoomByIdUseCase,
     private val addRoomUseCase: AddRoomAndNurseryUseCase,
+    private val getRoomAndNurseryByIdUseCase: GetRoomAndNurseryByIdUseCase,
     private val deleteRoomUseCase: DeleteRoomOrNurseryUseCase
 
 ) : ViewModel() {
@@ -81,6 +82,18 @@ open class MyRoomAndNurseryViewModel @Inject constructor(
         }
     }
 
+//    fun getRoomAndNurseryById(id: Int) {
+//        viewModelScope.launch {
+//            roomStateShow.postValue(RoomStateShow.Loading)
+//            try {
+//                val bed = getRoomAndNurseryByIdUseCase.execute(id)
+//
+//            } catch (e: Exception) {
+//                roomStateShow.postValue(RoomStateShow.ShowError(e.message.toString()))
+//            }
+//        }
+//    }
+
     fun addRoomAndNursery(room: RoomAndNursery) {
         viewModelScope.launch {
             roomStateShow.postValue(RoomStateShow.Loading)
@@ -102,9 +115,10 @@ open class MyRoomAndNurseryViewModel @Inject constructor(
             try {
                 val deletedRoom = deleteRoomUseCase.execute(id)
                 Log.d("kkk", "deleteRoomUseCase: $deletedRoom")
-                roomStateShow.postValue(RoomStateShow.IsDeleteSuccess(deletedRoom))
+                roomStateShow.postValue(RoomStateShow.IsDeleteSuccess(true))
+
             } catch (e: Exception) {
-                Log.e("kkk", "Error $id: in deleteRoomUseCase:  ${e.message}    ")
+                Log.e("kkk", "Error $id: in deleteRoomUseCase: ${e.message}")
                 roomStateShow.postValue(RoomStateShow.ShowError(e.message.toString()))
             }
         }

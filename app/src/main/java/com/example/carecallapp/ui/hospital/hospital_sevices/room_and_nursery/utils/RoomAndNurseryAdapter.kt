@@ -39,7 +39,6 @@ class RoomAndNurseryAdapter(
         bed: RoomAndNursery?
     ) {
         holder.binding.deleteRightView.setOnClickListener {
-
             deleteItem(bed!!.id)
             Log.d(
                 "kkk",

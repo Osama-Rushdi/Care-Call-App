@@ -1,6 +1,4 @@
 package com.example.carecallapp.data.repository.repository_imp
-
-import android.util.Log
 import com.example.carecallapp.data.repository.Connectivity
 import com.example.carecallapp.data.repository.data_sources.remote_data_source.RemoteDataSource
 import com.example.carecallapp.domain.model.hospital_accounts.PersonServiceResponse
@@ -44,9 +42,7 @@ class HospitalRepositoryImpl @Inject constructor(
             throw Exception("no Internet")
     }
 
-
     //blood bank
-
     override suspend fun getAllBloodBags(): List<BloodBag> {
         return if (connectivity.isOnline()) {
             remoteDataSource.getBloodAll()
@@ -82,7 +78,6 @@ class HospitalRepositoryImpl @Inject constructor(
             throw Exception("no Internet")
     }
 
-
     //room and nursery
     override suspend fun getAllRoomsAndNurseries(): List<RoomAndNursery> {
         return if (connectivity.isOnline()) {
@@ -107,10 +102,8 @@ class HospitalRepositoryImpl @Inject constructor(
 
     override suspend fun deleteRoomOrNursery(id: Int): Boolean {
         return if (connectivity.isOnline()) {
-            Log.d("kkk", "deleteRoomOrNursery:${remoteDataSource.deleteRoomOrNursery(id)} ")
             remoteDataSource.deleteRoomOrNursery(id)
         } else
             throw Exception("no Internet")
     }
-
 }

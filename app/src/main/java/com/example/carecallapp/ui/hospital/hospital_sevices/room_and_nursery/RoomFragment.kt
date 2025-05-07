@@ -1,5 +1,4 @@
 package com.example.carecallapp.ui.hospital.hospital_sevices.room_and_nursery
-
 import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.example.carecallapp.R
 import com.example.carecallapp.data.repository.view_models.MyRoomAndNurseryViewModel
 import com.example.carecallapp.data.repository.view_models.RoomStateShow
+import com.example.carecallapp.databinding.CustomDialogBinding
 import com.example.carecallapp.databinding.FragmentEmergencyRoomBinding
 import com.example.carecallapp.domain.model.hospital_content.RoomType
 import com.example.carecallapp.ui.hospital.hospital_sevices.room_and_nursery.utils.RoomAndNurseryAdapter
@@ -34,15 +34,14 @@ class RoomFragment(val type: RoomType) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        ChangeHeaderText()
-
+        changeHeaderText()
         adapter = RoomAndNurseryAdapter(emptyList(), { id ->
             deleteItem(id)
+            getAllRoomAndNursery()
             Log.d("kkk", "onViewCreated:$id ")
         }) { id ->
-            EditRoomDialogSheet(idBlood = id) {
-            }.show(parentFragmentManager, null)
+            EditRoomDialogSheet(type, idBlood = id) {
+            }//.show(parentFragmentManager, null)
         }
         binding.EmergencyRoomRecyclerView.adapter = adapter
         getAllRoomAndNursery()
@@ -66,7 +65,6 @@ class RoomFragment(val type: RoomType) : Fragment() {
                     showError(it.errorMessage)
                     showLoading(false)
                     notFound(false)
-
                 }
 
                 RoomStateShow.IsFound -> {
@@ -75,10 +73,11 @@ class RoomFragment(val type: RoomType) : Fragment() {
                 }
 
                 is RoomStateShow.IsDeleteSuccess -> {
+                    Toast.makeText(requireContext(), "is delete successful", Toast.LENGTH_SHORT).show()
+                    getAllRoomAndNursery()
                     showLoading(false)
                     notFound(false)
                 }
-
                 else -> {}
             }
         }
@@ -89,7 +88,7 @@ class RoomFragment(val type: RoomType) : Fragment() {
         }
     }
 
-    private fun ChangeHeaderText() {
+    private fun changeHeaderText() {
         if (type == RoomType.ICU)
             "Emergency Room".let { binding.roomAndNurseryTV.text = it }
         else
@@ -105,12 +104,22 @@ class RoomFragment(val type: RoomType) : Fragment() {
     }
 
     private fun deleteItem(id: Int) {
-        AlertDialog.Builder(requireContext()).setTitle(getString(R.string.confirm))
-            .setMessage((getString(R.string.are_you_confirm_to_delete_this_room)))
-            .setPositiveButton(getString(R.string.delete)) { _, _ ->
-                viewModel.deleteRoomOrNursery(id)
-                getAllRoomAndNursery()
-            }.setNegativeButton(getString(R.string.cancel), null).show()
+        val binding = CustomDialogBinding.inflate(layoutInflater)
+        val dialogBuilder = AlertDialog.Builder(requireContext())
+        dialogBuilder.setView(binding.root)
+        val dialog = dialogBuilder.create()
+
+        binding.massageTV.text = getString(R.string.are_you_want_to_delete_this_item)
+        binding.deleteButton.setOnClickListener {
+            viewModel.deleteRoomOrNursery(id)
+            dialog.dismiss()
+        }
+        binding.cancelBtn.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.setCancelable(false)
+        dialog.show()
     }
 
     private fun getAllRoomAndNursery() {
@@ -132,4 +141,5 @@ class RoomFragment(val type: RoomType) : Fragment() {
     private fun notFound(enable: Boolean) {
         binding.notFoundBloods.root.isVisible = enable
     }
+
 }

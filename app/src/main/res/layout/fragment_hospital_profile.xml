@@ -4,304 +4,381 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="#FFFFFF">
 
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         tools:context=".ui.hospital.HospitalActivity">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:orientation="vertical"
-            android:padding="15dp">
+            android:padding="16dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <!-- Header Section -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="Hospital Profile"
-                android:textColor="@color/black"
-                android:textSize="30sp"
-                android:textStyle="bold" />
+                android:orientation="vertical"
+                android:paddingVertical="16dp">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Hospital Profile"
+                    android:textColor="#1A237E"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="4dp"
+                    android:text="Manage your hospital information"
+                    android:textColor="#616161"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!-- Profile Card -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="10dp">
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:strokeColor="#E0E0E0"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
+                    android:background="@color/white"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="15dp">
+                    android:padding="24dp">
 
-                    <com.google.android.material.imageview.ShapeableImageView
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/ivProfilePicture"
-                        android:layout_width="150dp"
-                        android:layout_height="150dp"
-                        android:layout_gravity="center"
-                        android:clipToOutline="true"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_gravity="center_horizontal"
                         android:src="@drawable/ic_ambulance"
-                        app:shapeAppearanceOverlay="@style/CircleImageShape"
-                        app:strokeColor="@color/colorPrimary"
-                        app:strokeWidth="3dp" />
+                        app:civ_border_color="#1A237E"
+                        app:civ_border_width="2dp" />
 
                     <ImageButton
                         android:id="@+id/btnChangePhoto"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
-                        android:layout_marginTop="10dp"
-                        android:background="@android:color/transparent"
-                        android:src="@android:drawable/ic_menu_edit" />
+                        android:layout_marginTop="-20dp"
+                        android:background="@drawable/baseline_edit_24"
+                        android:padding="8dp"
+                        android:src="@android:drawable/ic_menu_edit"
+                        app:tint="@android:color/white" />
 
                     <TextView
                         android:id="@+id/tvFullName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="16dp"
                         android:textAlignment="center"
-                        android:textColor="@color/black"
+                        android:textColor="#212121"
                         android:textSize="20sp"
                         android:textStyle="bold"
-                        tools:text="scscsc" />
+                        tools:text="City General Hospital" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textAlignment="center"
+                        android:textColor="#757575"
+                        android:textSize="14sp"
+                        tools:text="Since 1995" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- About Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardAbout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:cardCornerRadius="10dp">
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:strokeColor="#E0E0E0"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
                     android:orientation="vertical"
-                    android:padding="15dp">
+                    android:background="@color/white"
+
+                    android:padding="16dp">
 
                     <TextView
                         android:id="@+id/tvAboutTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="About"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
+                        android:text="About Us"
+                        android:textColor="#1A237E"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="#E0E0E0" />
 
                     <TextView
                         android:id="@+id/tvWebsite"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:textColor="@color/black"
-                        android:textSize="15sp" />
+                        android:drawablePadding="8dp"
+                        android:drawableStart="@drawable/web_site_anim"
+                        android:textColor="#1A237E"
+                        android:textSize="14sp"
+                        tools:text="www.cityhospital.com" />
+
+                    <TextView
+                        android:id="@+id/tvAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:drawablePadding="8dp"
+                        android:drawableStart="@android:drawable/ic_menu_mapmode"
+                        android:textColor="#1A237E"
+                        android:textSize="14sp"
+                        tools:text="123 Medical St, Health City" />
+
+                    <TextView
+                        android:id="@+id/tvDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:textColor="#616161"
+                        android:textSize="14sp"
+                        tools:text="A leading healthcare provider with state-of-the-art facilities and expert medical staff dedicated to patient care." />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+            <!-- Information Card -->
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cardUserInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="10dp">
+                app:cardCornerRadius="12dp"
+                app:cardElevation="2dp"
+                app:strokeColor="#E0E0E0"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="15dp">
+                    android:background="@color/white"
+                    android:padding="16dp">
 
                     <TextView
                         android:id="@+id/tvUserInfoTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Hospital Information"
-                        android:textColor="@color/black"
-                        android:textSize="15sp"
+                        android:text="Hospital Details"
+                        android:textColor="#1A237E"
+                        android:textSize="18sp"
                         android:textStyle="bold" />
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginBottom="12dp"
+                        android:background="#E0E0E0" />
+
                     <!-- Username -->
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginEnd="10dp">
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
+                            android:layout_weight="1"
                             android:text="Username"
-                            android:textColor="@color/black"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
+                            android:textColor="#212121"
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/tvUsername"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:textColor="#6E6C6C"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-                    </RelativeLayout>
+                            android:layout_weight="1"
+                            android:textAlignment="textEnd"
+                            android:textColor="#424242"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            tools:text="city_hospital" />
+                    </LinearLayout>
 
                     <!-- Email -->
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginEnd="10dp">
+                        android:layout_marginTop="12dp"
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
+                            android:layout_weight="1"
                             android:text="Email"
-                            android:textColor="@color/black"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
+                            android:textColor="#212121"
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/tvEmail"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:textColor="#6E6C6C"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-                    </RelativeLayout>
+                            android:layout_weight="1"
+                            android:textAlignment="textEnd"
+                            android:textColor="#424242"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            tools:text="contact@cityhospital.com" />
+                    </LinearLayout>
 
-                    <!-- National ID -->
-                    <RelativeLayout
+                    <!-- License Number -->
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginEnd="10dp">
+                        android:layout_marginTop="12dp"
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:text="National ID"
-                            android:textColor="@color/black"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
+                            android:layout_weight="1"
+                            android:text="License Number"
+                            android:textColor="#212121"
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/tvNationalId"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:textColor="#6E6C6C"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-                    </RelativeLayout>
+                            android:layout_weight="1"
+                            android:textAlignment="textEnd"
+                            android:textColor="#424242"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            tools:text="MED-123456" />
+                    </LinearLayout>
 
                     <!-- Phone -->
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginEnd="10dp">
+                        android:layout_marginTop="12dp"
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
+                            android:layout_weight="1"
                             android:text="Phone"
-                            android:textColor="@color/black"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
+                            android:textColor="#212121"
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/tvPhone"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:textColor="#6E6C6C"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-                    </RelativeLayout>
+                            android:layout_weight="1"
+                            android:textAlignment="textEnd"
+                            android:textColor="#424242"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            tools:text="+1 234 567 890" />
+                    </LinearLayout>
 
                     <!-- Gender -->
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginEnd="10dp">
+                        android:layout_marginTop="12dp"
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
+                            android:layout_weight="1"
                             android:text="Gender"
-                            android:textColor="@color/black"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
+                            android:textColor="#212121"
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/tvGender"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:textColor="#6E6C6C"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-                    </RelativeLayout>
+                            android:layout_weight="1"
+                            android:textAlignment="textEnd"
+                            android:textColor="#424242"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            tools:text="Not Specified" />
+                    </LinearLayout>
 
                     <!-- Date of Birth -->
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginEnd="10dp">
+                        android:layout_marginTop="12dp"
+                        android:orientation="horizontal">
 
                         <TextView
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:text="Date of Birth"
-                            android:textColor="@color/black"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
+                            android:layout_weight="1"
+                            android:text="Established Date"
+                            android:textColor="#212121"
+                            android:textSize="14sp" />
 
                         <TextView
                             android:id="@+id/tvDateOfBirth"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:textColor="#6E6C6C"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-                    </RelativeLayout>
+                            android:layout_weight="1"
+                            android:textAlignment="textEnd"
+                            android:textColor="#424242"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            tools:text="15/03/1995" />
+                    </LinearLayout>
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
             <Button
                 android:id="@+id/btnSaveChanges"
-                style="@style/Widget.Material3.Button"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="30dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="16dp"
+                android:backgroundTint="#1A237E"
                 android:text="Save Changes"
+                android:textAllCaps="false"
+                android:textColor="@android:color/white"
                 android:visibility="gone" />
         </LinearLayout>
     </ScrollView>
@@ -310,19 +387,21 @@
         android:id="@+id/profileLoadingProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/scrollView"
+        android:indeterminateTint="#1A237E"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabEditProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:backgroundTint="@color/colorPrimary"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_margin="24dp"
         android:contentDescription="Edit Profile"
-        android:src="@android:drawable/ic_menu_edit"
+        app:backgroundTint="#1A237E"
+        app:rippleColor="#303F9F"
+        app:srcCompat="@android:drawable/ic_menu_edit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

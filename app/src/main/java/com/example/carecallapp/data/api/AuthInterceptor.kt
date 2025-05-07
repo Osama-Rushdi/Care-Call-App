@@ -8,6 +8,7 @@ class AuthInterceptor(private val token: String) : Interceptor {
         val newRequest = chain.request().newBuilder()
             .addHeader("Authorization", "Bearer $token")
             .build()
+
         Log.d("AuthInterceptor", "Request URL: ${chain.request().url}")
         Log.d("AuthInterceptor", "Authorization Header: Bearer $token")
 

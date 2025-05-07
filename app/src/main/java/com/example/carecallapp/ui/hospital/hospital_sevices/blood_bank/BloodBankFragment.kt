@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.example.carecallapp.R
 import com.example.carecallapp.data.repository.view_models.BloodStateShow
 import com.example.carecallapp.data.repository.view_models.MyBloodBankViewModel
+import com.example.carecallapp.databinding.CustomDialogBinding
 import com.example.carecallapp.databinding.FragmentBloodBankBinding
 import com.example.carecallapp.ui.hospital.hospital_sevices.blood_bank.utils.BloodBankAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -34,7 +35,7 @@ class BloodBankFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapter = BloodBankAdapter(emptyList(), { id ->
-            deleteItem(id)
+            safeDelete(id)
         }) { id, blood ->
             EditBloodDialogSheet(idBlood = id) {
             }.show(parentFragmentManager, null)
@@ -93,15 +94,23 @@ class BloodBankFragment : Fragment() {
         deleteItem(id)
     }
 
-    private fun deleteItem(id: Int) {
-        AlertDialog.Builder(requireContext())
-            .setTitle(getString(R.string.confirm))
-            .setMessage(getString(R.string.are_you_confirm_to_delete_this_blood_bag))
-            .setPositiveButton(getString(R.string.delete)) { _, _ ->
-                viewModel.deleteBloodBag(id)
-            }
-            .setNegativeButton(getString(R.string.cancel), null)
-            .show()
+    private fun deleteItem(id: Int){
+        val binding= CustomDialogBinding.inflate(layoutInflater)
+        val dialogBuilder = AlertDialog.Builder(requireContext())
+        dialogBuilder.setView(binding.root)
+        val dialog = dialogBuilder.create()
+
+        binding.massageTV.text = getString(R.string.are_you_want_to_delete_this_item)
+        binding.deleteButton.setOnClickListener {
+            viewModel.deleteBloodBag(id)
+            dialog.dismiss()
+        }
+        binding.cancelBtn.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.setCancelable(false)
+        dialog.show()
     }
 
     private fun showError(message: String) {

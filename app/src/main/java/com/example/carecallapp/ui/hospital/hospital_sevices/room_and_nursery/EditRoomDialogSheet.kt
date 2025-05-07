@@ -1,90 +1,77 @@
 package com.example.carecallapp.ui.hospital.hospital_sevices.room_and_nursery
 
 
-import android.R
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import com.example.carecallapp.data.repository.view_models.BloodStateShow
-import com.example.carecallapp.data.repository.view_models.MyBloodBankViewModel
-import com.example.carecallapp.databinding.EditBloodDialogSheetBinding
-import com.example.carecallapp.domain.model.hospital_content.BloodBag
+import com.example.carecallapp.data.repository.view_models.MyRoomAndNurseryViewModel
+import com.example.carecallapp.data.repository.view_models.RoomStateShow
+import com.example.carecallapp.databinding.EditRoomDialogSheetBinding
+import com.example.carecallapp.domain.model.hospital_content.RoomAndNursery
+import com.example.carecallapp.domain.model.hospital_content.RoomType
+import com.example.carecallapp.domain.model.hospital_content.Status
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EditRoomDialogSheet(private val idBlood: Int, private val reload: () -> Unit) :
+class EditRoomDialogSheet(val type: RoomType,private val idBlood: Int, private val reload: () -> Unit) :
     BottomSheetDialogFragment() {
-    private lateinit var binding: EditBloodDialogSheetBinding
-    private val viewModel: MyBloodBankViewModel by viewModels()
+    private lateinit var binding: EditRoomDialogSheetBinding
+    private val viewModel: MyRoomAndNurseryViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = EditBloodDialogSheetBinding.inflate(inflater, container, false)
+        binding = EditRoomDialogSheetBinding.inflate(inflater, container, false)
         return binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initListener()
-        val bloodTypes = listOf(
-            "APositive", "ANegative",
-            "BPositive", "BNegative",
-            "ABPositive", "ABNegative",
-            "OPositive", "ONegative"
-        )
-        val adapter =
-            ArrayAdapter(requireContext(), R.layout.simple_dropdown_item_1line, bloodTypes)
-        binding.bloodTypeDropDown.setAdapter(adapter)
-        viewModel.bloodStateShow.observe(viewLifecycleOwner) {
+        viewModel.roomStateShow.observe(viewLifecycleOwner) {
             when (it) {
-                is BloodStateShow.IsSuccess -> {}
 
-                BloodStateShow.Loading -> {
-                    showLoading(true)
+
+                is RoomStateShow.IsAddSuccess -> {
+                    dismiss()
+                    reload()
                 }
 
-                is BloodStateShow.ShowError -> {
+
+                RoomStateShow.Loading -> showLoading(true)
+                is RoomStateShow.ShowError -> {
                     showError(it.errorMessage)
                     showLoading(false)
                 }
 
-                BloodStateShow.IsFound -> {}
-                is BloodStateShow.IsAddSuccess -> {
-
-                }
-
-                is BloodStateShow.IsDeleteSuccess -> {}
-                is BloodStateShow.IsUpdateSuccess -> {
-                    dismiss()
-                    reload()
-                }
+                else -> {}
             }
+
         }
     }
-
 
     private fun initListener() {
-        binding.editBloodButton.setOnClickListener {
+        binding.editRoomTV.setOnClickListener {
             if (!isValid())
                 return@setOnClickListener
-            editBlood()
+            editBed()
         }
     }
 
-    private fun editBlood() {
-        val blood = BloodBag(
-            bloodType = binding.bloodTypeDropDown.text.toString(),
-            bloodBagQuantity = binding.bloodDescriptionTextLayout.editText!!.text.toString()
-                .toInt(),
+    private fun editBed() {
+
+        val room = RoomAndNursery(
+            roomNumber = binding.roomNumberTextLayout.editText?.text.toString(),
+            type = if (type == RoomType.ICU) RoomType.ICU else RoomType.Nursery,
+            status = Status.Available
         )
-        viewModel.updateBloodBag(idBlood, blood)
+     //   viewModel.updateBed(bed)
     }
 
     private fun showLoading(isVisible: Boolean) {
@@ -101,17 +88,11 @@ class EditRoomDialogSheet(private val idBlood: Int, private val reload: () -> Un
 
     private fun isValid(): Boolean {
         var isValid = true
-        binding.bloodTypeDropDown.error =
-            if (binding.bloodTypeDropDown.text.toString().isBlank()) {
-                isValid = false
-                "select type"
-            } else
-                null
 
-        binding.bloodDescriptionTextLayout.error =
-            if (binding.bloodDescriptionTextLayout.editText!!.text.trim().isEmpty()) {
+        binding.roomNumberTextLayout.error =
+            if (binding.roomNumberTextLayout.editText!!.text.trim().isEmpty()) {
                 isValid = false
-                "Enter Description"
+                "Enter Room Number"
             } else
                 null
 

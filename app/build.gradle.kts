@@ -69,10 +69,14 @@ dependencies {
     ksp(libs.hilt.compiler)
 
     //lottie for animation
-    implementation ("com.airbnb.android:lottie:6.0.0")
+    implementation("com.airbnb.android:lottie:6.0.0")
+
+    //circular image view
+    implementation("de.hdodenhof:circleimageview:3.1.0")
 
     //swipe
     implementation(libs.swipelayout)
+
     //unit testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

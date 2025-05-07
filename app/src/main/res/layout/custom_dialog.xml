@@ -1,0 +1,63 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:layout_constraintHeight_percent=".1"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/background_gradient"
+    android:paddingVertical="20dp">
+
+    <TextView
+        android:id="@+id/massageTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/are_you_want_to_delete_this_item"
+        android:textSize="24sp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
+        android:gravity="end">
+
+
+        <com.google.android.material.button.MaterialButton
+            app:cornerRadius="8dp"
+            android:id="@+id/cancelBtn"
+            android:layout_width="wrap_content"
+            android:backgroundTint="#109B00"
+            android:layout_marginHorizontal="30dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Cancle" />
+
+        <com.google.android.material.button.MaterialButton
+            app:cornerRadius="8dp"
+            android:id="@+id/delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete"
+            android:backgroundTint="#D50101"
+            android:layout_marginHorizontal="30dp"
+            android:layout_weight="1"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -91,9 +91,10 @@ class RemoteDataSourceImpl @Inject constructor(private val webServices: WebServi
     override suspend fun deleteRoomOrNursery(id: Int): Boolean {
         val response = webServices.deleteRoomOrNursery(id)
         Log.d("kkk", "deleteRoomOrNursery:$response ")
-        return if (response.isSuccessful) true
-         else
-            throw Exception("delete blood failed with code: ${response.code()}")
+        if (response.isSuccessful) {
+            return true
+        } else {
+            throw Exception("delete Bed failed with code: ${response.code()}")
+        }
     }
-
 }

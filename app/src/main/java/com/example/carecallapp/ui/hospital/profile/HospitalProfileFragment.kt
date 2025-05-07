@@ -89,7 +89,6 @@ class HospitalProfileFragment : Fragment() {
             binding.tvNationalId.text = nationalId
             binding.tvUsername.text = username
 
-
         }
 
     }
