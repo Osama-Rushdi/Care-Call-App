@@ -1,9 +1,16 @@
 package com.example.carecallapp.data.api
 
+import com.example.carecallapp.data.model.auth.AmbulanceRegisterResponseDM
+import com.example.carecallapp.data.model.auth.DoctorRegisterResponseDM
+import com.example.carecallapp.data.model.auth.HospitalRegisterResponseDM
+import com.example.carecallapp.data.model.auth.LoginRequestDM
+import com.example.carecallapp.data.model.auth.LoginResponseDM
 import com.example.carecallapp.data.model.hospital_accountsDM.PersonServiceResponseDM
 import com.example.carecallapp.data.model.hospital_profileDM.HospitalResponseDM
 import com.example.carecallapp.data.model.hospital_services.BloodBagDM
 import com.example.carecallapp.data.model.hospital_services.RoomAndNurseryDM
+import com.example.carecallapp.data.model.hospital_services.ServiceRequestDM
+import com.example.carecallapp.data.model.hospital_services.ServiceResponseDM
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -33,9 +40,23 @@ interface WebServices {
         @Body hospitalResponseDM: HospitalResponseDM
     ): Response<Unit> //because not any return data
 
-    //services
-//    @GET("api/Services")
-//    suspend fun getAllServices(): List<BloodBagDM>
+    //Services
+
+    @GET("api/Service")
+    suspend fun getAllServices(): List<ServiceResponseDM>
+
+    @POST("api/Service")
+    suspend fun addService(@Body service: ServiceRequestDM): Response<ServiceResponseDM>
+
+    @DELETE("api/Service")
+    suspend fun deleteService(@Query("id") id: Int): Response<Unit>
+
+    @PUT("api/Service")
+    suspend fun updateService(
+        @Query("id") id: Int,
+        @Body service: ServiceRequestDM
+    ): Response<Unit>
+
 
     //blood bank
     @GET("api/BloodBank")
@@ -68,5 +89,19 @@ interface WebServices {
 
     @DELETE("api/Bed")
     suspend fun deleteRoomOrNursery(@Query("id") id: Int): Response<Unit>
+
+    //Authentication
+
+    @POST("api/Account/Doctor-Register")
+    suspend fun doctorRegister(@Body register: DoctorRegisterResponseDM): Response<String>
+
+    @POST("api/Account/Amulance-Register")
+    suspend fun ambulanceRegister(@Body register: AmbulanceRegisterResponseDM): Response<String>
+
+    @POST("api/Account/Hopital-Register")
+    suspend fun hospitalRegister(@Body register: HospitalRegisterResponseDM): Response<String>
+
+    @POST("api/Account/Login")
+    suspend fun userLogin(@Body login: LoginRequestDM): Response<LoginResponseDM>
 
 }

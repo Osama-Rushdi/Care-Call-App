@@ -89,4 +89,19 @@
     <string name="number_of_room">number of room</string>
     <string name="add_room">add room</string>
     <string name="are_you_want_to_delete_this_item">Are you want to delete this item</string>
+    <string name="email_or_password_is_incorrect">Email or password is incorrect.</string>
+    <string name="you_are_not_authorized_to_log_in">You are not authorized to log in.</string>
+    <string name="server_error_please_try_again_later">Server error. Please try again later.</string>
+    <string name="unexpected_error">Unexpected error: %1$s</string>
+    <string name="login_successfully">login successfully</string>
+    <string name="error">Error</string>
+    <string name="ok">OK</string>
+    <string name="add_service">Add Service</string>
+    <string name="enter_service_price">enter service price</string>
+    <string name="enter_service_description">enter service description</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="create_a_new_doctor_account">Create a new doctor account</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="user_name">User name</string>
+    <string name="logo">logo</string>
 </resources>

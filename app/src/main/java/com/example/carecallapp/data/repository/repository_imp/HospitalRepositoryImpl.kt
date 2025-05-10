@@ -1,9 +1,17 @@
 package com.example.carecallapp.data.repository.repository_imp
+
 import com.example.carecallapp.data.repository.Connectivity
 import com.example.carecallapp.data.repository.data_sources.remote_data_source.RemoteDataSource
+import com.example.carecallapp.domain.model.auth.AmbulanceRegisterResponse
+import com.example.carecallapp.domain.model.auth.DoctorRegisterResponse
+import com.example.carecallapp.domain.model.auth.HospitalRegisterResponse
+import com.example.carecallapp.domain.model.auth.LoginRequest
+import com.example.carecallapp.domain.model.auth.LoginResponse
 import com.example.carecallapp.domain.model.hospital_accounts.PersonServiceResponse
 import com.example.carecallapp.domain.model.hospital_content.BloodBag
 import com.example.carecallapp.domain.model.hospital_content.RoomAndNursery
+import com.example.carecallapp.domain.model.hospital_content.ServiceRequest
+import com.example.carecallapp.domain.model.hospital_content.ServiceResponse
 import com.example.carecallapp.domain.model.hospital_profile.HospitalResponse
 import com.example.carecallapp.domain.repository.HospitalRepository
 import javax.inject.Inject
@@ -38,6 +46,35 @@ class HospitalRepositoryImpl @Inject constructor(
     ): HospitalResponse {
         return if (connectivity.isOnline()) {
             remoteDataSource.updateHospitalDetails(hospitalId, hospitalResponse)
+        } else
+            throw Exception("no Internet")
+    }
+
+    override suspend fun getAllServices(): List<ServiceResponse> {
+        return if (connectivity.isOnline()) {
+            remoteDataSource.getAllServices()
+        } else
+            throw Exception("no Internet")
+
+    }
+
+    override suspend fun addService(service: ServiceRequest): ServiceResponse {
+        return if (connectivity.isOnline()) {
+            remoteDataSource.addService(service)
+        } else
+            throw Exception("no Internet")
+    }
+
+    override suspend fun deleteService(id: Int): Boolean {
+        return if (connectivity.isOnline()) {
+            remoteDataSource.deleteService(id)
+        } else
+            throw Exception("no Internet")
+    }
+
+    override suspend fun updateService(id: Int, service: ServiceRequest): Boolean {
+        return if (connectivity.isOnline()) {
+            remoteDataSource.updateService(id, service)
         } else
             throw Exception("no Internet")
     }
@@ -103,6 +140,34 @@ class HospitalRepositoryImpl @Inject constructor(
     override suspend fun deleteRoomOrNursery(id: Int): Boolean {
         return if (connectivity.isOnline()) {
             remoteDataSource.deleteRoomOrNursery(id)
+        } else
+            throw Exception("no Internet")
+    }
+
+    override suspend fun doctorRegister(doctorRegisterResponse: DoctorRegisterResponse): Boolean {
+        return if (connectivity.isOnline()) {
+            remoteDataSource.doctorRegister(doctorRegisterResponse)
+        } else
+            throw Exception("no Internet")
+    }
+
+    override suspend fun ambulanceRegister(ambulanceRegisterResponse: AmbulanceRegisterResponse): Boolean {
+        return if (connectivity.isOnline()) {
+            remoteDataSource.ambulanceRegister(ambulanceRegisterResponse)
+        } else
+            throw Exception("no Internet")
+    }
+
+    override suspend fun hospitalRegister(hospitalRegisterResponse: HospitalRegisterResponse): Boolean {
+        return if (connectivity.isOnline()) {
+            remoteDataSource.hospitalRegister(hospitalRegisterResponse)
+        } else
+            throw Exception("no Internet")
+    }
+
+    override suspend fun userLogin(login: LoginRequest): LoginResponse {
+        return if (connectivity.isOnline()) {
+            remoteDataSource.userLogin(login)
         } else
             throw Exception("no Internet")
     }

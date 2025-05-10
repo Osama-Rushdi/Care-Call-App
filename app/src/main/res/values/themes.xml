@@ -1,6 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
+
     <style name="Theme.CareCallApp" parent="Theme.Material3.Dark.NoActionBar">
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">@color/colorPrimary</item>
+        <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowBackground">@color/white</item>
 
     </style>

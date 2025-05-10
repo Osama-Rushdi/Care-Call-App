@@ -97,5 +97,4 @@ sealed class BloodStateShow {
     data class ShowError(val errorMessage: String) : BloodStateShow()
     data object IsFound : BloodStateShow()
     data object Loading : BloodStateShow()
-
 }

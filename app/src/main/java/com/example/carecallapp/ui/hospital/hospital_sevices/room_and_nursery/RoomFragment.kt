@@ -1,4 +1,5 @@
 package com.example.carecallapp.ui.hospital.hospital_sevices.room_and_nursery
+
 import android.app.AlertDialog
 import android.os.Bundle
 import android.util.Log
@@ -6,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.fragment.app.Fragment
@@ -15,6 +17,7 @@ import com.example.carecallapp.data.repository.view_models.RoomStateShow
 import com.example.carecallapp.databinding.CustomDialogBinding
 import com.example.carecallapp.databinding.FragmentEmergencyRoomBinding
 import com.example.carecallapp.domain.model.hospital_content.RoomType
+import com.example.carecallapp.ui.hospital.home.HomeFragment
 import com.example.carecallapp.ui.hospital.hospital_sevices.room_and_nursery.utils.RoomAndNurseryAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -35,16 +38,22 @@ class RoomFragment(val type: RoomType) : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         changeHeaderText()
-        adapter = RoomAndNurseryAdapter(emptyList(), { id ->
-            deleteItem(id)
-            getAllRoomAndNursery()
-            Log.d("kkk", "onViewCreated:$id ")
-        }) { id ->
-            EditRoomDialogSheet(type, idBlood = id) {
-            }//.show(parentFragmentManager, null)
-        }
-        binding.EmergencyRoomRecyclerView.adapter = adapter
+        initAdapter()
         getAllRoomAndNursery()
+        observeData()
+        initListener()
+        onBack()
+    }
+
+    private fun initListener() {
+        binding.fabAddRoomBtn.setOnClickListener {
+            DialogSheetAddRoom(type) {
+                getAllRoomAndNursery()
+            }.show(parentFragmentManager, null)
+        }
+    }
+
+    private fun observeData() {
         viewModel.initRoomAdapter.observe(viewLifecycleOwner) { beds ->
             adapter.submitList(beds)
         }
@@ -73,19 +82,28 @@ class RoomFragment(val type: RoomType) : Fragment() {
                 }
 
                 is RoomStateShow.IsDeleteSuccess -> {
-                    Toast.makeText(requireContext(), "is delete successful", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "is delete successful", Toast.LENGTH_SHORT)
+                        .show()
                     getAllRoomAndNursery()
                     showLoading(false)
                     notFound(false)
                 }
+
                 else -> {}
             }
         }
-        binding.fabAddRoomBtn.setOnClickListener {
-            DialogSheetAddRoom(type) {
-                getAllRoomAndNursery()
-            }.show(parentFragmentManager, null)
+    }
+
+    private fun initAdapter() {
+        adapter = RoomAndNurseryAdapter(emptyList(), { id ->
+            deleteItem(id)
+            getAllRoomAndNursery()
+            Log.d("kkk", "onViewCreated:$id ")
+        }) { id ->
+            EditRoomDialogSheet(type, idBlood = id) {
+            }//.show(parentFragmentManager, null)
         }
+        binding.EmergencyRoomRecyclerView.adapter = adapter
     }
 
     private fun changeHeaderText() {
@@ -141,5 +159,18 @@ class RoomFragment(val type: RoomType) : Fragment() {
     private fun notFound(enable: Boolean) {
         binding.notFoundBloods.root.isVisible = enable
     }
+
+    private fun onBack() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            parentFragmentManager.beginTransaction()
+                .replace(
+                    R.id.fragmentContainer,
+                    HomeFragment()
+                )
+                .commit()
+
+        }
+    }
+
 
 }

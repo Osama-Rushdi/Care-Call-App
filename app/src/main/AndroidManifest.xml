@@ -16,7 +16,7 @@
         android:theme="@style/Theme.CareCallApp"
         tools:targetApi="31">
         <activity
-            android:name=".ui.auth.ui.login.LoginActivity"
+            android:name=".ui.auth.login.LoginActivity"
             android:exported="true"
             android:label="@string/title_activity_login">
             <intent-filter>

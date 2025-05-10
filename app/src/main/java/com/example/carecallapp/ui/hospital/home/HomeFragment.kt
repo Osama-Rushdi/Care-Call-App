@@ -5,11 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.example.carecallapp.R
+import com.example.carecallapp.data.repository.view_models.MyServicesViewModel
+import com.example.carecallapp.data.repository.view_models.ServiceStateShow
 import com.example.carecallapp.databinding.FragmentHomeBinding
 import com.example.carecallapp.domain.model.hospital_content.RoomType
+import com.example.carecallapp.domain.model.hospital_content.ServiceType
+import com.example.carecallapp.ui.hospital.hospital_sevices.FragmentAddServices
 import com.example.carecallapp.ui.hospital.hospital_sevices.blood_bank.BloodBankFragment
 import com.example.carecallapp.ui.hospital.hospital_sevices.room_and_nursery.RoomFragment
+
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,7 +23,8 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-
+    private val viewModel: MyServicesViewModel by viewModels()
+    private lateinit var type: ServiceType
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -31,14 +38,46 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initListeners()
+        observe()
+    }
+
+    private fun observe() {
+        viewModel.stateShow.observe(viewLifecycleOwner) {
+            when (it) {
+                is ServiceStateShow.IsSearchSuccess -> {
+                    if (it.success) {
+                        showFragment(
+                            when (type) {
+                                ServiceType.Nursery -> RoomFragment(RoomType.Nursery)
+                                ServiceType.BloodBank -> BloodBankFragment()
+                                ServiceType.ICU -> RoomFragment(RoomType.ICU)
+                                else -> {
+                                    HomeFragment()
+                                }
+                            }
+                        )
+                    } else {
+                        showFragment(FragmentAddServices(type))
+                    }
+                }
+
+                else -> {}
+            }
+        }
     }
 
     private fun initListeners() {
-        binding.nurseryCD.setOnClickListener { showFragment(RoomFragment(RoomType.Nursery)) }
-        binding.emergencyRoomCD.setOnClickListener { showFragment(RoomFragment(RoomType.ICU)) }
-
+        binding.nurseryCD.setOnClickListener {
+            type = ServiceType.Nursery
+            viewModel.searchServiceByNameUseCase(type.name)
+        }
+        binding.emergencyRoomCD.setOnClickListener {
+            type = ServiceType.ICU
+            viewModel.searchServiceByNameUseCase(type.name)
+        }
         binding.bloodItemCD.setOnClickListener {
-            showFragment(BloodBankFragment())
+            type = ServiceType.BloodBank
+            viewModel.searchServiceByNameUseCase(type.name)
         }
     }
 

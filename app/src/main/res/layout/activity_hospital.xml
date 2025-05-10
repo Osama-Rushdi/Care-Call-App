@@ -6,7 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:windowSoftInputMode="adjustPan"
     tools:openDrawer="start">
+
+    <!--    android:windowSoftInputMode="adjustPan"
+    this make layout don't move to top  -->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +26,10 @@
         <FrameLayout
             android:id="@+id/fragmentContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:windowSoftInputMode="adjustPan"
+            android:background="@color/whiteSmoke" />
 
     </LinearLayout>
 
@@ -36,9 +43,9 @@
         app:headerLayout="@layout/nav_header_main"
         app:itemIconSize="30dp"
         app:itemIconTint="@color/black"
-        app:itemTextColor="@color/black"
         app:itemRippleColor="@color/colorPrimary"
         app:itemTextAppearance="@style/text18BlackBold"
+        app:itemTextColor="@color/black"
         app:itemVerticalPadding="12dp"
         app:menu="@menu/nav_menu"
         tools:visibility="visible" />
