@@ -2,11 +2,11 @@ package com.example.carecallapp.data.repository.repository_imp
 
 import com.example.carecallapp.data.repository.Connectivity
 import com.example.carecallapp.data.repository.data_sources.remote_data_source.RemoteDataSource
-import com.example.carecallapp.domain.model.auth.AmbulanceRegisterResponse
-import com.example.carecallapp.domain.model.auth.DoctorRegisterResponse
-import com.example.carecallapp.domain.model.auth.HospitalRegisterResponse
+import com.example.carecallapp.domain.model.auth.AmbulanceRegisterRequest
+import com.example.carecallapp.domain.model.auth.DoctorRegisterRequest
+import com.example.carecallapp.domain.model.auth.HospitalRegisterRequest
 import com.example.carecallapp.domain.model.auth.LoginRequest
-import com.example.carecallapp.domain.model.auth.LoginResponse
+import com.example.carecallapp.domain.model.auth.TokenResponse
 import com.example.carecallapp.domain.model.hospital_accounts.PersonServiceResponse
 import com.example.carecallapp.domain.model.hospital_content.BloodBag
 import com.example.carecallapp.domain.model.hospital_content.RoomAndNursery
@@ -144,28 +144,28 @@ class HospitalRepositoryImpl @Inject constructor(
             throw Exception("no Internet")
     }
 
-    override suspend fun doctorRegister(doctorRegisterResponse: DoctorRegisterResponse): Boolean {
+    override suspend fun doctorRegister(doctorRegisterRequest: DoctorRegisterRequest): Boolean {
         return if (connectivity.isOnline()) {
-            remoteDataSource.doctorRegister(doctorRegisterResponse)
+            remoteDataSource.doctorRegister(doctorRegisterRequest)
         } else
             throw Exception("no Internet")
     }
 
-    override suspend fun ambulanceRegister(ambulanceRegisterResponse: AmbulanceRegisterResponse): Boolean {
+    override suspend fun ambulanceRegister(ambulanceRegisterRequest: AmbulanceRegisterRequest): Boolean {
         return if (connectivity.isOnline()) {
-            remoteDataSource.ambulanceRegister(ambulanceRegisterResponse)
+            remoteDataSource.ambulanceRegister(ambulanceRegisterRequest)
         } else
             throw Exception("no Internet")
     }
 
-    override suspend fun hospitalRegister(hospitalRegisterResponse: HospitalRegisterResponse): Boolean {
+    override suspend fun hospitalRegister(hospitalRegisterRequest: HospitalRegisterRequest): Boolean {
         return if (connectivity.isOnline()) {
-            remoteDataSource.hospitalRegister(hospitalRegisterResponse)
+            remoteDataSource.hospitalRegister(hospitalRegisterRequest)
         } else
             throw Exception("no Internet")
     }
 
-    override suspend fun userLogin(login: LoginRequest): LoginResponse {
+    override suspend fun userLogin(login: LoginRequest): TokenResponse {
         return if (connectivity.isOnline()) {
             remoteDataSource.userLogin(login)
         } else

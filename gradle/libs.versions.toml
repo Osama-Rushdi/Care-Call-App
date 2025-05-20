@@ -4,6 +4,9 @@ agp = "8.6.0"
 hiltAndroid = "2.51.1"
 kotlin = "2.0.21"
 coreKtx = "1.15.0"
+lifecycleRuntimeKtx = "2.8.7"
+lifecycleCommon = "2.8.7"
+
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
@@ -46,6 +49,8 @@ androidx-legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support
 androidx-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
 androidx-annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
 swipelayout = { module = "com.github.zerobranch:SwipeLayout", version.ref = "swipelayout" }
+androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
+androidx-lifecycle-common = { group = "androidx.lifecycle", name = "lifecycle-common", version.ref = "lifecycleCommon" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

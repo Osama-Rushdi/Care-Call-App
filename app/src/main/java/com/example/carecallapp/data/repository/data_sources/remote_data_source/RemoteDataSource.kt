@@ -1,10 +1,10 @@
 package com.example.carecallapp.data.repository.data_sources.remote_data_source
 
-import com.example.carecallapp.domain.model.auth.AmbulanceRegisterResponse
-import com.example.carecallapp.domain.model.auth.DoctorRegisterResponse
-import com.example.carecallapp.domain.model.auth.HospitalRegisterResponse
+import com.example.carecallapp.domain.model.auth.AmbulanceRegisterRequest
+import com.example.carecallapp.domain.model.auth.DoctorRegisterRequest
+import com.example.carecallapp.domain.model.auth.HospitalRegisterRequest
 import com.example.carecallapp.domain.model.auth.LoginRequest
-import com.example.carecallapp.domain.model.auth.LoginResponse
+import com.example.carecallapp.domain.model.auth.TokenResponse
 import com.example.carecallapp.domain.model.hospital_accounts.PersonServiceResponse
 import com.example.carecallapp.domain.model.hospital_content.BloodBag
 import com.example.carecallapp.domain.model.hospital_content.RoomAndNursery
@@ -47,9 +47,9 @@ interface RemoteDataSource {
     suspend fun deleteRoomOrNursery(id: Int): Boolean
 
     //AUTHENTICATION
-    suspend fun doctorRegister(doctorRegisterResponse: DoctorRegisterResponse): Boolean
-    suspend fun ambulanceRegister(ambulanceRegisterResponse: AmbulanceRegisterResponse): Boolean
-    suspend fun hospitalRegister(hospitalRegisterResponse: HospitalRegisterResponse): Boolean
-    suspend fun userLogin(login: LoginRequest): LoginResponse
+    suspend fun doctorRegister(doctorRegisterRequest: DoctorRegisterRequest): Boolean
+    suspend fun ambulanceRegister(ambulanceRegisterRequest: AmbulanceRegisterRequest): Boolean
+    suspend fun hospitalRegister(hospitalRegisterRequest: HospitalRegisterRequest): Boolean
+    suspend fun userLogin(login: LoginRequest): TokenResponse
 
 }

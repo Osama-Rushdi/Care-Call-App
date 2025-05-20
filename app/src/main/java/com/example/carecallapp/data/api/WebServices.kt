@@ -1,14 +1,14 @@
 package com.example.carecallapp.data.api
 
-import com.example.carecallapp.data.model.auth.AmbulanceRegisterResponseDM
-import com.example.carecallapp.data.model.auth.DoctorRegisterResponseDM
+import com.example.carecallapp.data.model.auth.AmbulanceRegisterRequestDM
+import com.example.carecallapp.data.model.auth.DoctorRegisterRequestDM
 import com.example.carecallapp.data.model.auth.HospitalRegisterResponseDM
 import com.example.carecallapp.data.model.auth.LoginRequestDM
-import com.example.carecallapp.data.model.auth.LoginResponseDM
+import com.example.carecallapp.data.model.auth.TokenResponseDM
 import com.example.carecallapp.data.model.hospital_accountsDM.PersonServiceResponseDM
 import com.example.carecallapp.data.model.hospital_profileDM.HospitalResponseDM
 import com.example.carecallapp.data.model.hospital_services.BloodBagDM
-import com.example.carecallapp.data.model.hospital_services.RoomAndNurseryDM
+import com.example.carecallapp.data.model.hospital_services.RoomAndNurseryResponseDM
 import com.example.carecallapp.data.model.hospital_services.ServiceRequestDM
 import com.example.carecallapp.data.model.hospital_services.ServiceResponseDM
 import retrofit2.Response
@@ -79,13 +79,13 @@ interface WebServices {
 
     //room and nursery
     @GET("api/Bed")
-    suspend fun getAllRoomsAndNurseries(): List<RoomAndNurseryDM>
+    suspend fun getAllRoomsAndNurseries(): List<RoomAndNurseryResponseDM>
 
     @GET("api/Bed/{id}")
-    suspend fun getRoomAndNurseryById(@Path("id") id: Int): RoomAndNurseryDM
+    suspend fun getRoomAndNurseryById(@Path("id") id: Int): RoomAndNurseryResponseDM
 
     @POST("api/Bed")
-    suspend fun addRoomAndNursery(@Body blood: RoomAndNurseryDM): Response<RoomAndNurseryDM>
+    suspend fun addRoomAndNursery(@Body blood: RoomAndNurseryResponseDM): Response<RoomAndNurseryResponseDM>
 
     @DELETE("api/Bed")
     suspend fun deleteRoomOrNursery(@Query("id") id: Int): Response<Unit>
@@ -93,15 +93,15 @@ interface WebServices {
     //Authentication
 
     @POST("api/Account/Doctor-Register")
-    suspend fun doctorRegister(@Body register: DoctorRegisterResponseDM): Response<String>
+    suspend fun doctorRegister(@Body register: DoctorRegisterRequestDM): Response<TokenResponseDM>
 
     @POST("api/Account/Amulance-Register")
-    suspend fun ambulanceRegister(@Body register: AmbulanceRegisterResponseDM): Response<String>
+    suspend fun ambulanceRegister(@Body register: AmbulanceRegisterRequestDM): Response<TokenResponseDM>
 
     @POST("api/Account/Hopital-Register")
-    suspend fun hospitalRegister(@Body register: HospitalRegisterResponseDM): Response<String>
+    suspend fun hospitalRegister(@Body register: HospitalRegisterResponseDM): Response<TokenResponseDM>
 
     @POST("api/Account/Login")
-    suspend fun userLogin(@Body login: LoginRequestDM): Response<LoginResponseDM>
+    suspend fun userLogin(@Body login: LoginRequestDM): Response<TokenResponseDM>
 
 }

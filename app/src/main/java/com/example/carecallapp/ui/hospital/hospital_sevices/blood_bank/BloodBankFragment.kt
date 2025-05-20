@@ -36,7 +36,7 @@ class BloodBankFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         adapter = BloodBankAdapter(emptyList(), { id ->
             safeDelete(id)
-        }) { id, blood ->
+        }) { id, _ ->
             EditBloodDialogSheet(idBlood = id) {
             }.show(parentFragmentManager, null)
         }

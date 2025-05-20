@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.carecallapp.R
 import com.example.carecallapp.data.repository.view_models.MyProfileViewModel
 import com.example.carecallapp.data.repository.view_models.ProfileStateShow
@@ -62,14 +63,14 @@ class HospitalProfileFragment : Fragment() {
             if (saveData.equals(null)) {
                 Toast.makeText(requireContext(), "some thing go wrong", Toast.LENGTH_SHORT).show()
             } else {
-                val bundle = Bundle()
-                bundle.putSerializable(Constants.HOSPITAL_PROFILE_KEY, saveData)
-                val editProfileFragment = HospitalUpdateProfileFragment()
-                editProfileFragment.arguments = bundle
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainer, editProfileFragment)
-                    .addToBackStack(null)
-                    .commit()
+
+                val bundle = Bundle().apply {
+                    putSerializable(Constants.HOSPITAL_PROFILE_KEY, saveData)
+                }
+                findNavController().navigate(
+                    R.id.action_hospitalProfileFragment_to_hospitalUpdateProfileFragment,
+                    bundle
+                )
             }
         }
     }

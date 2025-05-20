@@ -15,11 +15,11 @@ import com.example.carecallapp.data.mappers.toLoginDM
 import com.example.carecallapp.data.mappers.toLoginResponse
 import com.example.carecallapp.data.mappers.toPeopleService
 import com.example.carecallapp.data.mappers.toRoomAndNurseryDM
-import com.example.carecallapp.domain.model.auth.AmbulanceRegisterResponse
-import com.example.carecallapp.domain.model.auth.DoctorRegisterResponse
-import com.example.carecallapp.domain.model.auth.HospitalRegisterResponse
+import com.example.carecallapp.domain.model.auth.AmbulanceRegisterRequest
+import com.example.carecallapp.domain.model.auth.DoctorRegisterRequest
+import com.example.carecallapp.domain.model.auth.HospitalRegisterRequest
 import com.example.carecallapp.domain.model.auth.LoginRequest
-import com.example.carecallapp.domain.model.auth.LoginResponse
+import com.example.carecallapp.domain.model.auth.TokenResponse
 import com.example.carecallapp.domain.model.hospital_accounts.PersonServiceResponse
 import com.example.carecallapp.domain.model.hospital_content.BloodBag
 import com.example.carecallapp.domain.model.hospital_content.RoomAndNursery
@@ -132,8 +132,8 @@ class RemoteDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun doctorRegister(doctorRegisterResponse: DoctorRegisterResponse): Boolean {
-        val response = webServices.doctorRegister(doctorRegisterResponse.toDataModel())
+    override suspend fun doctorRegister(doctorRegisterRequest: DoctorRegisterRequest): Boolean {
+        val response = webServices.doctorRegister(doctorRegisterRequest.toDataModel())
         Log.d("kkk", "doctorRegister:$response ")
         if (response.isSuccessful) {
             return true
@@ -142,8 +142,8 @@ class RemoteDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun ambulanceRegister(ambulanceRegisterResponse: AmbulanceRegisterResponse): Boolean {
-        val response = webServices.ambulanceRegister(ambulanceRegisterResponse.toDataModel())
+    override suspend fun ambulanceRegister(ambulanceRegisterRequest: AmbulanceRegisterRequest): Boolean {
+        val response = webServices.ambulanceRegister(ambulanceRegisterRequest.toDataModel())
         Log.d("kkk", "ambulanceRegister:$response ")
         if (response.isSuccessful) {
             return true
@@ -152,8 +152,8 @@ class RemoteDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun hospitalRegister(hospitalRegisterResponse: HospitalRegisterResponse): Boolean {
-        val response = webServices.hospitalRegister(hospitalRegisterResponse.toDataModel())
+    override suspend fun hospitalRegister(hospitalRegisterRequest: HospitalRegisterRequest): Boolean {
+        val response = webServices.hospitalRegister(hospitalRegisterRequest.toDataModel())
         Log.d("kkk", "hospital Register:$response ")
         if (response.isSuccessful) {
             return true
@@ -163,7 +163,7 @@ class RemoteDataSourceImpl @Inject constructor(
     }
 
 
-    override suspend fun userLogin(login: LoginRequest): LoginResponse {
+    override suspend fun userLogin(login: LoginRequest): TokenResponse {
         val response = webServices.userLogin(login.toLoginDM())
         Log.d("kkk", "userLogin:$response ")
         if (response.isSuccessful) {

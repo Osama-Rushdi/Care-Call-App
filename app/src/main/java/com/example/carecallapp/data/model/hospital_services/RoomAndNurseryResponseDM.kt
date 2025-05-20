@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 
 
-data class RoomAndNurseryDM(
+data class RoomAndNurseryResponseDM(
 
 	@field:SerializedName("hospitalId")
 	val hospitalId: String? = null,

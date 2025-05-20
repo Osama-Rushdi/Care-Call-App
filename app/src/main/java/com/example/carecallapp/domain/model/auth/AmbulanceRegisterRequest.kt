@@ -1,6 +1,6 @@
 package com.example.carecallapp.domain.model.auth
 
-data class AmbulanceRegisterResponse(
+data class AmbulanceRegisterRequest(
     val firstName: String = "",
     val lastName: String = "",
     val password: String = "",
@@ -9,7 +9,7 @@ data class AmbulanceRegisterResponse(
     val phone: Int = 0,
     val hospitalId: String = "",
     val confirmPassword: String = "",
-    val vehicleNumber: String = "",
+    var vehicleNumber: String = "",
     val dateOfBirth: String = "",
     val email: String = "",
     val username: String = ""

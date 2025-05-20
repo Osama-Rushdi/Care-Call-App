@@ -9,6 +9,4 @@ class GetRoomAndNurseryByIdUseCase  @Inject constructor(private val repository: 
      suspend fun execute(id:Int): RoomAndNursery {
          return repository.getRoomAndNurseryById(id)
      }
-
-
  }

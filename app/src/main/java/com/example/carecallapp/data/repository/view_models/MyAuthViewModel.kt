@@ -4,11 +4,11 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.carecallapp.domain.model.auth.AmbulanceRegisterResponse
-import com.example.carecallapp.domain.model.auth.DoctorRegisterResponse
-import com.example.carecallapp.domain.model.auth.HospitalRegisterResponse
+import com.example.carecallapp.domain.model.auth.AmbulanceRegisterRequest
+import com.example.carecallapp.domain.model.auth.DoctorRegisterRequest
+import com.example.carecallapp.domain.model.auth.HospitalRegisterRequest
 import com.example.carecallapp.domain.model.auth.LoginRequest
-import com.example.carecallapp.domain.model.auth.LoginResponse
+import com.example.carecallapp.domain.model.auth.TokenResponse
 import com.example.carecallapp.domain.use_cases.AmbulanceRegisterUseCase
 import com.example.carecallapp.domain.use_cases.DoctorRegisterUseCase
 import com.example.carecallapp.domain.use_cases.HospitalRegisterUseCase
@@ -28,11 +28,11 @@ open class MyAuthViewModel @Inject constructor(
 
     val stateShow = MutableLiveData<AuthStateShow>()
 
-    fun doctorRegister(doctorRegisterResponse: DoctorRegisterResponse) {
+    fun doctorRegister(doctorRegisterRequest: DoctorRegisterRequest) {
         stateShow.postValue(AuthStateShow.Loading)
         viewModelScope.launch {
             try {
-                val doctorRegister = doctorRegisterUseCase.execute(doctorRegisterResponse)
+                val doctorRegister = doctorRegisterUseCase.execute(doctorRegisterRequest)
                 if (doctorRegister)
                     stateShow.postValue(AuthStateShow.IsSuccess(true))
                 Log.d("kkk", "doctorRegister: $doctorRegister")
@@ -43,7 +43,7 @@ open class MyAuthViewModel @Inject constructor(
         }
     }
 
-    fun ambulanceRegister(ambulanceRegisterResponse: AmbulanceRegisterResponse) {
+    fun ambulanceRegister(ambulanceRegisterResponse: AmbulanceRegisterRequest) {
         stateShow.postValue(AuthStateShow.Loading)
         viewModelScope.launch {
             try {
@@ -58,7 +58,7 @@ open class MyAuthViewModel @Inject constructor(
         }
     }
 
-    fun hospitalRegister(hospitalRegisterResponse: HospitalRegisterResponse) {
+    fun hospitalRegister(hospitalRegisterResponse: HospitalRegisterRequest) {
         stateShow.postValue(AuthStateShow.Loading)
         viewModelScope.launch {
             try {
@@ -94,7 +94,7 @@ sealed class AuthStateShow {
     data object Loading : AuthStateShow()
     class IsSuccess(val hospitalDetails: Boolean) : AuthStateShow()
     data class ShowError(val errorMessage: String) : AuthStateShow()
-    class IsSuccessLogin(val userLogin: LoginResponse) : AuthStateShow() {
+    class IsSuccessLogin(val userLogin: TokenResponse) : AuthStateShow() {
 
     }
 }

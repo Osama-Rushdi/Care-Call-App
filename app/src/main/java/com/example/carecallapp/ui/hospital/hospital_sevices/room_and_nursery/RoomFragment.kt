@@ -1,13 +1,13 @@
 package com.example.carecallapp.ui.hospital.hospital_sevices.room_and_nursery
 
 import android.app.AlertDialog
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.addCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.fragment.app.Fragment
@@ -15,34 +15,45 @@ import com.example.carecallapp.R
 import com.example.carecallapp.data.repository.view_models.MyRoomAndNurseryViewModel
 import com.example.carecallapp.data.repository.view_models.RoomStateShow
 import com.example.carecallapp.databinding.CustomDialogBinding
-import com.example.carecallapp.databinding.FragmentEmergencyRoomBinding
+import com.example.carecallapp.databinding.FragmentRoomBinding
 import com.example.carecallapp.domain.model.hospital_content.RoomType
-import com.example.carecallapp.ui.hospital.home.HomeFragment
 import com.example.carecallapp.ui.hospital.hospital_sevices.room_and_nursery.utils.RoomAndNurseryAdapter
+import com.example.carecallapp.ui.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class RoomFragment(val type: RoomType) : Fragment() {
-    private lateinit var binding: FragmentEmergencyRoomBinding
+class RoomFragment : Fragment() {
+    private lateinit var binding: FragmentRoomBinding
     private val viewModel: MyRoomAndNurseryViewModel by viewModels()
     private lateinit var adapter: RoomAndNurseryAdapter
     private var lastClickTime = 0L
+    private lateinit var type: RoomType
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = FragmentEmergencyRoomBinding.inflate(inflater, container, false)
+        binding = FragmentRoomBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        getRoomType()
         changeHeaderText()
         initAdapter()
         getAllRoomAndNursery()
         observeData()
         initListener()
-        onBack()
+
+    }
+
+    private fun getRoomType() {
+        type =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+                arguments?.getSerializable(Constants.ROOM_TYPE_KEY, RoomType::class.java)!!
+            else
+                arguments?.getSerializable(Constants.ROOM_TYPE_KEY) as RoomType
     }
 
     private fun initListener() {
@@ -160,17 +171,6 @@ class RoomFragment(val type: RoomType) : Fragment() {
         binding.notFoundBloods.root.isVisible = enable
     }
 
-    private fun onBack() {
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            parentFragmentManager.beginTransaction()
-                .replace(
-                    R.id.fragmentContainer,
-                    HomeFragment()
-                )
-                .commit()
-
-        }
-    }
-
 
 }
+

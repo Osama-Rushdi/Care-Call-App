@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.carecallapp.R
 import com.example.carecallapp.data.repository.view_models.MyServicesViewModel
 import com.example.carecallapp.data.repository.view_models.ServiceStateShow
@@ -17,8 +18,7 @@ import com.example.carecallapp.domain.ServiceTypeUtil
 import com.example.carecallapp.domain.model.hospital_content.RoomType
 import com.example.carecallapp.domain.model.hospital_content.ServiceRequest
 import com.example.carecallapp.domain.model.hospital_content.ServiceType
-import com.example.carecallapp.ui.hospital.hospital_sevices.blood_bank.BloodBankFragment
-import com.example.carecallapp.ui.hospital.hospital_sevices.room_and_nursery.RoomFragment
+import com.example.carecallapp.ui.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -26,9 +26,6 @@ class FragmentAddServices(private val serviceType: ServiceType) : Fragment() {
     private var _binding: AddServiceFragmentBinding? = null
     private val binding get() = _binding!!
     private val viewModel: MyServicesViewModel by viewModels()
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -61,6 +58,7 @@ class FragmentAddServices(private val serviceType: ServiceType) : Fragment() {
                     showError(it.errorMessage)
                     showLoading(false)
                 }
+
                 else -> {}
             }
         }
@@ -69,21 +67,27 @@ class FragmentAddServices(private val serviceType: ServiceType) : Fragment() {
     private fun navigationToServiceFragments() {
         when (serviceType.name) {
             ServiceType.ICU.name -> {
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainer, RoomFragment(RoomType.ICU))
-                    .commit()
+                val action = Bundle().apply {
+                    putSerializable(Constants.ROOM_TYPE_KEY, RoomType.ICU)
+                }
+                findNavController().navigate(
+                    R.id.action_fragmentAddServices_to_roomFragment,
+                    action
+                )
             }
 
             ServiceType.BloodBank.name -> {
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainer, BloodBankFragment())
-                    .commit()
+                findNavController().navigate(R.id.action_homeFragment_to_bloodBankFragment)
             }
 
             ServiceType.Nursery.name -> {
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.fragmentContainer, RoomFragment(RoomType.Nursery))
-                    .commit()
+                val action = Bundle().apply {
+                    putSerializable(Constants.ROOM_TYPE_KEY, RoomType.Nursery)
+                }
+                findNavController().navigate(
+                    R.id.action_fragmentAddServices_to_roomFragment,
+                    action
+                )
             }
         }
     }

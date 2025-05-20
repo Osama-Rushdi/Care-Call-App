@@ -1,31 +1,29 @@
 package com.example.carecallapp.data.mappers
 
-import com.example.carecallapp.data.model.auth.AmbulanceRegisterResponseDM
-import com.example.carecallapp.data.model.auth.DoctorRegisterResponseDM
+import com.example.carecallapp.data.model.auth.AmbulanceRegisterRequestDM
+import com.example.carecallapp.data.model.auth.DoctorRegisterRequestDM
 import com.example.carecallapp.data.model.auth.HospitalRegisterResponseDM
 import com.example.carecallapp.data.model.auth.LoginRequestDM
-import com.example.carecallapp.data.model.auth.LoginResponseDM
+import com.example.carecallapp.data.model.auth.TokenResponseDM
 import com.example.carecallapp.data.model.hospital_accountsDM.PersonServiceResponseDM
 import com.example.carecallapp.data.model.hospital_profileDM.HospitalResponseDM
 import com.example.carecallapp.data.model.hospital_services.BloodBagDM
-import com.example.carecallapp.data.model.hospital_services.RoomAndNurseryDM
+import com.example.carecallapp.data.model.hospital_services.RoomAndNurseryResponseDM
 import com.example.carecallapp.data.model.hospital_services.ServiceRequestDM
 import com.example.carecallapp.data.model.hospital_services.ServiceResponseDM
-import com.example.carecallapp.domain.ServiceTypeUtil
 import com.example.carecallapp.domain.model.hospital_accounts.PersonServiceResponse
 import com.example.carecallapp.domain.model.hospital_content.BloodBag
 import com.example.carecallapp.domain.model.hospital_content.RoomAndNursery
 import com.example.carecallapp.domain.model.hospital_content.RoomType
 import com.example.carecallapp.domain.model.hospital_content.Status
 import com.example.carecallapp.domain.model.hospital_profile.HospitalResponse
-import com.example.carecallapp.domain.model.auth.AmbulanceRegisterResponse
-import com.example.carecallapp.domain.model.auth.DoctorRegisterResponse
-import com.example.carecallapp.domain.model.auth.HospitalRegisterResponse
+import com.example.carecallapp.domain.model.auth.AmbulanceRegisterRequest
+import com.example.carecallapp.domain.model.auth.DoctorRegisterRequest
+import com.example.carecallapp.domain.model.auth.HospitalRegisterRequest
 import com.example.carecallapp.domain.model.auth.LoginRequest
-import com.example.carecallapp.domain.model.auth.LoginResponse
+import com.example.carecallapp.domain.model.auth.TokenResponse
 import com.example.carecallapp.domain.model.hospital_content.ServiceRequest
 import com.example.carecallapp.domain.model.hospital_content.ServiceResponse
-import com.example.carecallapp.domain.model.hospital_content.ServiceType
 
 
 //Accounts
@@ -126,15 +124,15 @@ fun BloodBag.toBloodDM(): BloodBagDM {
 }
 
 //Room and Nursery
-fun RoomAndNursery.toRoomAndNurseryDM(): RoomAndNurseryDM {
-    return RoomAndNurseryDM(
+fun RoomAndNursery.toRoomAndNurseryDM(): RoomAndNurseryResponseDM {
+    return RoomAndNurseryResponseDM(
         bedNumber = roomNumber,
         status = status.name,
         type = type.name
     )
 }
 
-fun RoomAndNurseryDM.toRoomAndNursery(): RoomAndNursery {
+fun RoomAndNurseryResponseDM.toRoomAndNursery(): RoomAndNursery {
     return RoomAndNursery(
         id = id!!,
         roomNumber = bedNumber ?: "0",
@@ -153,14 +151,14 @@ fun RoomAndNurseryDM.toRoomAndNursery(): RoomAndNursery {
 
 
 //AUTHENTICATION
-fun AmbulanceRegisterResponseDM.toDomainModel(): AmbulanceRegisterResponse {
-    return AmbulanceRegisterResponse(
+fun AmbulanceRegisterRequestDM.toDomainModel(): AmbulanceRegisterRequest {
+    return AmbulanceRegisterRequest(
         firstName = firstName ?: "",
         lastName = lastName ?: "",
         password = password ?: "",
         nationalId = nationalId ?: "",
         gender = gender ?: "",
-        phone = phone,
+        phone = phone ?: 0,
         hospitalId = hospitalId ?: "",
         confirmPassword = confirmPassword ?: "",
         vehicleNumber = vehicleNumber ?: "",
@@ -170,8 +168,8 @@ fun AmbulanceRegisterResponseDM.toDomainModel(): AmbulanceRegisterResponse {
     )
 }
 
-fun DoctorRegisterResponseDM.toDomainModel(): DoctorRegisterResponse {
-    return DoctorRegisterResponse(
+fun DoctorRegisterRequestDM.toDomainModel(): DoctorRegisterRequest {
+    return DoctorRegisterRequest(
         lastName = lastName ?: "",
         specialty = specialty ?: "",
         gender = gender ?: "",
@@ -190,8 +188,8 @@ fun DoctorRegisterResponseDM.toDomainModel(): DoctorRegisterResponse {
     )
 }
 
-fun HospitalRegisterResponseDM.toDomainModel(): HospitalRegisterResponse {
-    return HospitalRegisterResponse(
+fun HospitalRegisterResponseDM.toDomainModel(): HospitalRegisterRequest {
+    return HospitalRegisterRequest(
         firstName = firstName ?: "",
         lastName = lastName ?: "",
         password = password ?: "",
@@ -206,8 +204,8 @@ fun HospitalRegisterResponseDM.toDomainModel(): HospitalRegisterResponse {
     )
 }
 
-fun AmbulanceRegisterResponse.toDataModel(): AmbulanceRegisterResponseDM {
-    return AmbulanceRegisterResponseDM().apply {
+fun AmbulanceRegisterRequest.toDataModel(): AmbulanceRegisterRequestDM {
+    return AmbulanceRegisterRequestDM().apply {
         firstName = this@toDataModel.firstName
         lastName = this@toDataModel.lastName
         password = this@toDataModel.password
@@ -223,8 +221,8 @@ fun AmbulanceRegisterResponse.toDataModel(): AmbulanceRegisterResponseDM {
     }
 }
 
-fun DoctorRegisterResponse.toDataModel(): DoctorRegisterResponseDM {
-    return DoctorRegisterResponseDM().apply {
+fun DoctorRegisterRequest.toDataModel(): DoctorRegisterRequestDM {
+    return DoctorRegisterRequestDM().apply {
         lastName = this@toDataModel.lastName
         specialty = this@toDataModel.specialty
         gender = this@toDataModel.gender
@@ -243,7 +241,7 @@ fun DoctorRegisterResponse.toDataModel(): DoctorRegisterResponseDM {
     }
 }
 
-fun HospitalRegisterResponse.toDataModel(): HospitalRegisterResponseDM {
+fun HospitalRegisterRequest.toDataModel(): HospitalRegisterResponseDM {
     return HospitalRegisterResponseDM().apply {
         firstName = this@toDataModel.firstName
         lastName = this@toDataModel.lastName
@@ -271,8 +269,8 @@ fun LoginRequestDM.toLogin(): LoginRequest {
     )
 }
 
-fun LoginResponseDM.toLoginResponse(): LoginResponse {
-    return LoginResponse(
+fun TokenResponseDM.toLoginResponse(): TokenResponse {
+    return TokenResponse(
         role = role ?: "", expiration = expiration ?: "", userId = userId, token = token
     )
 }

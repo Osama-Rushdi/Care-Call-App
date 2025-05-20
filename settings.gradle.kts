@@ -18,6 +18,7 @@ dependencyResolutionManagement {
         mavenCentral()
         maven { setUrl("https://jitpack.io") }
     }
+
 }
 
 rootProject.name = "Care Call App"

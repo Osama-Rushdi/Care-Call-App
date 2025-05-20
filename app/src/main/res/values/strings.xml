@@ -21,7 +21,7 @@
     <string name="ambulances">Ambulances</string>
     <string name="doctors">Doctors</string>
     <string name="add_accounts">add Accounts</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_main">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
@@ -104,4 +104,28 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="user_name">User name</string>
     <string name="logo">logo</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="phone">Phone Number</string>
+    <string name="national_id">National ID</string>
+    <string name="specialty">Specielity</string>
+    <string name="license_number">License Number</string>
+    <string name="hospital_id">Hospital ID</string>
+    <string name="doctor_register_succefully">doctor register successfully</string>
+    <string name="ambulance_register_succefully">ambulance register successfully</string>
+    <string name="create_a_new_ambulance_account">Create a New Ambulance Account</string>
+    <string name="vehicle_number">Vehicle Number</string>
+    <string name="username_is_required">Username is required</string>
+    <string name="email_is_required">Email is required</string>
+    <string name="invalid_email_format">Invalid email format</string>
+    <string name="password_is_required">Password is required</string>
+    <string name="password_must_be_at_least_8_characters">Password must be at least 8 characters</string>
+    <string name="passwords_don_t_match">Passwords don\'t match</string>
+    <string name="first_name_is_required">First name is required</string>
+    <string name="last_name_is_required">Last name is required</string>
+    <string name="gender_is_required">gender is required</string>
+    <string name="invalid_phone_number">invalid phone number</string>
+    <string name="phone_is_required">phone is required</string>
+    <string name="national_id_required">National ID Required</string>
+    <string name="vehicle_number_required">Vehicle Number Required</string>
 </resources>

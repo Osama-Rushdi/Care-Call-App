@@ -6,16 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.carecallapp.R
 import com.example.carecallapp.data.repository.view_models.MyServicesViewModel
 import com.example.carecallapp.data.repository.view_models.ServiceStateShow
 import com.example.carecallapp.databinding.FragmentHomeBinding
 import com.example.carecallapp.domain.model.hospital_content.RoomType
 import com.example.carecallapp.domain.model.hospital_content.ServiceType
-import com.example.carecallapp.ui.hospital.hospital_sevices.FragmentAddServices
-import com.example.carecallapp.ui.hospital.hospital_sevices.blood_bank.BloodBankFragment
-import com.example.carecallapp.ui.hospital.hospital_sevices.room_and_nursery.RoomFragment
-
+import com.example.carecallapp.ui.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -46,18 +44,34 @@ class HomeFragment : Fragment() {
             when (it) {
                 is ServiceStateShow.IsSearchSuccess -> {
                     if (it.success) {
-                        showFragment(
-                            when (type) {
-                                ServiceType.Nursery -> RoomFragment(RoomType.Nursery)
-                                ServiceType.BloodBank -> BloodBankFragment()
-                                ServiceType.ICU -> RoomFragment(RoomType.ICU)
-                                else -> {
-                                    HomeFragment()
+                        when (type) {
+                            ServiceType.Nursery -> {
+                                val action = Bundle().apply {
+                                    putSerializable(Constants.ROOM_TYPE_KEY, RoomType.Nursery)
                                 }
+                                findNavController().navigate(
+                                    R.id.action_homeFragment_to_roomFragment,
+                                    action
+                                )
                             }
-                        )
+
+                            ServiceType.BloodBank -> findNavController().navigate(R.id.action_homeFragment_to_bloodBankFragment)
+                            ServiceType.ICU -> {
+                                val action = Bundle().apply {
+                                    putSerializable(Constants.ROOM_TYPE_KEY, RoomType.ICU)
+                                }
+                                findNavController().navigate(
+                                    R.id.action_homeFragment_to_roomFragment,
+                                    action
+                                )
+                            }
+
+                            else -> {}
+                        }
                     } else {
-                        showFragment(FragmentAddServices(type))
+                        val action =
+                            HomeFragmentDirections.actionHomeFragmentToFragmentAddServices(type)
+                        findNavController().navigate(action)
                     }
                 }
 
@@ -68,8 +82,10 @@ class HomeFragment : Fragment() {
 
     private fun initListeners() {
         binding.nurseryCD.setOnClickListener {
+
             type = ServiceType.Nursery
             viewModel.searchServiceByNameUseCase(type.name)
+
         }
         binding.emergencyRoomCD.setOnClickListener {
             type = ServiceType.ICU
@@ -81,12 +97,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun showFragment(fragment: Fragment) {
-        parentFragmentManager
-            .beginTransaction()
-            .replace(R.id.fragmentContainer, fragment)
-            .commit()
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

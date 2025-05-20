@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.carecallapp.R
 import com.example.carecallapp.data.repository.view_models.MyAccountsViewModel
 import com.example.carecallapp.data.repository.view_models.AccountsStateShow
 import com.example.carecallapp.databinding.FragmentMedicalServicesBinding
@@ -34,9 +36,7 @@ class MedicalServicesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initListeners()
-
         viewModel.initAccountAdapter.observe(viewLifecycleOwner) { accounts ->
             adapter = MedicalServicesAdapter(accounts) {
                 selectItem()
@@ -70,6 +70,12 @@ class MedicalServicesFragment : Fragment() {
             changeAmbulanceSelect()
             changeDoctorSelect(false)
         }
+        binding.fabAddAccountBtn.setOnClickListener {
+           if(isDoctorSelect) {
+               findNavController().navigate(R.id.action_medicalServicesFragment_to_registerFragment)
+           }
+        }
+
     }
 
     private fun showLoading(isVisible: Boolean) {

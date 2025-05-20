@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
+    id ("androidx.navigation.safeargs.kotlin")
+
 }
 
 android {
@@ -50,6 +52,9 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.recyclerview)
+    implementation ("androidx.navigation:navigation-ui-ktx:2.7.7") // أو آخر إصدار عندك
+
+
 
     //retrofit
     implementation(libs.retrofit)
@@ -59,6 +64,8 @@ dependencies {
     //live data
     implementation(libs.androidx.lifecycle.livedata.ktx)
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.common)
 
     //Kotlin Coroutines
     implementation(libs.kotlinx.coroutines.android)

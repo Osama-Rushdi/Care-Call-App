@@ -9,4 +9,5 @@ data class PersonServiceResponseDM(
     val userName: String?,
     @field:SerializedName("phoneNumber")
     val phoneNumber: String?
+
 )

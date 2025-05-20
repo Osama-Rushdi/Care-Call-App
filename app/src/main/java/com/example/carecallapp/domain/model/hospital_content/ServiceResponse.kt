@@ -1,5 +1,7 @@
 package com.example.carecallapp.domain.model.hospital_content
 
+import java.io.Serializable
+
 
 data class ServiceResponse(
 
@@ -11,6 +13,6 @@ data class ServiceResponse(
     val id: Int,
 )
 
-enum class ServiceType {
+enum class ServiceType :Serializable{
     Ambulance, Doctor, Nursery,BloodBank,ICU
 }
