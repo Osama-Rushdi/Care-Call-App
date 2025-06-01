@@ -1,16 +1,21 @@
 package com.example.carecallapp.data.api
 
+import com.example.carecallapp.data.model.PersonService.LocationRequestDM
+import com.example.carecallapp.data.model.PersonService.MapRouteResponseDM
+import com.example.carecallapp.data.model.PersonService.PersonNotificationResponseDM
+import com.example.carecallapp.data.model.PersonService.ambulance.AmbulanceProfileDM
+import com.example.carecallapp.data.model.PersonService.doctor.DoctorProfileDM
 import com.example.carecallapp.data.model.auth.AmbulanceRegisterRequestDM
 import com.example.carecallapp.data.model.auth.DoctorRegisterRequestDM
 import com.example.carecallapp.data.model.auth.HospitalRegisterResponseDM
 import com.example.carecallapp.data.model.auth.LoginRequestDM
 import com.example.carecallapp.data.model.auth.TokenResponseDM
-import com.example.carecallapp.data.model.hospital_accountsDM.PersonServiceResponseDM
-import com.example.carecallapp.data.model.hospital_profileDM.HospitalResponseDM
-import com.example.carecallapp.data.model.hospital_services.BloodBagDM
-import com.example.carecallapp.data.model.hospital_services.RoomAndNurseryResponseDM
-import com.example.carecallapp.data.model.hospital_services.ServiceRequestDM
-import com.example.carecallapp.data.model.hospital_services.ServiceResponseDM
+import com.example.carecallapp.data.model.hospital.hospital_accountsDM.PersonServiceResponseDM
+import com.example.carecallapp.data.model.hospital.hospital_profileDM.HospitalResponseDM
+import com.example.carecallapp.data.model.hospital.hospital_services.BloodBagDM
+import com.example.carecallapp.data.model.hospital.hospital_services.RoomAndNurseryResponseDM
+import com.example.carecallapp.data.model.hospital.hospital_services.ServiceRequestDM
+import com.example.carecallapp.data.model.hospital.hospital_services.ServiceResponseDM
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -22,6 +27,21 @@ import retrofit2.http.Query
 import retrofit2.http.Url
 
 interface WebServices {
+    //----------------------Authentication-------------------------
+
+    @POST("api/Account/Doctor-Register")
+    suspend fun doctorRegister(@Body register: DoctorRegisterRequestDM): Response<TokenResponseDM>
+
+    @POST("api/Account/Amulance-Register")
+    suspend fun ambulanceRegister(@Body register: AmbulanceRegisterRequestDM): Response<TokenResponseDM>
+
+    @POST("api/Account/Hopital-Register")
+    suspend fun hospitalRegister(@Body register: HospitalRegisterResponseDM): Response<TokenResponseDM>
+
+    @POST("api/Account/Login")
+    suspend fun userLogin(@Body login: LoginRequestDM): Response<TokenResponseDM>
+
+    //-----------------------HOSPITAL------------------------------
 
     //ambulance and doctor accounts
     @GET
@@ -90,18 +110,64 @@ interface WebServices {
     @DELETE("api/Bed")
     suspend fun deleteRoomOrNursery(@Query("id") id: Int): Response<Unit>
 
-    //Authentication
 
-    @POST("api/Account/Doctor-Register")
-    suspend fun doctorRegister(@Body register: DoctorRegisterRequestDM): Response<TokenResponseDM>
+    //------------------DOCTOR AND AMBULANCE REQUESTS-----------------------
 
-    @POST("api/Account/Amulance-Register")
-    suspend fun ambulanceRegister(@Body register: AmbulanceRegisterRequestDM): Response<TokenResponseDM>
+    @GET("api/Request/Ambulance&Doctor-CurrentRequest")
+    suspend fun getCurrentPersonRequest(): Response<PersonNotificationResponseDM>
 
-    @POST("api/Account/Hopital-Register")
-    suspend fun hospitalRegister(@Body register: HospitalRegisterResponseDM): Response<TokenResponseDM>
 
-    @POST("api/Account/Login")
-    suspend fun userLogin(@Body login: LoginRequestDM): Response<TokenResponseDM>
+    @GET("api/Request/Ambulance&Doctor-requests")
+    suspend fun getPersonRequests(): Response<List<PersonNotificationResponseDM>>
+
+    @PUT("api/Request/confirm-request")
+    suspend fun confirmPersonRequest(
+        @Query("id") id: Int,
+    ): Response<Unit>
+
+    @PUT("api/Request/complete-request")
+    suspend fun completePersonRequest(
+        @Query("id") id: Int,
+    ): Response<Unit>
+
+    @PUT("api/Request/Cancel-request")
+    suspend fun cancelPersonRequest(
+        @Query("id") id: Int
+    ): Response<Unit>
+
+    @DELETE("api/Request/Delete-request")
+    suspend fun deletePersonRequest(
+        @Query("id") id: Int
+    ): Response<Unit>
+
+
+    //-------------------DOCTOR------------------------------
+
+    //profile
+    @PUT("api/Doctor/GetHospitalDetails")
+    suspend fun getDoctorDetails(@Query("doctorId") doctorId: String): Response<DoctorProfileDM?>
+
+    @PUT("api/Doctor/UpdateHospitalDetails")
+    suspend fun updateDoctorDetails(
+        @Query("doctorId") doctorId: String,
+        @Body doctorProfileDM: DoctorProfileDM
+    ): Response<Unit> //because not any return data
+
+    @PUT("api/Doctor/UpdateLocation")
+    suspend fun updateDoctorLocation(@Body locationRequest: LocationRequestDM): Response<Unit>
+    //-------------------AMBULANCE------------------------------
+
+    @PUT("api/Hospital/GetHospitalDetails")
+    suspend fun getAmbulanceDetails( @Query("ambulanceId") ambulanceId: String): Response<AmbulanceProfileDM?>
+
+    @PUT("api/Hospital/UpdateHospitalDetails")
+    suspend fun updateAmbulanceDetails(
+        @Query("ambulanceId") ambulanceId: String,
+        @Body doctorProfileDM: AmbulanceProfileDM
+    ): Response<Unit> //because not any return data
+
+    @PUT("api/Ambulance/UpdateLocation")
+    suspend fun updateAmbulanceLocation(@Body locationRequest: LocationRequestDM): Response<Unit>
+
 
 }

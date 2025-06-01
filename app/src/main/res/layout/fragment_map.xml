@@ -1,0 +1,43 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.MainActivity">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/directionsFab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:importantForAccessibility="no"
+        android:src="@android:drawable/ic_menu_directions"
+        app:backgroundTint="@android:color/white"
+
+        app:tint="#4285F4" />
+    <Button
+        android:id="@+id/btnStartTracking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ابدأ التتبع"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:layout_alignParentStart="true"/>
+
+    <!-- زر إيقاف التتبع -->
+    <Button
+        android:id="@+id/btnStopTracking"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="إيقاف التتبع"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:layout_toEndOf="@id/btnStartTracking"/>
+</FrameLayout>

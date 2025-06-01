@@ -5,21 +5,23 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.carecallapp.data.api.ApiManager
-import com.example.carecallapp.domain.model.hospital_accounts.PersonServiceResponse
+import com.example.carecallapp.domain.model.hospital.hospital_accounts.PersonServiceResponse
 import com.example.carecallapp.domain.use_cases.GetPeopleAccountsUseCase
+import com.example.carecallapp.domain.use_cases.UserSessionManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 open class MyAccountsViewModel @Inject constructor(
-    private val getPeopleAccountsUseCase: GetPeopleAccountsUseCase
-) : ViewModel() {
+    private val getPeopleAccountsUseCase: GetPeopleAccountsUseCase,
+  private val userSessionManager: UserSessionManager) : ViewModel() {
     val accountStateShow = MutableLiveData<AccountsStateShow>()
     val initAccountAdapter = MutableLiveData<List<PersonServiceResponse?>?>()
 
-    fun showAccounts(type: String, hospitalId: String? = ApiManager.FAKE_HOSPITAL_ID) {
-        if (hospitalId.isNullOrBlank()) {
+    fun showAccounts(type: String) {
+        val hospitalId = userSessionManager.getUserId()
+        if (hospitalId.isBlank()) {
             Log.e("kkk", "Invalid hospitalId")
             return
         }

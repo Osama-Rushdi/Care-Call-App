@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 data class TokenResponseDM(
 
 	@field:SerializedName("role")
-	val role: String? = null,
+	var role: String? = null,
 
 	@field:SerializedName("expiration")
 	val expiration: String? = null,

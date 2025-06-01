@@ -13,6 +13,14 @@
     <color name="colorHome">#DAE0ED</color>
     <color name="red">#FF0000</color>
     <color name="green">#029B17</color>
+    <color name="grey">#73CECDCD</color>
     <color name="nile_color">#E507489E</color>
-
+    <color name="primary">#1A237E</color>
+    <color name="primary_dark">#0D1565</color>
+    <color name="primary_light">#3F51B5</color>
+    <color name="accent">#FF4081</color>
+    <color name="background_light">#F5F5F5</color>
+    <color name="card_stroke">#E0E0E0</color>
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
 </resources>

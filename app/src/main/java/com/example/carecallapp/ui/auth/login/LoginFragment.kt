@@ -12,12 +12,14 @@ import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.carecallapp.R
 import com.example.carecallapp.data.repository.view_models.AuthStateShow
 import com.example.carecallapp.data.repository.view_models.MyAuthViewModel
 import com.example.carecallapp.databinding.FragmentLoginBinding
 import com.example.carecallapp.domain.model.auth.LoginRequest
+import com.example.carecallapp.domain.model.auth.Role
 import com.example.carecallapp.ui.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,6 +29,7 @@ class LoginFragment : Fragment() {
     private val binding get() = _binding!!
     private val authViewModel: MyAuthViewModel by viewModels()
     private lateinit var saveToken: SharedPreferences
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -40,20 +43,41 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        saveToken = requireActivity().getSharedPreferences(Constants.SHARED_TOKEN_NAME, Context.MODE_PRIVATE)
+        saveToken = requireActivity().getSharedPreferences(
+            Constants.SHARED_TOKEN_NAME,
+            Context.MODE_PRIVATE
+        )
 
-        if (saveToken.getString(Constants.SHARED_TOKEN_KEY, null) != null) {
-            navigateToHomeScreen()
-            return
-        }
-
+        navigateOnRole()
         setupObservers()
         initListeners()
+    }
+
+    private fun navigateOnRole() {
+        if (saveToken.getString(Constants.SHARED_TOKEN_KEY, null) != null) {
+            when (saveToken.getString(Constants.USER_ROLE_KEY, null)) {
+                Role.Hospital.name -> navigateAndClearBackStack(R.id.homeFragment)
+                Role.Doctor.name ->  navigateAndClearBackStack(R.id.doctorHomeFragment)
+                Role.Ambulance.name ->  navigateAndClearBackStack(R.id.ambulanceHomeFragment)
+                Role.Admin.name ->  navigateAndClearBackStack(R.id.adminFragment)
+                else -> {
+                    Toast.makeText(requireContext(), "patient not available ", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+        }
+    }
+    private fun navigateAndClearBackStack(destinationId: Int) {
+        val navOptions = NavOptions.Builder()
+            .setPopUpTo(R.id.loginFragment, true) // مسح LoginFragment
+            .build()
+        findNavController().navigate(destinationId, null, navOptions)
     }
 
     private fun initListeners() {
         binding.emailLayout?.editText?.addTextChangedListener {
             binding.emailLayout?.error = null
+
         }
 
         binding.passwordLayout.editText?.addTextChangedListener {
@@ -76,15 +100,24 @@ class LoginFragment : Fragment() {
             when (state) {
                 is AuthStateShow.Loading -> {
                     binding.loading?.isVisible = true
-                    binding.signInBtn?.isEnabled = false
+                    binding.signInBtn?.isEnabled = true
                 }
 
                 is AuthStateShow.IsSuccessLogin -> {
                     binding.loading?.isVisible = false
                     binding.signInBtn?.isEnabled = true
-                    Toast.makeText(requireContext(), getString(R.string.login_successfully), Toast.LENGTH_SHORT).show()
-                    saveToken.edit().putString(Constants.SHARED_TOKEN_KEY, state.userLogin.token).apply()
-                    navigateToHomeScreen()
+                    Toast.makeText(
+                        requireContext(),
+                        getString(R.string.login_successfully),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    saveToken.edit().apply {
+                        putString(Constants.SHARED_TOKEN_KEY, state.userLogin.token)
+                        putString(Constants.USER_ID_KEY, state.userLogin.userId)
+                        putString(Constants.USER_ROLE_KEY, state.userLogin.role.name)
+                            .apply()
+                    }
+                    navigateOnRole()
                 }
 
                 is AuthStateShow.ShowError -> {
@@ -98,9 +131,7 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun navigateToHomeScreen() {
-        findNavController().navigate(R.id.homeFragment)
-    }
+
 
     private fun isValidLogin(email: String, password: String): Boolean {
         var isValid = true

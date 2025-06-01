@@ -34,7 +34,7 @@ open class MyAuthViewModel @Inject constructor(
             try {
                 val doctorRegister = doctorRegisterUseCase.execute(doctorRegisterRequest)
                 if (doctorRegister)
-                    stateShow.postValue(AuthStateShow.IsSuccess(true))
+                    stateShow.postValue(AuthStateShow.IsRegisterSuccess(true))
                 Log.d("kkk", "doctorRegister: $doctorRegister")
             } catch (e: Exception) {
                 stateShow.postValue(AuthStateShow.ShowError(e.message.toString()))
@@ -49,11 +49,11 @@ open class MyAuthViewModel @Inject constructor(
             try {
                 val ambulanceRegister = ambulanceRegisterUseCase.execute(ambulanceRegisterResponse)
                 if (ambulanceRegister)
-                    stateShow.postValue(AuthStateShow.IsSuccess(true))
+                    stateShow.postValue(AuthStateShow.IsRegisterSuccess(true))
                 Log.d("kkk", "ambulanceRegister: $ambulanceRegister")
             } catch (e: Exception) {
                 stateShow.postValue(AuthStateShow.ShowError(e.message.toString()))
-                Log.d("kkk", "showError:${e.message} ")
+                Log.d("kkk", "showError:${e.message}")
             }
         }
     }
@@ -64,7 +64,7 @@ open class MyAuthViewModel @Inject constructor(
             try {
                 val hospitalRegister = hospRegisterUseCase.execute(hospitalRegisterResponse)
                 if (hospitalRegister)
-                    stateShow.postValue(AuthStateShow.IsSuccess(true))
+                    stateShow.postValue(AuthStateShow.IsRegisterHospitalSuccess(true))
                 Log.d("kkk", "hospitalRegister: $hospitalRegister")
             } catch (e: Exception) {
                 stateShow.postValue(AuthStateShow.ShowError(e.message.toString()))
@@ -92,7 +92,8 @@ open class MyAuthViewModel @Inject constructor(
 
 sealed class AuthStateShow {
     data object Loading : AuthStateShow()
-    class IsSuccess(val hospitalDetails: Boolean) : AuthStateShow()
+    class IsRegisterSuccess(val isSuccess: Boolean) : AuthStateShow()
+    class IsRegisterHospitalSuccess(val isSuccess: Boolean) : AuthStateShow()
     data class ShowError(val errorMessage: String) : AuthStateShow()
     class IsSuccessLogin(val userLogin: TokenResponse) : AuthStateShow() {
 

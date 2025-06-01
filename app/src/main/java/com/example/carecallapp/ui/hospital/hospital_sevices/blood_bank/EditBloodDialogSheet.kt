@@ -13,7 +13,7 @@ import androidx.fragment.app.viewModels
 import com.example.carecallapp.data.repository.view_models.BloodStateShow
 import com.example.carecallapp.data.repository.view_models.MyBloodBankViewModel
 import com.example.carecallapp.databinding.EditBloodDialogSheetBinding
-import com.example.carecallapp.domain.model.hospital_content.BloodBag
+import com.example.carecallapp.domain.model.hospital.hospital_content.BloodBag
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 

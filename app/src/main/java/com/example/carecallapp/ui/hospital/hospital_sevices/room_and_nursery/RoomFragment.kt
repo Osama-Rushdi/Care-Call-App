@@ -1,7 +1,6 @@
 package com.example.carecallapp.ui.hospital.hospital_sevices.room_and_nursery
 
 import android.app.AlertDialog
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,14 +10,14 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import com.example.carecallapp.R
 import com.example.carecallapp.data.repository.view_models.MyRoomAndNurseryViewModel
 import com.example.carecallapp.data.repository.view_models.RoomStateShow
 import com.example.carecallapp.databinding.CustomDialogBinding
 import com.example.carecallapp.databinding.FragmentRoomBinding
-import com.example.carecallapp.domain.model.hospital_content.RoomType
+import com.example.carecallapp.domain.model.hospital.hospital_content.RoomType
 import com.example.carecallapp.ui.hospital.hospital_sevices.room_and_nursery.utils.RoomAndNurseryAdapter
-import com.example.carecallapp.ui.utils.Constants
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -27,7 +26,7 @@ class RoomFragment : Fragment() {
     private val viewModel: MyRoomAndNurseryViewModel by viewModels()
     private lateinit var adapter: RoomAndNurseryAdapter
     private var lastClickTime = 0L
-    private lateinit var type: RoomType
+    private lateinit var roomType : RoomType
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -38,8 +37,9 @@ class RoomFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val args: RoomFragmentArgs by navArgs()
+        roomType = args.roomType
 
-        getRoomType()
         changeHeaderText()
         initAdapter()
         getAllRoomAndNursery()
@@ -48,17 +48,10 @@ class RoomFragment : Fragment() {
 
     }
 
-    private fun getRoomType() {
-        type =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
-                arguments?.getSerializable(Constants.ROOM_TYPE_KEY, RoomType::class.java)!!
-            else
-                arguments?.getSerializable(Constants.ROOM_TYPE_KEY) as RoomType
-    }
 
     private fun initListener() {
         binding.fabAddRoomBtn.setOnClickListener {
-            DialogSheetAddRoom(type) {
+            DialogSheetAddRoom(roomType) {
                 getAllRoomAndNursery()
             }.show(parentFragmentManager, null)
         }
@@ -111,14 +104,14 @@ class RoomFragment : Fragment() {
             getAllRoomAndNursery()
             Log.d("kkk", "onViewCreated:$id ")
         }) { id ->
-            EditRoomDialogSheet(type, idBlood = id) {
+            EditRoomDialogSheet(roomType, idBlood = id) {
             }//.show(parentFragmentManager, null)
         }
         binding.EmergencyRoomRecyclerView.adapter = adapter
     }
 
     private fun changeHeaderText() {
-        if (type == RoomType.ICU)
+        if (roomType == RoomType.ICU)
             "Emergency Room".let { binding.roomAndNurseryTV.text = it }
         else
             "Nursery Room".let { binding.roomAndNurseryTV.text = it }
@@ -152,7 +145,7 @@ class RoomFragment : Fragment() {
     }
 
     private fun getAllRoomAndNursery() {
-        if (type == RoomType.ICU)
+        if (roomType == RoomType.ICU)
             viewModel.getAllRooms()
         else
             viewModel.getAllNurseries()

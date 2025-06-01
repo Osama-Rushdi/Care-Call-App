@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.carecallapp.domain.model.hospital_content.BloodBag
+import com.example.carecallapp.domain.model.hospital.hospital_content.BloodBag
 import com.example.carecallapp.domain.use_cases.AddBloodUseCase
 import com.example.carecallapp.domain.use_cases.DeleteBloodUseCase
 import com.example.carecallapp.domain.use_cases.GetAllBloodBagUseCase

@@ -1,25 +1,28 @@
 package com.example.carecallapp.ui.hospital.profile
-import android.os.Build
+
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.navArgs
 import com.example.carecallapp.data.repository.view_models.MyProfileViewModel
 import com.example.carecallapp.data.repository.view_models.ProfileStateShow
 import com.example.carecallapp.databinding.FragmentHospitalUpdateProfileBinding
-import com.example.carecallapp.domain.model.hospital_profile.HospitalResponse
-import com.example.carecallapp.ui.utils.Constants
+import com.example.carecallapp.domain.model.hospital.hospital_profile.HospitalResponse
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Calendar
 
 @AndroidEntryPoint
 class HospitalUpdateProfileFragment : Fragment() {
     private lateinit var binding: FragmentHospitalUpdateProfileBinding
     private val viewModel: MyProfileViewModel by viewModels()
-
+    private lateinit var hospitalDetails: HospitalResponse
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -30,9 +33,35 @@ class HospitalUpdateProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initProfileDetails(getBundleHospitalDetails())
+        val args: HospitalUpdateProfileFragmentArgs by navArgs()
+        hospitalDetails = args.hospitalProfile
+
+        setupDatePicker()
+        initProfileDetails(hospitalDetails)
         initListeners()
         observeState()
+        setupGenderDropdown()
+    }
+
+    private fun setupDatePicker() {
+        val calendar = Calendar.getInstance()
+        val datePicker = DatePickerDialog.OnDateSetListener { _, year, month, day ->
+            calendar.set(Calendar.YEAR, year)
+            calendar.set(Calendar.MONTH, month)
+            calendar.set(Calendar.DAY_OF_MONTH, day)
+            val displayedDate =
+                "${year}-${if (month + 1 < 10) "0" + (month + 1) else (month + 1)}-${if (day < 10) "0$day" else (day)}"
+            binding.etDateOfBirth.setText(displayedDate)
+        }
+        binding.etDateOfBirth.setOnClickListener {
+            DatePickerDialog(
+                requireContext(),
+                datePicker,
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+            ).show()
+        }
     }
 
     private fun initListeners() {
@@ -85,18 +114,11 @@ class HospitalUpdateProfileFragment : Fragment() {
         }
     }
 
-    private fun getBundleHospitalDetails(): HospitalResponse {
-        val hospitalDetails: HospitalResponse =
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
-                arguments?.getSerializable(
-                    Constants.HOSPITAL_PROFILE_KEY,
-                    HospitalResponse::class.java
-                )!!
-            else
-                arguments?.getSerializable(Constants.HOSPITAL_PROFILE_KEY) as HospitalResponse
-        return hospitalDetails
+    private fun setupGenderDropdown() {
+        val genders = listOf("Male", "Female")
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, genders)
+        binding.etGender.setAdapter(adapter)
     }
-
     private fun initProfileDetails(hospitalDetails: HospitalResponse) {
         hospitalDetails.apply {
             binding.etEmail.setText(email)
@@ -108,8 +130,6 @@ class HospitalUpdateProfileFragment : Fragment() {
             binding.etDateOfBirth.setText(dateOfBirth)
             binding.etNationalId.setText(nationalId)
             binding.etUsername.setText(username)
-
-
         }
 
     }

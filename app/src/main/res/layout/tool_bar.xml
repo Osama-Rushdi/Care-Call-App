@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/tool_bar_file"
     android:layout_height="match_parent"
@@ -11,18 +12,22 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
+
         <ImageView
             android:id="@+id/toggleBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start|center_vertical"
             android:layout_marginStart="16dp"
+            android:contentDescription="@string/tog_bar"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_menu"
+
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.499" />
+            android:visibility="visible"
+            app:layout_constraintVertical_bias="0.5" />
 
         <TextView
             android:id="@+id/header_titleTV"
@@ -36,9 +41,44 @@
             android:text="@string/app_name"
             app:layout_constraintBottom_toBottomOf="@+id/toggleBtn"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/toggleBtn"
-            app:layout_constraintVertical_bias="0.526" />
+            app:layout_constraintTop_toTopOf="@+id/toggleBtn" />
+
+        <FrameLayout
+            android:id="@+id/notification_container"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/header_titleTV"
+            app:layout_constraintEnd_toEndOf="@+id/header_titleTV"
+            app:layout_constraintTop_toTopOf="@+id/header_titleTV">
+
+            <ImageButton
+                android:id="@+id/hospitalNotificationBtn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:contentDescription="@string/hospital_request_notification"
+                android:scaleType="fitCenter"
+                android:background="@android:color/transparent"
+                android:src="@drawable/baseline_notifications_24" />
+
+            <TextView
+                android:id="@+id/notification_badge_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:layout_marginTop="2dp"
+                android:layout_marginEnd="2dp"
+                android:background="@drawable/notification_count_shape"
+                tools:text="3"
+                android:textColor="@color/white"
+                android:textSize="10sp"
+                android:visibility="gone"
+                android:gravity="center"
+                tools:ignore="SmallSp" />
+        </FrameLayout>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </Toolbar>

@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.carecallapp.databinding.BloodBankItemBinding
-import com.example.carecallapp.domain.model.hospital_content.BloodBag
+import com.example.carecallapp.domain.model.hospital.hospital_content.BloodBag
 
 class BloodBankAdapter(
     private var bloodBags: List<BloodBag?>?,

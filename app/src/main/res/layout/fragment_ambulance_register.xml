@@ -155,10 +155,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginBottom="20dp"
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 app:boxStrokeColor="@color/colorPrimary"
                 app:hintTextColor="@color/black">
 
                 <AutoCompleteTextView
+                    android:id="@+id/genderDropDown"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/gender"

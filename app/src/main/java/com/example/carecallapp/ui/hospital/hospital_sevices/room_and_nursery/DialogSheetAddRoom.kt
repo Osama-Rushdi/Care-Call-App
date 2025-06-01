@@ -11,9 +11,9 @@ import androidx.fragment.app.viewModels
 import com.example.carecallapp.data.repository.view_models.MyRoomAndNurseryViewModel
 import com.example.carecallapp.data.repository.view_models.RoomStateShow
 import com.example.carecallapp.databinding.AddRoomDialogSheetBinding
-import com.example.carecallapp.domain.model.hospital_content.RoomAndNursery
-import com.example.carecallapp.domain.model.hospital_content.RoomType
-import com.example.carecallapp.domain.model.hospital_content.Status
+import com.example.carecallapp.domain.model.hospital.hospital_content.RoomAndNursery
+import com.example.carecallapp.domain.model.hospital.hospital_content.RoomType
+import com.example.carecallapp.domain.model.hospital.hospital_content.RoomStatus
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -68,7 +68,7 @@ class DialogSheetAddRoom(val type: RoomType, private val reload: () -> Unit) :
         val room = RoomAndNursery(
             roomNumber = binding.roomNumberTextLayout.editText?.text.toString(),
             type = if (type == RoomType.ICU) RoomType.ICU else RoomType.Nursery,
-            status = Status.Available
+            status = RoomStatus.Available
         )
         viewModel.addRoomAndNursery(room)
     }

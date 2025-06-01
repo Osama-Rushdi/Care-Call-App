@@ -21,7 +21,19 @@
         <item name="android:textColor">@color/black</item>
 
     </style>
+    <style name="TextAppearance.App.ExpandedTitle" parent="TextAppearance.MaterialComponents.Headline5">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
+    <style name="TextAppearance.App.CollapsedTitle" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">sans-serif-condensed</item>
+        <item name="android:textStyle">bold</item>
+    </style>
     <style name="text18whiteBold">
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
@@ -69,6 +81,12 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/green</item>
     </style>
+
+    <style name="selectedTab">
+        <item name="android:textSize">30sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 
 
 </resources>

@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.carecallapp.data.api.WebServices
 import com.example.carecallapp.data.api.ApiManager.BASE_URL
 import com.example.carecallapp.data.api.AuthInterceptor
+import com.example.carecallapp.data.api.MapRouteApiService
 import com.example.carecallapp.data.repository.Connectivity
 import com.example.carecallapp.ui.utils.Constants
 import dagger.Module
@@ -15,6 +16,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Qualifier
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -44,14 +46,33 @@ object NetworkModule {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
 
-        val getToken = context.getSharedPreferences(Constants.SHARED_TOKEN_NAME, Context.MODE_PRIVATE)
-        val token =getToken.getString(Constants.SHARED_TOKEN_KEY, "")
+        val getToken =
+            context.getSharedPreferences(Constants.SHARED_TOKEN_NAME, Context.MODE_PRIVATE)
+        val token = getToken.getString(Constants.SHARED_TOKEN_KEY, "")
 
-        val authInterceptor = AuthInterceptor(token?:"")
+        val authInterceptor = AuthInterceptor(token ?: "")
 
         return OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
             .addInterceptor(loggingInterceptor)
             .build()
     }
+    @Provides
+    fun provideMapRouteApiService(): MapRouteApiService {
+        val logging = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY // يطبع كل حاجة بالتفصيل
+        }
+
+        val client = OkHttpClient.Builder()
+            .addInterceptor(logging)
+            .build()
+
+        return Retrofit.Builder()
+            .baseUrl(Constants.OSRM_BASE_URL)
+            .client(client) // استخدم الـ client اللي فيه logging
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(MapRouteApiService::class.java)
+    }
+
 }

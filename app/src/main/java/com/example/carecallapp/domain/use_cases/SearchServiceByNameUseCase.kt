@@ -1,6 +1,6 @@
 package com.example.carecallapp.domain.use_cases
 
-import com.example.carecallapp.domain.model.hospital_content.ServiceResponse
+import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceResponse
 import javax.inject.Inject
 
 

@@ -11,14 +11,14 @@ import androidx.fragment.app.viewModels
 import com.example.carecallapp.data.repository.view_models.MyRoomAndNurseryViewModel
 import com.example.carecallapp.data.repository.view_models.RoomStateShow
 import com.example.carecallapp.databinding.EditRoomDialogSheetBinding
-import com.example.carecallapp.domain.model.hospital_content.RoomAndNursery
-import com.example.carecallapp.domain.model.hospital_content.RoomType
-import com.example.carecallapp.domain.model.hospital_content.Status
+import com.example.carecallapp.domain.model.hospital.hospital_content.RoomAndNursery
+import com.example.carecallapp.domain.model.hospital.hospital_content.RoomType
+import com.example.carecallapp.domain.model.hospital.hospital_content.RoomStatus
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class EditRoomDialogSheet(val type: RoomType,private val idBlood: Int, private val reload: () -> Unit) :
+class EditRoomDialogSheet(val type: RoomType, private val idBlood: Int, private val reload: () -> Unit) :
     BottomSheetDialogFragment() {
     private lateinit var binding: EditRoomDialogSheetBinding
     private val viewModel: MyRoomAndNurseryViewModel by viewModels()
@@ -69,7 +69,7 @@ class EditRoomDialogSheet(val type: RoomType,private val idBlood: Int, private v
         val room = RoomAndNursery(
             roomNumber = binding.roomNumberTextLayout.editText?.text.toString(),
             type = if (type == RoomType.ICU) RoomType.ICU else RoomType.Nursery,
-            status = Status.Available
+            status = RoomStatus.Available
         )
      //   viewModel.updateBed(bed)
     }

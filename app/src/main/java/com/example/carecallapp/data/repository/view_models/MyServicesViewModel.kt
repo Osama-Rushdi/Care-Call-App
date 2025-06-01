@@ -4,9 +4,8 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.carecallapp.domain.model.hospital_content.ServiceRequest
-import com.example.carecallapp.domain.model.hospital_content.ServiceResponse
-import com.example.carecallapp.domain.model.hospital_content.ServiceType
+import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceRequest
+import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceResponse
 import com.example.carecallapp.domain.use_cases.AddServiceUseCase
 import com.example.carecallapp.domain.use_cases.DeleteServiceUseCase
 import com.example.carecallapp.domain.use_cases.GetAllServicesUseCase

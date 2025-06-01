@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.navArgs
 import com.example.carecallapp.R
 import com.example.carecallapp.data.repository.view_models.BloodStateShow
 import com.example.carecallapp.data.repository.view_models.MyBloodBankViewModel
@@ -23,6 +24,7 @@ class BloodBankFragment : Fragment() {
     private val viewModel: MyBloodBankViewModel by viewModels()
     private lateinit var adapter: BloodBankAdapter
     private var lastClickTime = 0L
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

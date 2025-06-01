@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.carecallapp.domain.model.hospital_content.RoomAndNursery
-import com.example.carecallapp.domain.model.hospital_content.RoomType
+import com.example.carecallapp.domain.model.hospital.hospital_content.RoomAndNursery
+import com.example.carecallapp.domain.model.hospital.hospital_content.RoomType
 import com.example.carecallapp.domain.use_cases.AddRoomAndNurseryUseCase
 import com.example.carecallapp.domain.use_cases.DeleteRoomOrNurseryUseCase
 import com.example.carecallapp.domain.use_cases.GetAllRoomsAndNurseriesUseCase

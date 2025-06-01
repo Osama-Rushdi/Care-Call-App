@@ -1,16 +1,22 @@
 package com.example.carecallapp.data.repository.data_sources.remote_data_source
 
+import com.example.carecallapp.domain.model.PersonService.LocationRequest
+import com.example.carecallapp.domain.model.PersonService.MapRouteDomain
+import com.example.carecallapp.domain.model.PersonService.PersonNotificationResponse
+import com.example.carecallapp.domain.model.PersonService.ambulance.AmbulanceProfile
+import com.example.carecallapp.domain.model.PersonService.doctor.DoctorProfile
 import com.example.carecallapp.domain.model.auth.AmbulanceRegisterRequest
 import com.example.carecallapp.domain.model.auth.DoctorRegisterRequest
 import com.example.carecallapp.domain.model.auth.HospitalRegisterRequest
 import com.example.carecallapp.domain.model.auth.LoginRequest
 import com.example.carecallapp.domain.model.auth.TokenResponse
-import com.example.carecallapp.domain.model.hospital_accounts.PersonServiceResponse
-import com.example.carecallapp.domain.model.hospital_content.BloodBag
-import com.example.carecallapp.domain.model.hospital_content.RoomAndNursery
-import com.example.carecallapp.domain.model.hospital_content.ServiceRequest
-import com.example.carecallapp.domain.model.hospital_content.ServiceResponse
-import com.example.carecallapp.domain.model.hospital_profile.HospitalResponse
+import com.example.carecallapp.domain.model.hospital.hospital_accounts.PersonServiceResponse
+import com.example.carecallapp.domain.model.hospital.hospital_content.BloodBag
+import com.example.carecallapp.domain.model.hospital.hospital_content.RoomAndNursery
+import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceRequest
+import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceResponse
+import com.example.carecallapp.domain.model.hospital.hospital_profile.HospitalResponse
+import com.google.android.gms.maps.model.LatLng
 
 
 interface RemoteDataSource {
@@ -52,4 +58,28 @@ interface RemoteDataSource {
     suspend fun hospitalRegister(hospitalRegisterRequest: HospitalRegisterRequest): Boolean
     suspend fun userLogin(login: LoginRequest): TokenResponse
 
+    //PERSON REQUESTS
+    suspend fun getCurrentPersonRequest(): PersonNotificationResponse
+    suspend fun getPersonRequests(): List<PersonNotificationResponse>
+    suspend fun confirmPersonRequest(id: Int): Boolean
+    suspend fun completePersonRequest(id: Int): Boolean
+    suspend fun cancelPersonRequest(id: Int): Boolean
+    suspend fun deletePersonRequest(id: Int): Boolean
+
+    //DOCTOR
+    suspend fun getDoctorDetails(doctorId: String): DoctorProfile?
+    suspend fun updateDoctorDetails(doctorId: String, doctorProfile: DoctorProfile): Boolean
+    suspend fun updateDoctorLocation(locationRequest: LocationRequest): Boolean
+
+    // Ambulance
+    suspend fun getAmbulanceDetails(ambulanceId: String): AmbulanceProfile?
+    suspend fun updateAmbulanceDetails(
+        ambulanceId: String,
+        ambulanceProfile: AmbulanceProfile
+    ): Boolean
+
+    suspend fun updateAmbulanceLocation(locationRequest: LocationRequest): Boolean
+
+    //MAP
+    suspend fun getRoute(start: LatLng, end: LatLng): Result<MapRouteDomain>
 }

@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter
 import com.example.carecallapp.R
 import com.example.carecallapp.databinding.EmergencyRoomItemBinding
-import com.example.carecallapp.domain.model.hospital_content.RoomAndNursery
-import com.example.carecallapp.domain.model.hospital_content.Status
+import com.example.carecallapp.domain.model.hospital.hospital_content.RoomAndNursery
+import com.example.carecallapp.domain.model.hospital.hospital_content.RoomStatus
 
 class RoomAndNurseryAdapter(
     private var beds: List<RoomAndNursery?>?,
@@ -63,7 +63,7 @@ class RoomAndNurseryAdapter(
         Log.d("kkk", "changeIcon:  bed.status.name  ${bed.status.name}")
         Log.d("BedData", "RoomNumber: ${bed.roomNumber}, Status: ${bed.status}")
 
-        if (holder.binding.changerStatusTV.text == Status.Available.name)
+        if (holder.binding.changerStatusTV.text == RoomStatus.Available.name)
             holder.binding.changerStatusTV.setTextColor(holder.binding.root.context.getColor(R.color.green))
         else
             holder.binding.changerStatusTV.setTextColor(holder.binding.root.context.getColor(R.color.red))

@@ -1,0 +1,138 @@
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:elevation="8dp"
+    app:cardCornerRadius="12dp"
+    app:strokeColor="@color/primary_light"
+    app:strokeWidth="3dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/divider_gradient"
+        android:padding="16dp">
+
+        <include layout="@layout/loading"
+            android:id="@+id/requestsLoading"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/requestTypeConst"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/request_type"
+            android:textColor="@color/primary"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/requestTypeVar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="8dp"
+            android:textColor="@color/primary"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/requestTypeConst"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/requestTypeConst"
+            app:layout_constraintTop_toTopOf="@+id/requestTypeConst"
+            app:layout_constraintVertical_bias="0.0"
+            tools:text="Blood Bag" />
+
+        <TextView
+            android:id="@+id/bagsTypeTvConst"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/requested_by"
+            android:textColor="@color/green"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/requestTypeConst" />
+
+        <TextView
+            android:id="@+id/bagsTypeTvVar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:paddingHorizontal="8dp"
+            android:textColor="@color/green"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/bagsTypeTvConst"
+            app:layout_constraintTop_toBottomOf="@+id/requestTypeConst"
+            tools:text=" John Doe" />
+
+        <!-- Bags Number -->
+
+        <TextView
+            android:id="@+id/bagsNumberTvConst"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/bags"
+            android:textColor="@color/nile_color"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/bagsTypeTvConst"
+            app:layout_constraintTop_toBottomOf="@+id/bagsTypeTvConst" />
+
+        <TextView
+            android:id="@+id/bagsNumberTvVar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingStart="8dp"
+            android:textColor="@color/nile_color"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/bagsNumberTvConst"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/bagsNumberTvConst"
+            app:layout_constraintTop_toTopOf="@+id/bagsNumberTvConst"
+            tools:ignore="RtlSymmetry"
+            tools:text="5" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/acceptBtn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="6dp"
+            android:text="@string/accept"
+            android:textColor="@android:color/white"
+            app:backgroundTint="@color/green"
+            app:cornerRadius="8dp"
+            app:layout_constraintStart_toStartOf="@+id/bagsNumberTvConst"
+            app:layout_constraintTop_toBottomOf="@+id/bagsNumberTvVar"
+            app:strokeColor="@color/green" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/rejectBtn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:text="@string/reject"
+            android:textColor="@color/primary"
+            app:backgroundTint="@android:color/white"
+            app:cornerRadius="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/acceptBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/acceptBtn"
+            app:strokeColor="@color/primary"
+            app:strokeWidth="1dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</com.google.android.material.card.MaterialCardView>

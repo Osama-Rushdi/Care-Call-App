@@ -1,0 +1,85 @@
+package com.example.carecallapp.domain.repository
+
+import com.example.carecallapp.domain.model.PersonService.LocationRequest
+import com.example.carecallapp.domain.model.PersonService.MapRouteDomain
+import com.example.carecallapp.domain.model.PersonService.PersonNotificationResponse
+import com.example.carecallapp.domain.model.PersonService.ambulance.AmbulanceProfile
+import com.example.carecallapp.domain.model.PersonService.doctor.DoctorProfile
+import com.example.carecallapp.domain.model.auth.LoginRequest
+import com.example.carecallapp.domain.model.auth.AmbulanceRegisterRequest
+import com.example.carecallapp.domain.model.auth.DoctorRegisterRequest
+import com.example.carecallapp.domain.model.auth.HospitalRegisterRequest
+import com.example.carecallapp.domain.model.auth.TokenResponse
+import com.example.carecallapp.domain.model.hospital.hospital_accounts.PersonServiceResponse
+import com.example.carecallapp.domain.model.hospital.hospital_content.BloodBag
+import com.example.carecallapp.domain.model.hospital.hospital_content.RoomAndNursery
+import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceRequest
+import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceResponse
+import com.example.carecallapp.domain.model.hospital.hospital_profile.HospitalResponse
+import com.google.android.gms.maps.model.LatLng
+
+interface MyRepository {
+    suspend fun getPeopleAccounts(
+        accountType: String, hospitalId: String
+    ): List<PersonServiceResponse>
+
+    //PROFILE
+    suspend fun getHospitalDetails(hospitalId: String): HospitalResponse
+    suspend fun updateHospitalDetails(
+        hospitalId: String,
+        hospitalResponse: HospitalResponse
+    ): HospitalResponse
+
+    //SERVICES
+    suspend fun getAllServices(): List<ServiceResponse>
+    suspend fun addService(service: ServiceRequest): ServiceResponse
+    suspend fun deleteService(id: Int): Boolean
+    suspend fun updateService(id: Int, service: ServiceRequest): Boolean
+
+
+    //BLOOD BANK
+    suspend fun getAllBloodBags(): List<BloodBag>
+    suspend fun getBloodById(id: Int): BloodBag
+    suspend fun addBlood(blood: BloodBag): BloodBag
+    suspend fun updateBlood(id: Int, blood: BloodBag): BloodBag
+    suspend fun deleteBlood(id: Int): Boolean
+
+    //NURSERY AND ROOM
+    suspend fun getAllRoomsAndNurseries(): List<RoomAndNursery>
+    suspend fun getRoomAndNurseryById(id: Int): RoomAndNursery
+    suspend fun addRoomAndNursery(room: RoomAndNursery): RoomAndNursery
+    suspend fun deleteRoomOrNursery(id: Int): Boolean
+
+    //AUTHENTICATION
+    suspend fun doctorRegister(doctorRegisterRequest: DoctorRegisterRequest): Boolean
+    suspend fun ambulanceRegister(ambulanceRegisterRequest: AmbulanceRegisterRequest): Boolean
+    suspend fun hospitalRegister(hospitalRegisterRequest: HospitalRegisterRequest): Boolean
+    suspend fun userLogin(login: LoginRequest): TokenResponse
+
+    //PERSON REQUESTS
+    suspend fun getCurrentPersonRequest(): PersonNotificationResponse
+    suspend fun getPersonRequests(): List<PersonNotificationResponse>
+    suspend fun confirmPersonRequest(id: Int): Boolean
+    suspend fun completePersonRequest(id: Int): Boolean
+    suspend fun cancelPersonRequest(id: Int): Boolean
+    suspend fun deletePersonRequest(id: Int): Boolean
+
+
+
+    //DOCTOR
+    suspend fun getDoctorDetails(doctorId: String): DoctorProfile?
+    suspend fun updateDoctorDetails(doctorId: String, doctorProfile: DoctorProfile): Boolean
+    suspend fun updateDoctorLocation(locationRequest: LocationRequest):Boolean
+
+    // Ambulance
+    suspend fun getAmbulanceDetails(ambulanceId: String): AmbulanceProfile?
+    suspend fun updateAmbulanceDetails(
+        ambulanceId: String,
+        ambulanceProfileDM: AmbulanceProfile):Boolean
+
+    suspend fun updateAmbulanceLocation(locationRequest: LocationRequest):Boolean
+
+    //Map
+    suspend fun getRoute(start: LatLng, end: LatLng): Result<MapRouteDomain>
+
+}

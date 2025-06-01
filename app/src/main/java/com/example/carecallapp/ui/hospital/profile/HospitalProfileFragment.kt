@@ -14,9 +14,10 @@ import com.example.carecallapp.R
 import com.example.carecallapp.data.repository.view_models.MyProfileViewModel
 import com.example.carecallapp.data.repository.view_models.ProfileStateShow
 import com.example.carecallapp.databinding.FragmentHospitalProfileBinding
-import com.example.carecallapp.domain.model.hospital_profile.HospitalResponse
-import com.example.carecallapp.ui.utils.Constants
+import com.example.carecallapp.domain.model.hospital.hospital_profile.HospitalResponse
 import dagger.hilt.android.AndroidEntryPoint
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 
 @AndroidEntryPoint
@@ -35,42 +36,45 @@ class HospitalProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.showDetails()
+        observer()
+        initListener()
+    }
+
+    private fun observer() {
         viewModel.stateShow.observe(viewLifecycleOwner) {
             when (it) {
                 is ProfileStateShow.IsSuccess -> {
                     saveData = it.hospitalDetails
                     showLoading(false)
                     initProfileDetails(it.hospitalDetails)
-                    binding.fabEditProfile.isClickable = true
+                    binding.editProfileBtn.isClickable = true
                 }
 
                 ProfileStateShow.Loading -> {
                     showLoading(true)
-                    binding.fabEditProfile.isClickable = false
+                    binding.editProfileBtn.isClickable = false
                 }
 
                 is ProfileStateShow.ShowError -> {
                     showError(it.errorMessage)
-                    binding.fabEditProfile.isClickable = false
+                    binding.editProfileBtn.isClickable = false
                 }
             }
         }
-        initListener()
     }
 
     private fun initListener() {
-        binding.fabEditProfile.setOnClickListener {
+        binding.editProfileBtn.setOnClickListener {
             if (saveData.equals(null)) {
-                Toast.makeText(requireContext(), "some thing go wrong", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(),
+                    getString(R.string.some_thing_go_wrong), Toast.LENGTH_SHORT).show()
             } else {
 
-                val bundle = Bundle().apply {
-                    putSerializable(Constants.HOSPITAL_PROFILE_KEY, saveData)
-                }
-                findNavController().navigate(
-                    R.id.action_hospitalProfileFragment_to_hospitalUpdateProfileFragment,
-                    bundle
-                )
+                val action =
+                    HospitalProfileFragmentDirections.actionHospitalProfileFragmentToHospitalUpdateProfileFragment(
+                        saveData
+                    )
+                findNavController().navigate(action)
             }
         }
     }
@@ -86,12 +90,10 @@ class HospitalProfileFragment : Fragment() {
             binding.tvGender.text = gender
             binding.tvWebsite.text = website
             "$firstName $lastName".let { binding.tvFullName.text = it }
-            binding.tvDateOfBirth.text = dateOfBirth
+            binding.tvDateOfBirth.text = formatDateTime(dateOfBirth)
             binding.tvNationalId.text = nationalId
             binding.tvUsername.text = username
-
         }
-
     }
 
     private fun showError(message: String) {
@@ -102,4 +104,15 @@ class HospitalProfileFragment : Fragment() {
             .show()
     }
 
+    private fun formatDateTime(input: String): String {
+        return try {
+            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+            val outputFormat = SimpleDateFormat("d MMMM yyyy", Locale.getDefault())
+
+            val date = inputFormat.parse(input)
+            outputFormat.format(date!!)
+        } catch (e: Exception) {
+            input
+        }
+    }
 }

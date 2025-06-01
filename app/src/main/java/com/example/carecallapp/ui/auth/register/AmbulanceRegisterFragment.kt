@@ -1,13 +1,15 @@
 package com.example.carecallapp.ui.auth.register
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -15,10 +17,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.carecallapp.R
-import com.example.carecallapp.data.model.auth.AmbulanceRegisterRequestDM
 import com.example.carecallapp.data.repository.view_models.AuthStateShow
 import com.example.carecallapp.data.repository.view_models.MyAuthViewModel
 import com.example.carecallapp.databinding.FragmentAmbulanceRegisterBinding
+import com.example.carecallapp.domain.model.auth.AmbulanceRegisterRequest
+import com.example.carecallapp.ui.utils.Constants
 import com.google.android.material.internal.ViewUtils.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
@@ -29,7 +32,7 @@ class AmbulanceRegisterFragment : Fragment() {
     private var _binding: FragmentAmbulanceRegisterBinding? = null
     private val binding get() = _binding!!
     private val authViewModel: MyAuthViewModel by viewModels()
-
+    private lateinit var sharedPref: SharedPreferences
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,31 +44,32 @@ class AmbulanceRegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        setupGenderDropdown()
-        setupDatePicker()
-        setupTextWatchers()
-        setupObservers()
+        sharedPref =
+            requireContext().getSharedPreferences(Constants.SHARED_TOKEN_NAME, Context.MODE_PRIVATE)
+        initGenderDropdown()
+        initDatePicker()
+        initTextWatchers()
+        initObservers()
         initListeners()
     }
 
-    private fun setupGenderDropdown() {
-        val genders = listOf("Male", "Female", "Other")
-        val adapter = ArrayAdapter(requireContext(), com.zerobranch.layout.R.layout.support_simple_spinner_dropdown_item, genders)
-        (binding.genderLayout.editText as? AutoCompleteTextView)?.setAdapter(adapter)
+    private fun initGenderDropdown() {
+        val genders = listOf("Male", "Female")
+        val adapter =
+            ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, genders)
+        binding.genderDropDown.setAdapter(adapter)
     }
 
-    private fun setupDatePicker() {
+    private fun initDatePicker() {
         val calendar = Calendar.getInstance()
         val datePicker = DatePickerDialog.OnDateSetListener { _, year, month, day ->
             calendar.set(Calendar.YEAR, year)
             calendar.set(Calendar.MONTH, month)
             calendar.set(Calendar.DAY_OF_MONTH, day)
-            binding.dateOfBirthLayout.editText?.setText(
-                "${day}/${month + 1}/${year}"
-            )
+            val displayedDate =
+                "${year}-${if (month + 1 < 10) "0" + (month + 1) else (month + 1)}-${if (day < 10) "0$day" else (day)}"
+            binding.dateOfBirthLayout.editText?.setText(displayedDate)
         }
-
         binding.dateOfBirthLayout.editText?.setOnClickListener {
             DatePickerDialog(
                 requireContext(),
@@ -77,25 +81,30 @@ class AmbulanceRegisterFragment : Fragment() {
         }
     }
 
-    private fun setupTextWatchers() {
+    private fun initTextWatchers() {
         with(binding) {
             usernameLayout.editText?.addTextChangedListener { usernameLayout.error = null }
             emailLayout.editText?.addTextChangedListener { emailLayout.error = null }
             passwordLayout.editText?.addTextChangedListener { passwordLayout.error = null }
-            confirmPasswordLayout.editText?.addTextChangedListener { confirmPasswordLayout.error = null }
+            confirmPasswordLayout.editText?.addTextChangedListener {
+                confirmPasswordLayout.error = null
+            }
             firstNameLayout.editText?.addTextChangedListener { firstNameLayout.error = null }
             lastNameLayout.editText?.addTextChangedListener { lastNameLayout.error = null }
             phoneLayout.editText?.addTextChangedListener { phoneLayout.error = null }
             nationalIdLayout.editText?.addTextChangedListener { nationalIdLayout.error = null }
-            vehicleNumberLayout.editText?.addTextChangedListener { vehicleNumberLayout.error = null }
-          //  hospitalIdLayout.editText?.addTextChangedListener { hospitalIdLayout.error = null }
+            vehicleNumberLayout.editText?.addTextChangedListener {
+                vehicleNumberLayout.error = null
+            }
+            dateOfBirthLayout.editText?.addTextChangedListener { dateOfBirthLayout.error = null }
+            genderLayout.editText?.addTextChangedListener { genderLayout.error = null }
         }
     }
 
     private fun initListeners() {
         binding.signUpBtn.setOnClickListener {
             if (validateInputs()) {
-              //  registerAmbulance()
+                registerAmbulance()
             }
         }
     }
@@ -184,31 +193,34 @@ class AmbulanceRegisterFragment : Fragment() {
 
 
         }
+
         return isValid
+
     }
 
-//    private fun registerAmbulance() {
-//        hideKeyboard()
-//
-//        val ambulanceRequest = AmbulanceRegisterRequest(
-//            username = binding.usernameLayout.editText?.text.toString().trim(),
-//            email = binding.emailLayout.editText?.text.toString().trim(),
-//            password = binding.passwordLayout.editText?.text.toString().trim(),
-//            firstName = binding.firstNameLayout.editText?.text.toString().trim(),
-//            lastName = binding.lastNameLayout.editText?.text.toString().trim(),
-//            gender = binding.genderLayout.editText?.text.toString().trim(),
-//            dateOfBirth = binding.dateOfBirthLayout.editText?.text.toString().trim(),
-//            phone = binding.phoneLayout.editText?.text.toString().trim().toIntOrNull() ?: 0,
-//            nationalId = binding.nationalIdLayout.editText?.text.toString().trim(),
-//            vehicleNumber = binding.vehicleNumberLayout.editText?.text.toString().trim(),
-//            hospitalId = binding.hospitalIdLayout.editText?.text.toString().trim(),
-//            confirmPassword = binding.confirmPasswordLayout.editText?.text.toString().trim()
-//        )
-//
-//        authViewModel.ambulanceRegister(ambulanceRequest)
-//    }
+    @SuppressLint("RestrictedApi")
+    private fun registerAmbulance() {
+        hideKeyboard(binding.root)
 
-    private fun setupObservers() {
+        val ambulanceRequest = AmbulanceRegisterRequest(
+            username = binding.usernameLayout.editText?.text.toString().trim(),
+            email = binding.emailLayout.editText?.text.toString().trim(),
+            password = binding.passwordLayout.editText?.text.toString().trim(),
+            firstName = binding.firstNameLayout.editText?.text.toString().trim(),
+            lastName = binding.lastNameLayout.editText?.text.toString().trim(),
+            gender = binding.genderLayout.editText?.text.toString().trim(),
+            dateOfBirth = binding.dateOfBirthLayout.editText?.text.toString().trim(),
+            phone = binding.phoneLayout.editText?.text.toString().trim().toIntOrNull() ?: 0,
+            nationalId = binding.nationalIdLayout.editText?.text.toString().trim(),
+            vehicleNumber = binding.vehicleNumberLayout.editText?.text.toString().trim(),
+            hospitalId = sharedPref.getString(Constants.USER_ID_KEY, null)!!,
+            confirmPassword = binding.confirmPasswordLayout.editText?.text.toString().trim()
+        )
+
+        authViewModel.ambulanceRegister(ambulanceRequest)
+    }
+
+    private fun initObservers() {
         authViewModel.stateShow.observe(viewLifecycleOwner) { state ->
             when (state) {
                 is AuthStateShow.Loading -> {
@@ -216,16 +228,16 @@ class AmbulanceRegisterFragment : Fragment() {
                     binding.signUpBtn.isEnabled = false
                 }
 
-                is AuthStateShow.IsSuccess -> {
+                is AuthStateShow.IsRegisterSuccess -> {
                     binding.loading.root.isVisible = false
                     binding.signUpBtn.isEnabled = true
-                    if (state.hospitalDetails) {
+                    if (state.isSuccess) {
                         Toast.makeText(
                             requireContext(),
                             getString(R.string.ambulance_register_succefully),
                             Toast.LENGTH_SHORT
                         ).show()
-                        navigateToHomeScreen()
+                        navigateToMedicalScreen()
                     }
                 }
 
@@ -240,8 +252,10 @@ class AmbulanceRegisterFragment : Fragment() {
         }
     }
 
-    private fun navigateToHomeScreen() {
-        findNavController().navigate(R.id.action_ambulanceRegisterFragment_to_medicalServicesFragment)
+    private fun navigateToMedicalScreen() {
+        val action =
+            AmbulanceRegisterFragmentDirections.actionAmbulanceRegisterFragmentToMedicalServicesFragment()
+        findNavController().navigate(action)
     }
 
     private fun showError(message: String) {

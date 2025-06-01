@@ -3,10 +3,12 @@ package com.example.carecallapp.data.repository.data_sources.remote_data_source
 import android.content.Context
 import android.util.Log
 import com.example.carecallapp.R
+import com.example.carecallapp.data.api.MapRouteApiService
 import com.example.carecallapp.data.api.WebServices
 import com.example.carecallapp.data.mappers.toBloodBag
 import com.example.carecallapp.data.mappers.toBloodDM
 import com.example.carecallapp.data.mappers.toDataModel
+import com.example.carecallapp.data.mappers.toDomain
 import com.example.carecallapp.data.mappers.toDomainModel
 import com.example.carecallapp.data.mappers.toRoomAndNursery
 import com.example.carecallapp.data.mappers.toHospitalResponse
@@ -15,22 +17,31 @@ import com.example.carecallapp.data.mappers.toLoginDM
 import com.example.carecallapp.data.mappers.toLoginResponse
 import com.example.carecallapp.data.mappers.toPeopleService
 import com.example.carecallapp.data.mappers.toRoomAndNurseryDM
+import com.example.carecallapp.domain.model.PersonService.LocationRequest
+import com.example.carecallapp.domain.model.PersonService.MapRouteDomain
+import com.example.carecallapp.domain.model.PersonService.PersonNotificationResponse
+import com.example.carecallapp.domain.model.PersonService.ambulance.AmbulanceProfile
+import com.example.carecallapp.domain.model.PersonService.doctor.DoctorProfile
 import com.example.carecallapp.domain.model.auth.AmbulanceRegisterRequest
 import com.example.carecallapp.domain.model.auth.DoctorRegisterRequest
 import com.example.carecallapp.domain.model.auth.HospitalRegisterRequest
 import com.example.carecallapp.domain.model.auth.LoginRequest
 import com.example.carecallapp.domain.model.auth.TokenResponse
-import com.example.carecallapp.domain.model.hospital_accounts.PersonServiceResponse
-import com.example.carecallapp.domain.model.hospital_content.BloodBag
-import com.example.carecallapp.domain.model.hospital_content.RoomAndNursery
-import com.example.carecallapp.domain.model.hospital_content.ServiceRequest
-import com.example.carecallapp.domain.model.hospital_content.ServiceResponse
-import com.example.carecallapp.domain.model.hospital_profile.HospitalResponse
+import com.example.carecallapp.domain.model.hospital.hospital_accounts.PersonServiceResponse
+import com.example.carecallapp.domain.model.hospital.hospital_content.BloodBag
+import com.example.carecallapp.domain.model.hospital.hospital_content.RoomAndNursery
+import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceRequest
+import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceResponse
+import com.example.carecallapp.domain.model.hospital.hospital_profile.HospitalResponse
+import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.qualifiers.ApplicationContext
+import org.json.JSONObject
+import java.net.URL
 import javax.inject.Inject
 
 class RemoteDataSourceImpl @Inject constructor(
-    private val webServices: WebServices, @ApplicationContext val context: Context
+    private val webServices: WebServices, @ApplicationContext val context: Context,
+    private val mapRouteApiService: MapRouteApiService
 ) : RemoteDataSource {
 
     //get accounts doctor and ambulance
@@ -64,7 +75,7 @@ class RemoteDataSourceImpl @Inject constructor(
 
     override suspend fun addService(service: ServiceRequest): ServiceResponse {
         val response = webServices.addService(service.toDataModel())
-        return if (response.isSuccessful)  response.body()!!.toDomainModel()
+        return if (response.isSuccessful) response.body()!!.toDomainModel()
         else throw Exception("add Service failed with code: ${response.code()}")
     }
 
@@ -177,6 +188,143 @@ class RemoteDataSourceImpl @Inject constructor(
                     " ${context.getString(R.string.unexpected_error)} ${response.code()}"
                 )
             }
+        }
+    }
+
+    override suspend fun getCurrentPersonRequest(): PersonNotificationResponse {
+        val response = webServices.getCurrentPersonRequest()
+        Log.d("kkk", "getCurrentPersonRequest:$response ")
+        if (response.isSuccessful) {
+            return response.body()!!.toDomain()
+        } else
+            throw Exception("get Current Person Request failed with code: ${response.code()}")
+    }
+
+    override suspend fun getPersonRequests(): List<PersonNotificationResponse> {
+        val response = webServices.getPersonRequests()
+        Log.d("kkk", "get PersonRequests:$response ")
+        if (response.isSuccessful) {
+            return response.body()!!.map { it.toDomain() }
+        } else
+            throw Exception("get Person Requests failed with code: ${response.code()}")
+    }
+
+    override suspend fun confirmPersonRequest(id: Int): Boolean {
+        val response = webServices.confirmPersonRequest(id)
+        Log.d("kkk", "confirm Person Request:$response ")
+        if (response.isSuccessful) {
+            return true
+        } else {
+            throw Exception("confirm Person Request: ${response.code()}")
+        }
+    }
+
+    override suspend fun completePersonRequest(id: Int): Boolean {
+        val response = webServices.completePersonRequest(id)
+        Log.d("kkk", "complete Person Request:$response ")
+        if (response.isSuccessful) {
+            return true
+        } else {
+            throw Exception("complete Person Request: ${response.code()}")
+        }
+    }
+
+    override suspend fun cancelPersonRequest(id: Int): Boolean {
+        val response = webServices.cancelPersonRequest(id)
+        Log.d("kkk", "cancel Person Request:$response ")
+        if (response.isSuccessful) {
+            return true
+        } else {
+            throw Exception("cancel Person Request: ${response.code()}")
+        }
+    }
+
+    override suspend fun deletePersonRequest(id: Int): Boolean {
+        val response = webServices.deletePersonRequest(id)
+        Log.d("kkk", "delete Person Request:$response ")
+        if (response.isSuccessful) {
+            return true
+        } else {
+            throw Exception("delete Person Request: ${response.code()}")
+        }
+    }
+
+    override suspend fun getDoctorDetails(doctorId: String): DoctorProfile? {
+        val doctorProfile = webServices.getDoctorDetails(doctorId)
+        if (doctorProfile.isSuccessful) {
+            return doctorProfile.body()?.toDomainModel()
+        } else {
+            throw Exception("get Doctor Details failed with code: ${doctorProfile.code()}")
+        }
+    }
+
+    override suspend fun updateDoctorDetails(
+        doctorId: String,
+        doctorProfile: DoctorProfile
+    ): Boolean {
+        val response = webServices.updateDoctorDetails(doctorId, doctorProfile.toDataModel())
+        return if (response.isSuccessful) {
+            true
+        } else {
+            throw Exception("update Doctor Details failed with code: ${response.code()}")
+        }
+    }
+
+
+    override suspend fun updateDoctorLocation(locationRequest: LocationRequest): Boolean {
+        val location = webServices.updateDoctorLocation(locationRequest.toDataModel())
+        return if (location.isSuccessful) {
+            true
+        } else {
+            throw Exception("update Doctor Location failed with code: ${location.code()}")
+        }
+    }
+
+    override suspend fun getAmbulanceDetails(ambulanceId: String): AmbulanceProfile? {
+        val ambulanceProfile = webServices.getAmbulanceDetails(ambulanceId)
+        if (ambulanceProfile.isSuccessful) {
+            return ambulanceProfile.body()?.toDomainModel()
+        } else {
+            throw Exception("get ambulance Details failed with code: ${ambulanceProfile.code()}")
+        }
+    }
+
+    override suspend fun updateAmbulanceDetails(
+        ambulanceId: String,
+        ambulanceProfile: AmbulanceProfile
+    ): Boolean {
+        val response =
+            webServices.updateAmbulanceDetails(ambulanceId, ambulanceProfile.toDataModel())
+        return if (response.isSuccessful) {
+            true
+        } else {
+            throw Exception("update Doctor Details failed with code: ${response.code()}")
+        }
+    }
+
+    override suspend fun updateAmbulanceLocation(locationRequest: LocationRequest): Boolean {
+        val location = webServices.updateAmbulanceLocation(locationRequest.toDataModel())
+        return if (location.isSuccessful) {
+            true
+        } else {
+            throw Exception("update ambulance Location failed with code: ${location.code()}")
+        }
+    }
+
+    override suspend fun getRoute(start: LatLng, end: LatLng): Result<MapRouteDomain> {
+        return try {
+            val domainModel = mapRouteApiService.getRoute(
+                start.longitude, start.latitude,
+                end.longitude, end.latitude
+            ).toDomain()
+
+            if (domainModel.path.isNotEmpty()) {
+                Result.success(domainModel)
+            } else {
+                Result.failure(Exception("No route found"))
+            }
+        } catch (e: Exception) {
+            Result.failure(e)
         }
     }
 }

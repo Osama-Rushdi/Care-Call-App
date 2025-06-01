@@ -1,9 +1,9 @@
 package com.example.carecallapp.domain
 
-import com.example.carecallapp.domain.model.hospital_content.ServiceType
+import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceType
 
-object Utils {
-}
+
+
 object Types{
     fun peopleTypeUrl(ifDoctor:Boolean):String=if (ifDoctor) "api/Doctor/GetDoctorsOfHospital" else "api/Ambulance/GetAmbulancesOfHospital"
 }

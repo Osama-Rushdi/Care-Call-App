@@ -4,7 +4,7 @@
     app:layout_constraintHeight_percent=".1"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@drawable/background_gradient"
+    android:background="@drawable/dialog_background_gradient"
     android:paddingVertical="20dp">
 
     <TextView

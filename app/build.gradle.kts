@@ -4,6 +4,7 @@ plugins {
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
     id ("androidx.navigation.safeargs.kotlin")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 
 }
 
@@ -89,4 +90,20 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    //google maps
+    implementation(libs.play.services.maps)
+    implementation(libs.play.services.location)
+    implementation(libs.okhttp)
+
+}
+
+secrets {
+// To add your Maps API key to this project:
+// 1. If the secrets.properties file does not exist, create it in the same folder as the local.properties file.
+// 2. Add this line, where YOUR_API_KEY is your API key:
+// MAPS_API_KEY=YOUR_API_KEY
+    propertiesFileName = "secrets.properties"
+// A properties file containing default secret values. This file can be
+// checked in version control.
+    defaultPropertiesFileName = "local.defaults.properties"
 }

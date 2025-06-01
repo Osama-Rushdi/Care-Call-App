@@ -126,9 +126,9 @@
                             android:id="@+id/etUsername"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Username"
+                            android:hint="@string/username"
                             android:textColorHint="@color/colorPrimaryVariant"
-                            android:text="hospital"
+                            tools:text="hospital"
                             android:textColor="@color/colorPrimary" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -142,10 +142,10 @@
                             android:id="@+id/etEmail"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Email"
+                            android:hint="@string/email"
                             android:textColorHint="@color/colorPrimaryVariant"
                             android:inputType="textEmailAddress"
-                            android:text="hospital@example.com"
+                            tools:text="hospital@example.com"
                             android:textColor="@color/colorPrimary" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -159,8 +159,7 @@
                             android:id="@+id/etFirstName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="First Name"
-                            android:text="string"
+                            android:hint="@string/first_name"
                             android:textColor="@color/colorPrimary" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -174,9 +173,8 @@
                             android:id="@+id/etLastName"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Last Name"
+                            android:hint="@string/last_name"
                             android:textColorHint="@color/colorPrimaryVariant"
-                            android:text="string"
                             android:textColor="@color/colorPrimary" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -190,9 +188,9 @@
                             android:id="@+id/etPhone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Phone"
+                            android:hint="@string/phone"
                             android:inputType="phone"
-                            android:text="0"
+                            tools:text="012122"
                             android:textColor="@color/colorPrimary" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -206,8 +204,8 @@
                             android:id="@+id/etNationalId"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="National ID"
-                            android:text="i347394"
+                            android:hint="@string/national_id"
+                            tools:text="i347394"
                             android:textColor="@color/colorPrimary" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -221,24 +219,26 @@
                             android:id="@+id/etDateOfBirth"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Date of Birth"
-                            android:inputType="date"
-                            android:text="2025-04-18"
+                            android:hint="@string/date_of_birth"
+                            android:inputType="none"
+                            tools:text="2025-04-18"
+
                             android:textColor="@color/colorPrimary" />
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="15dp">
 
-                        <com.google.android.material.textfield.TextInputEditText
+                        <AutoCompleteTextView
                             android:id="@+id/etGender"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="Gender"
-                            android:text="Male"
+                            android:layout_height="match_parent"
+                            android:hint="@string/gender"
+                            android:text="@string/male"
+                            android:inputType="none"
                             android:textColor="@color/colorPrimary" />
                     </com.google.android.material.textfield.TextInputLayout>
 
@@ -252,9 +252,9 @@
                             android:id="@+id/etWebsite"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Website"
+                            android:hint="@string/website"
                             android:inputType="textUri"
-                            android:text="string"
+                            tools:text="www.facebook.com"
                             android:textColor="@color/colorPrimary" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>

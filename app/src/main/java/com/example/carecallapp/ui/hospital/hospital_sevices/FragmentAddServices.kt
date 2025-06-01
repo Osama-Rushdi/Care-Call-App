@@ -10,22 +10,22 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.carecallapp.R
+import androidx.navigation.fragment.navArgs
 import com.example.carecallapp.data.repository.view_models.MyServicesViewModel
 import com.example.carecallapp.data.repository.view_models.ServiceStateShow
 import com.example.carecallapp.databinding.AddServiceFragmentBinding
 import com.example.carecallapp.domain.ServiceTypeUtil
-import com.example.carecallapp.domain.model.hospital_content.RoomType
-import com.example.carecallapp.domain.model.hospital_content.ServiceRequest
-import com.example.carecallapp.domain.model.hospital_content.ServiceType
-import com.example.carecallapp.ui.utils.Constants
+import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceRequest
+import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceType
+import com.example.carecallapp.ui.utils.navigateToService
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FragmentAddServices(private val serviceType: ServiceType) : Fragment() {
+class FragmentAddServices() : Fragment() {
     private var _binding: AddServiceFragmentBinding? = null
     private val binding get() = _binding!!
     private val viewModel: MyServicesViewModel by viewModels()
+    private lateinit var serviceType: ServiceType
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -37,6 +37,8 @@ class FragmentAddServices(private val serviceType: ServiceType) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val args: FragmentAddServicesArgs by navArgs()
+        serviceType = args.serviceType
         initListeners()
         observeData()
     }
@@ -47,7 +49,7 @@ class FragmentAddServices(private val serviceType: ServiceType) : Fragment() {
                 is ServiceStateShow.IsAddSuccess -> {
                     showLoading(false)
                     Toast.makeText(requireContext(), "successfully", Toast.LENGTH_SHORT).show()
-                    navigationToServiceFragments()
+                    navigateToService(serviceType,findNavController())
                 }
 
                 ServiceStateShow.Loading -> {
@@ -58,36 +60,7 @@ class FragmentAddServices(private val serviceType: ServiceType) : Fragment() {
                     showError(it.errorMessage)
                     showLoading(false)
                 }
-
                 else -> {}
-            }
-        }
-    }
-
-    private fun navigationToServiceFragments() {
-        when (serviceType.name) {
-            ServiceType.ICU.name -> {
-                val action = Bundle().apply {
-                    putSerializable(Constants.ROOM_TYPE_KEY, RoomType.ICU)
-                }
-                findNavController().navigate(
-                    R.id.action_fragmentAddServices_to_roomFragment,
-                    action
-                )
-            }
-
-            ServiceType.BloodBank.name -> {
-                findNavController().navigate(R.id.action_homeFragment_to_bloodBankFragment)
-            }
-
-            ServiceType.Nursery.name -> {
-                val action = Bundle().apply {
-                    putSerializable(Constants.ROOM_TYPE_KEY, RoomType.Nursery)
-                }
-                findNavController().navigate(
-                    R.id.action_fragmentAddServices_to_roomFragment,
-                    action
-                )
             }
         }
     }

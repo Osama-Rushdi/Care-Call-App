@@ -7,13 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.carecallapp.R
 import com.example.carecallapp.data.repository.view_models.MyServicesViewModel
 import com.example.carecallapp.data.repository.view_models.ServiceStateShow
 import com.example.carecallapp.databinding.FragmentHomeBinding
-import com.example.carecallapp.domain.model.hospital_content.RoomType
-import com.example.carecallapp.domain.model.hospital_content.ServiceType
-import com.example.carecallapp.ui.utils.Constants
+import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceType
+import com.example.carecallapp.ui.utils.navigateToService
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -44,41 +42,18 @@ class HomeFragment : Fragment() {
             when (it) {
                 is ServiceStateShow.IsSearchSuccess -> {
                     if (it.success) {
-                        when (type) {
-                            ServiceType.Nursery -> {
-                                val action = Bundle().apply {
-                                    putSerializable(Constants.ROOM_TYPE_KEY, RoomType.Nursery)
-                                }
-                                findNavController().navigate(
-                                    R.id.action_homeFragment_to_roomFragment,
-                                    action
-                                )
-                            }
-
-                            ServiceType.BloodBank -> findNavController().navigate(R.id.action_homeFragment_to_bloodBankFragment)
-                            ServiceType.ICU -> {
-                                val action = Bundle().apply {
-                                    putSerializable(Constants.ROOM_TYPE_KEY, RoomType.ICU)
-                                }
-                                findNavController().navigate(
-                                    R.id.action_homeFragment_to_roomFragment,
-                                    action
-                                )
-                            }
-
-                            else -> {}
-                        }
+                        navigateToService(type,findNavController())
                     } else {
                         val action =
                             HomeFragmentDirections.actionHomeFragmentToFragmentAddServices(type)
                         findNavController().navigate(action)
                     }
                 }
-
                 else -> {}
             }
         }
     }
+
 
     private fun initListeners() {
         binding.nurseryCD.setOnClickListener {

@@ -72,8 +72,10 @@ class MedicalServicesFragment : Fragment() {
         }
         binding.fabAddAccountBtn.setOnClickListener {
            if(isDoctorSelect) {
-               findNavController().navigate(R.id.action_medicalServicesFragment_to_registerFragment)
+               findNavController().navigate(R.id.action_medicalServicesFragment_to_doctorRegisterFragment)
            }
+            else
+                findNavController().navigate(R.id.action_medicalServicesFragment_to_ambulanceRegisterFragment)
         }
 
     }

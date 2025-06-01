@@ -5,9 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.carecallapp.data.api.ApiManager
-import com.example.carecallapp.domain.model.hospital_profile.HospitalResponse
+import com.example.carecallapp.domain.model.hospital.hospital_profile.HospitalResponse
 import com.example.carecallapp.domain.use_cases.GetHospitalDetailsUseCase
 import com.example.carecallapp.domain.use_cases.UpdateHospitalDetailsUseCase
+import com.example.carecallapp.domain.use_cases.UserSessionManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,10 +17,11 @@ import javax.inject.Inject
 open class MyProfileViewModel @Inject constructor(
     private val getHospitalDetailsUseCase: GetHospitalDetailsUseCase,
     private val updateHospitalDetailsUseCase: UpdateHospitalDetailsUseCase,
+     private val userSessionManager: UserSessionManager
 ) : ViewModel() {
     val stateShow = MutableLiveData<ProfileStateShow>()
-
-    fun showDetails(hospitalId: String = ApiManager.FAKE_HOSPITAL_ID) {
+    fun showDetails() {
+        val hospitalId = userSessionManager.getUserId()
         stateShow.postValue(ProfileStateShow.Loading)
         viewModelScope.launch {
             try {
@@ -34,11 +36,11 @@ open class MyProfileViewModel @Inject constructor(
     }
 
     fun updateDetails(
-        hospitalId: String = ApiManager.FAKE_HOSPITAL_ID,
         hospitalResponse: HospitalResponse
     ) {
         stateShow.postValue(ProfileStateShow.Loading)
         viewModelScope.launch {
+            val hospitalId = userSessionManager.getUserId()
             try {
                 val hospitalDetails =
                     updateHospitalDetailsUseCase.execute(hospitalId, hospitalResponse)
