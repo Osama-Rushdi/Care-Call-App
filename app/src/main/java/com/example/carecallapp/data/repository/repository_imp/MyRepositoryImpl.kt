@@ -17,6 +17,7 @@ import com.example.carecallapp.domain.model.hospital.hospital_content.BloodBag
 import com.example.carecallapp.domain.model.hospital.hospital_content.RoomAndNursery
 import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceRequest
 import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceResponse
+import com.example.carecallapp.domain.model.hospital.hospital_notification.HospitalNotificationResponse
 import com.example.carecallapp.domain.model.hospital.hospital_profile.HospitalResponse
 import com.example.carecallapp.domain.repository.MyRepository
 import com.google.android.gms.maps.model.LatLng
@@ -226,6 +227,14 @@ class MyRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getHospitalRequests(): List<HospitalNotificationResponse> {
+        return if (connectivity.isOnline()) {
+            remoteDataSource.getHospitalRequests()
+        } else {
+            throw Exception("No internet connection")
+        }
+    }
+
     override suspend fun getDoctorDetails(doctorId: String): DoctorProfile? {
         return if (connectivity.isOnline()) {
             remoteDataSource.getDoctorDetails(doctorId)
@@ -285,7 +294,6 @@ class MyRepositoryImpl @Inject constructor(
             throw Exception("No internet connection")
         }
     }
-
 
     override suspend fun getRoute(start: LatLng, end: LatLng): Result<MapRouteDomain>  {
         return if (connectivity.isOnline()) {

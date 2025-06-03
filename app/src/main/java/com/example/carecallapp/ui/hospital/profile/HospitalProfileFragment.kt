@@ -1,6 +1,9 @@
 package com.example.carecallapp.ui.hospital.profile
 
 import android.app.AlertDialog
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -66,8 +69,10 @@ class HospitalProfileFragment : Fragment() {
     private fun initListener() {
         binding.editProfileBtn.setOnClickListener {
             if (saveData.equals(null)) {
-                Toast.makeText(requireContext(),
-                    getString(R.string.some_thing_go_wrong), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.some_thing_go_wrong), Toast.LENGTH_SHORT
+                ).show()
             } else {
 
                 val action =
@@ -77,42 +82,51 @@ class HospitalProfileFragment : Fragment() {
                 findNavController().navigate(action)
             }
         }
-    }
+        binding.webSiteLayout.setOnClickListener {
+            var url = binding.tvWebsite.text.toString().trim()
 
-    private fun showLoading(isVisible: Boolean) {
-        binding.profileLoadingProgressBar.isVisible = isVisible
-    }
+            if (url.isNotEmpty()) {
+                if (!url.startsWith("http://") && !url.startsWith("https://")) {
+                    url = "https://$url"
+                }
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                startActivity(intent)}
+            }
+        }
 
-    private fun initProfileDetails(hospitalDetails: HospitalResponse) {
-        hospitalDetails.apply {
-            binding.tvEmail.text = email
-            binding.tvPhone.text = phone.toString()
-            binding.tvGender.text = gender
-            binding.tvWebsite.text = website
-            "$firstName $lastName".let { binding.tvFullName.text = it }
-            binding.tvDateOfBirth.text = formatDateTime(dateOfBirth)
-            binding.tvNationalId.text = nationalId
-            binding.tvUsername.text = username
+        private fun showLoading(isVisible: Boolean) {
+            binding.profileLoadingProgressBar.isVisible = isVisible
+        }
+
+        private fun initProfileDetails(hospitalDetails: HospitalResponse) {
+            hospitalDetails.apply {
+                binding.tvEmail.text = email
+                binding.tvPhone.text = phone.toString()
+                binding.tvGender.text = gender
+                binding.tvWebsite.text = website
+                "$firstName $lastName".let { binding.tvFullName.text = it }
+                binding.tvDateOfBirth.text = formatDateTime(dateOfBirth)
+                binding.tvNationalId.text = nationalId
+                binding.tvUsername.text = username
+            }
+        }
+
+        private fun showError(message: String) {
+            AlertDialog.Builder(requireContext())
+                .setTitle("Error")
+                .setMessage(message)
+                .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
+                .show()
+        }
+
+        private fun formatDateTime(input: String): String {
+            return try {
+                val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+                val outputFormat = SimpleDateFormat("d MMMM yyyy", Locale.getDefault())
+                val date = inputFormat.parse(input)
+                outputFormat.format(date!!)
+            } catch (e: Exception) {
+                input
+            }
         }
     }
-
-    private fun showError(message: String) {
-        AlertDialog.Builder(requireContext())
-            .setTitle("Error")
-            .setMessage(message)
-            .setPositiveButton("OK") { dialog, _ -> dialog.dismiss() }
-            .show()
-    }
-
-    private fun formatDateTime(input: String): String {
-        return try {
-            val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
-            val outputFormat = SimpleDateFormat("d MMMM yyyy", Locale.getDefault())
-
-            val date = inputFormat.parse(input)
-            outputFormat.format(date!!)
-        } catch (e: Exception) {
-            input
-        }
-    }
-}

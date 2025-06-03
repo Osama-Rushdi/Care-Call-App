@@ -55,10 +55,10 @@
             app:layout_constraintTop_toTopOf="@+id/header_titleTV">
 
             <ImageButton
-                android:id="@+id/hospitalNotificationBtn"
+                android:id="@+id/notificationBtn"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                android:contentDescription="@string/hospital_request_notification"
+                android:contentDescription="@string/notification_btn"
                 android:scaleType="fitCenter"
                 android:background="@android:color/transparent"
                 android:src="@drawable/baseline_notifications_24" />

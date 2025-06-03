@@ -32,6 +32,7 @@ import com.example.carecallapp.domain.model.hospital.hospital_content.BloodBag
 import com.example.carecallapp.domain.model.hospital.hospital_content.RoomAndNursery
 import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceRequest
 import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceResponse
+import com.example.carecallapp.domain.model.hospital.hospital_notification.HospitalNotificationResponse
 import com.example.carecallapp.domain.model.hospital.hospital_profile.HospitalResponse
 import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -249,6 +250,17 @@ class RemoteDataSourceImpl @Inject constructor(
         }
     }
 
+    override suspend fun getHospitalRequests(): List<HospitalNotificationResponse> {
+        val response = webServices.getHospitalRequests()
+        Log.d("kkk", "get Hospital Requests:$response ")
+        if (response.isSuccessful) {
+            return response.body()!!.map { it.toDomain() }
+        } else
+            throw Exception("get Hospital Requests failed with code: ${response.code()}")
+
+}
+
+    //--------------DOCTOR------------------
     override suspend fun getDoctorDetails(doctorId: String): DoctorProfile? {
         val doctorProfile = webServices.getDoctorDetails(doctorId)
         if (doctorProfile.isSuccessful) {
@@ -270,7 +282,6 @@ class RemoteDataSourceImpl @Inject constructor(
         }
     }
 
-
     override suspend fun updateDoctorLocation(locationRequest: LocationRequest): Boolean {
         val location = webServices.updateDoctorLocation(locationRequest.toDataModel())
         return if (location.isSuccessful) {
@@ -279,6 +290,8 @@ class RemoteDataSourceImpl @Inject constructor(
             throw Exception("update Doctor Location failed with code: ${location.code()}")
         }
     }
+
+    //--------------AMBULANCE------------------
 
     override suspend fun getAmbulanceDetails(ambulanceId: String): AmbulanceProfile? {
         val ambulanceProfile = webServices.getAmbulanceDetails(ambulanceId)
@@ -311,6 +324,7 @@ class RemoteDataSourceImpl @Inject constructor(
         }
     }
 
+    // Map Route
     override suspend fun getRoute(start: LatLng, end: LatLng): Result<MapRouteDomain> {
         return try {
             val domainModel = mapRouteApiService.getRoute(

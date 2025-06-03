@@ -11,6 +11,8 @@ import com.example.carecallapp.data.model.auth.HospitalRegisterResponseDM
 import com.example.carecallapp.data.model.auth.LoginRequestDM
 import com.example.carecallapp.data.model.auth.TokenResponseDM
 import com.example.carecallapp.data.model.hospital.hospital_accountsDM.PersonServiceResponseDM
+import com.example.carecallapp.data.model.hospital.hospital_notification.HospitalNotificationResponseDM
+import com.example.carecallapp.data.model.hospital.hospital_notification.ServiceDM
 import com.example.carecallapp.data.model.hospital.hospital_profileDM.HospitalResponseDM
 import com.example.carecallapp.data.model.hospital.hospital_services.BloodBagDM
 import com.example.carecallapp.data.model.hospital.hospital_services.RoomAndNurseryResponseDM
@@ -36,9 +38,11 @@ import com.example.carecallapp.domain.model.auth.Role
 import com.example.carecallapp.domain.model.auth.TokenResponse
 import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceRequest
 import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceResponse
+import com.example.carecallapp.domain.model.hospital.hospital_notification.HospitalNotificationResponse
+import com.example.carecallapp.domain.model.hospital.hospital_notification.Service
 import com.google.android.gms.maps.model.LatLng
 
-
+//----------------HOSPITAL---------------------
 //Accounts
 fun PersonServiceResponseDM.toPeopleService(): PersonServiceResponse {
     return PersonServiceResponse(
@@ -90,27 +94,6 @@ fun ServiceRequest.toDataModel(): ServiceRequestDM {
     )
 }
 
-fun ServiceRequestDM.toDomainModel(): ServiceRequest {
-    return ServiceRequest(
-        price = this.price ?: 0,
-        name = this.name.orEmpty(),
-        description = this.description.orEmpty(),
-        serviceTypeId = this.serviceTypeId ?: 0
-    )
-}
-
-fun ServiceResponse.toDataModel(hospitalId: String? = null): ServiceResponseDM {
-    return ServiceResponseDM(
-        serviceType = this.serviceType,
-        hospitalId = hospitalId,
-        price = this.price,
-        name = this.name,
-        description = this.description,
-        serviceTypeId = this.serviceTypeId,
-        id = this.id
-    )
-}
-
 fun ServiceResponseDM.toDomainModel(): ServiceResponse {
     return ServiceResponse(
         serviceType = serviceType ?: "",
@@ -121,7 +104,6 @@ fun ServiceResponseDM.toDomainModel(): ServiceResponse {
         id = this.id ?: 0
     )
 }
-
 
 //Blood bank
 fun BloodBagDM.toBloodBag(): BloodBag {
@@ -166,58 +148,6 @@ fun RoomAndNurseryResponseDM.toRoomAndNursery(): RoomAndNursery {
 
 
 //AUTHENTICATION
-fun AmbulanceRegisterRequestDM.toDomainModel(): AmbulanceRegisterRequest {
-    return AmbulanceRegisterRequest(
-        firstName = firstName ?: "",
-        lastName = lastName ?: "",
-        password = password ?: "",
-        nationalId = nationalId ?: "",
-        gender = gender ?: "",
-        phone = phone ?: 0,
-        hospitalId = hospitalId ?: "",
-        confirmPassword = confirmPassword ?: "",
-        vehicleNumber = vehicleNumber ?: "",
-        dateOfBirth = dateOfBirth ?: "",
-        email = email ?: "",
-        username = username ?: ""
-    )
-}
-
-fun DoctorRegisterRequestDM.toDomainModel(): DoctorRegisterRequest {
-    return DoctorRegisterRequest(
-        lastName = lastName ?: "",
-        specialty = specialty ?: "",
-        gender = gender ?: "",
-        bio = bio ?: "",
-        dateOfBirth = dateOfBirth ?: "",
-        firstName = firstName ?: "",
-        password = password ?: "",
-        nationalId = nationalId ?: "",
-        phone = phone,
-        hospitalId = hospitalId ?: "",
-        confirmPassword = confirmPassword ?: "",
-        licenseNumber = licenseNumber ?: "",
-        email = email ?: "",
-        username = username ?: "",
-        status = status ?: ""
-    )
-}
-
-fun HospitalRegisterResponseDM.toDomainModel(): HospitalRegisterRequest {
-    return HospitalRegisterRequest(
-        firstName = firstName ?: "",
-        lastName = lastName ?: "",
-        password = password ?: "",
-        website = website ?: "",
-        nationalId = nationalId ?: "",
-        gender = gender ?: "",
-        phone = phone ?: 0,
-        confirmPassword = confirmPassword ?: "",
-        dateOfBirth = dateOfBirth ?: "",
-        email = email ?: "",
-        username = username ?: ""
-    )
-}
 
 fun AmbulanceRegisterRequest.toDataModel(): AmbulanceRegisterRequestDM {
     return AmbulanceRegisterRequestDM().apply {
@@ -278,12 +208,6 @@ fun LoginRequest.toLoginDM(): LoginRequestDM {
     )
 }
 
-fun LoginRequestDM.toLogin(): LoginRequest {
-    return LoginRequest(
-        email = email ?: "", password = password ?: ""
-    )
-}
-
 fun TokenResponseDM.toLoginResponse(): TokenResponse {
     return TokenResponse(
         role = when (role) {
@@ -301,7 +225,8 @@ fun TokenResponseDM.toLoginResponse(): TokenResponse {
 }
 
 
-//PERSON NOTIFICATION REQUESTES
+
+//NOTIFICATION REQUESTES
 
 fun PersonNotificationResponseDM.toDomain(): PersonNotificationResponse {
     return PersonNotificationResponse(
@@ -333,14 +258,6 @@ fun PersonNotificationResponseDM.toDomain(): PersonNotificationResponse {
     )
 }
 
-fun LocationRequestDM.toDomain(): LocationRequest {
-    return LocationRequest(
-        latitude = latitude ?: 0.0,
-        longitude = longitude ?: 0.0,
-
-        )
-}
-
 fun LocationRequest.toDataModel(): LocationRequestDM {
     return LocationRequestDM(
         latitude = latitude,
@@ -348,10 +265,41 @@ fun LocationRequest.toDataModel(): LocationRequestDM {
 
         )
 }
+// ServiceDM.kt
+fun ServiceDM.toDomain(): Service {
+    return Service(
+        serviceType = this.serviceType?.toString(),  // عشان هو Any؟
+        id = this.id
+    )
+}
+// HospitalNotificationResponseDM.kt
+fun HospitalNotificationResponseDM.toDomain(): HospitalNotificationResponse {
+    return HospitalNotificationResponse(
+        id = this.id ?: 0,
+        date = this.date,
+        patientName = this.patientName?.toString(),
+        quantity = this.quantity?.toString(),
+        bloodType = this.bloodType?.toString(),
+        phoneNumber = this.phoneNumber?.toString(),
+        price = this.price,
+        service=service,
+        caseDescription = this.jsonMemberCase?.toString(),
+        status = when(this.status){
+            "Pending" -> RequestStatus.Pending
+            "Accepted" -> RequestStatus.Accepted
+            "Rejected" -> RequestStatus.Rejected
+            "Confirmed" -> RequestStatus.Confirmed
+            "Completed" -> RequestStatus.Completed
+            "Canceled" -> RequestStatus.Canceled
+            else -> null
+        }
+    )
+}
+
+
+//--------------------------PERSON DOCTOR AND AMBULANCE---------------------
 
 //DOCTOR
-
-// Domain -> Data
 fun DoctorProfile.toDataModel(): DoctorProfileDM {
     return DoctorProfileDM(
         lastName = this.lastName,
@@ -370,8 +318,6 @@ fun DoctorProfile.toDataModel(): DoctorProfileDM {
         status = this.status
     )
 }
-
-// Data -> Domain
 fun DoctorProfileDM.toDomainModel(): DoctorProfile {
     return DoctorProfile(
         lastName = this.lastName,
@@ -391,9 +337,7 @@ fun DoctorProfileDM.toDomainModel(): DoctorProfile {
     )
 }
 
-
 //AMBULANCE
-// Domain -> Data
 fun AmbulanceProfile.toDataModel(): AmbulanceProfileDM {
     return AmbulanceProfileDM(
         profilePicture = this.profilePicture,
@@ -410,7 +354,6 @@ fun AmbulanceProfile.toDataModel(): AmbulanceProfileDM {
     )
 }
 
-// Data -> Domain
 fun AmbulanceProfileDM.toDomainModel(): AmbulanceProfile {
     return AmbulanceProfile(
         profilePicture = this.profilePicture,
@@ -428,7 +371,9 @@ fun AmbulanceProfileDM.toDomainModel(): AmbulanceProfile {
 }
 
 
-//
+
+
+// MAP ROUTE
 fun MapRouteResponseDM.toDomain(): MapRouteDomain {
     val path = routes?.firstOrNull()?.geometry?.coordinates?.map {
         LatLng(it[1], it[0]) // [longitude, latitude] → [latitude, longitude]
@@ -436,4 +381,3 @@ fun MapRouteResponseDM.toDomain(): MapRouteDomain {
 
     return MapRouteDomain(path = path)
 }
-

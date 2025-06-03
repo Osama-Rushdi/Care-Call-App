@@ -11,6 +11,7 @@ import com.example.carecallapp.data.model.auth.HospitalRegisterResponseDM
 import com.example.carecallapp.data.model.auth.LoginRequestDM
 import com.example.carecallapp.data.model.auth.TokenResponseDM
 import com.example.carecallapp.data.model.hospital.hospital_accountsDM.PersonServiceResponseDM
+import com.example.carecallapp.data.model.hospital.hospital_notification.HospitalNotificationResponseDM
 import com.example.carecallapp.data.model.hospital.hospital_profileDM.HospitalResponseDM
 import com.example.carecallapp.data.model.hospital.hospital_services.BloodBagDM
 import com.example.carecallapp.data.model.hospital.hospital_services.RoomAndNurseryResponseDM
@@ -110,6 +111,10 @@ interface WebServices {
     @DELETE("api/Bed")
     suspend fun deleteRoomOrNursery(@Query("id") id: Int): Response<Unit>
 
+    //hospital requests
+    @GET("api/Request/hospital-requests")
+    suspend fun getHospitalRequests(): Response<List<HospitalNotificationResponseDM>>
+
 
     //------------------DOCTOR AND AMBULANCE REQUESTS-----------------------
 
@@ -144,10 +149,10 @@ interface WebServices {
     //-------------------DOCTOR------------------------------
 
     //profile
-    @PUT("api/Doctor/GetHospitalDetails")
+    @PUT("api/Doctor/GetDoctorDetails")
     suspend fun getDoctorDetails(@Query("doctorId") doctorId: String): Response<DoctorProfileDM?>
 
-    @PUT("api/Doctor/UpdateHospitalDetails")
+    @PUT("api/Doctor/UpdateDoctorDetails")
     suspend fun updateDoctorDetails(
         @Query("doctorId") doctorId: String,
         @Body doctorProfileDM: DoctorProfileDM
@@ -157,10 +162,10 @@ interface WebServices {
     suspend fun updateDoctorLocation(@Body locationRequest: LocationRequestDM): Response<Unit>
     //-------------------AMBULANCE------------------------------
 
-    @PUT("api/Hospital/GetHospitalDetails")
+    @PUT("api/Ambulance/GetAmbulanceDetails")
     suspend fun getAmbulanceDetails( @Query("ambulanceId") ambulanceId: String): Response<AmbulanceProfileDM?>
 
-    @PUT("api/Hospital/UpdateHospitalDetails")
+    @PUT("api/Ambulance/UpdateAmbulanceDetails")
     suspend fun updateAmbulanceDetails(
         @Query("ambulanceId") ambulanceId: String,
         @Body doctorProfileDM: AmbulanceProfileDM

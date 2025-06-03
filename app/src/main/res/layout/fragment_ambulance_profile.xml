@@ -147,7 +147,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/username"
+                        android:text="@string/amitthecoder"
                         android:textColor="#212121" />
 
                     <TextView

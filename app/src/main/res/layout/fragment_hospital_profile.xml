@@ -29,7 +29,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Hospital Profile"
+                    android:text="@string/hospital_profile"
                     android:textColor="#1A237E"
                     android:textSize="24sp"
                     android:textStyle="bold" />
@@ -39,7 +39,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="4dp"
-                    android:text="Manage your hospital information"
+                    android:text="@string/manage_your_hospital_information"
                     android:textColor="#616161"
                     android:textSize="14sp" />
             </LinearLayout>
@@ -97,7 +97,7 @@
                         android:drawableEnd="@drawable/baseline_edit_24"
                         android:drawablePadding="8dp"
                         android:drawableTint="@color/black"
-                        android:text="Edit Profile"
+                        android:text="@string/edit_profile"
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         app:cornerRadius="8dp"
@@ -161,6 +161,7 @@
                         android:id="@+id/webSiteLayout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/card_stroke"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
@@ -178,21 +179,11 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
                             android:gravity="center_horizontal"
-                            android:text="www.cityhospital.com"
+                            android:linksClickable="true"
                             android:textColor="@color/primary"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            tools:text="www.cityhospital.com" />
                     </LinearLayout>
-
-                    <TextView
-                        android:id="@+id/tvAddress"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:drawableStart="@android:drawable/ic_menu_mapmode"
-                        android:drawablePadding="8dp"
-                        android:textColor="#1A237E"
-                        android:textSize="14sp"
-                        tools:text="123 Medical St, Health City" />
 
                     <TextView
                         android:id="@+id/tvDescription"
@@ -202,6 +193,7 @@
                         android:textColor="#616161"
                         android:textSize="14sp"
                         tools:text="A leading healthcare provider with state-of-the-art facilities and expert medical staff dedicated to patient care." />
+
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
@@ -226,7 +218,7 @@
                         android:id="@+id/tvUserInfoTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Hospital Details"
+                        android:text="@string/hospital_details"
                         android:textColor="#1A237E"
                         android:textSize="18sp"
                         android:textStyle="bold" />
@@ -249,7 +241,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Username"
+                            android:text="@string/user_name"
                             android:textColor="#212121"
                             android:textSize="14sp" />
 
@@ -276,13 +268,15 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Email"
+                            android:paddingEnd="16dp"
+                            android:text="@string/email"
                             android:textColor="#212121"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            tools:ignore="RtlSymmetry" />
 
                         <TextView
                             android:id="@+id/tvEmail"
-                            android:layout_width="0dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:textAlignment="textEnd"
@@ -303,7 +297,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="License Number"
+                            android:text="@string/license_number"
                             android:textColor="#212121"
                             android:textSize="14sp" />
 
@@ -330,7 +324,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Phone"
+                            android:text="@string/phone"
                             android:textColor="#212121"
                             android:textSize="14sp" />
 
@@ -357,7 +351,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Gender"
+                            android:text="@string/gender"
                             android:textColor="#212121"
                             android:textSize="14sp" />
 
@@ -384,7 +378,7 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="Established Date"
+                            android:text="@string/established_date"
                             android:textColor="#212121"
                             android:textSize="14sp" />
 

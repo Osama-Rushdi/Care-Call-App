@@ -62,7 +62,7 @@
             app:layout_constraintTop_toBottomOf="@+id/requestTypeConst" />
 
         <TextView
-            android:id="@+id/bagsTypeTvVar"
+            android:id="@+id/patientName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
@@ -89,7 +89,7 @@
             app:layout_constraintTop_toBottomOf="@+id/bagsTypeTvConst" />
 
         <TextView
-            android:id="@+id/bagsNumberTvVar"
+            android:id="@+id/countOfBagsTvVar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingStart="8dp"
@@ -115,7 +115,7 @@
             app:backgroundTint="@color/green"
             app:cornerRadius="8dp"
             app:layout_constraintStart_toStartOf="@+id/bagsNumberTvConst"
-            app:layout_constraintTop_toBottomOf="@+id/bagsNumberTvVar"
+            app:layout_constraintTop_toBottomOf="@+id/countOfBagsTvVar"
             app:strokeColor="@color/green" />
 
         <com.google.android.material.button.MaterialButton

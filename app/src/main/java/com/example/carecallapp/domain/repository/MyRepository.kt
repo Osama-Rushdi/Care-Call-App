@@ -15,6 +15,7 @@ import com.example.carecallapp.domain.model.hospital.hospital_content.BloodBag
 import com.example.carecallapp.domain.model.hospital.hospital_content.RoomAndNursery
 import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceRequest
 import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceResponse
+import com.example.carecallapp.domain.model.hospital.hospital_notification.HospitalNotificationResponse
 import com.example.carecallapp.domain.model.hospital.hospital_profile.HospitalResponse
 import com.google.android.gms.maps.model.LatLng
 
@@ -63,6 +64,7 @@ interface MyRepository {
     suspend fun completePersonRequest(id: Int): Boolean
     suspend fun cancelPersonRequest(id: Int): Boolean
     suspend fun deletePersonRequest(id: Int): Boolean
+    suspend fun getHospitalRequests(): List<HospitalNotificationResponse>
 
 
 

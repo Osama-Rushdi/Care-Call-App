@@ -1,5 +1,6 @@
 package com.example.carecallapp.data.repository.data_sources.remote_data_source
 
+import com.example.carecallapp.data.model.hospital.hospital_notification.HospitalNotificationResponseDM
 import com.example.carecallapp.domain.model.PersonService.LocationRequest
 import com.example.carecallapp.domain.model.PersonService.MapRouteDomain
 import com.example.carecallapp.domain.model.PersonService.PersonNotificationResponse
@@ -15,8 +16,10 @@ import com.example.carecallapp.domain.model.hospital.hospital_content.BloodBag
 import com.example.carecallapp.domain.model.hospital.hospital_content.RoomAndNursery
 import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceRequest
 import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceResponse
+import com.example.carecallapp.domain.model.hospital.hospital_notification.HospitalNotificationResponse
 import com.example.carecallapp.domain.model.hospital.hospital_profile.HospitalResponse
 import com.google.android.gms.maps.model.LatLng
+import retrofit2.Response
 
 
 interface RemoteDataSource {
@@ -58,13 +61,15 @@ interface RemoteDataSource {
     suspend fun hospitalRegister(hospitalRegisterRequest: HospitalRegisterRequest): Boolean
     suspend fun userLogin(login: LoginRequest): TokenResponse
 
-    //PERSON REQUESTS
+    //All REQUESTS HOSPITAL,AMBULANCE AND DOCTOR
+
     suspend fun getCurrentPersonRequest(): PersonNotificationResponse
     suspend fun getPersonRequests(): List<PersonNotificationResponse>
     suspend fun confirmPersonRequest(id: Int): Boolean
     suspend fun completePersonRequest(id: Int): Boolean
     suspend fun cancelPersonRequest(id: Int): Boolean
     suspend fun deletePersonRequest(id: Int): Boolean
+    suspend fun getHospitalRequests(): List<HospitalNotificationResponse>
 
     //DOCTOR
     suspend fun getDoctorDetails(doctorId: String): DoctorProfile?

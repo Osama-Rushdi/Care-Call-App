@@ -10,12 +10,19 @@ object Constants {
 
     const val SHARED_TOKEN_KEY = "token Key"
     const val SHARED_TOKEN_NAME = "shared Pre"
-val mapOfTabs = mapOf(
+val mapPersonOfTabs = mapOf(
     "Current Requests" to 0,
     "Completed Requests" to 1,
     "Cancelled Requests" to 2,
     "Pending Requests" to 3,
     "Confirmed Requests" to 4
 )
+    val mapHospitalOfTabs = mapOf(
+        "All Requests" to 0,
+        "Completed Requests" to 1,
+        "Cancelled Requests" to 2,
+        "Pending Requests" to 3,
+        "Confirmed Requests" to 4
+    )
 
 }

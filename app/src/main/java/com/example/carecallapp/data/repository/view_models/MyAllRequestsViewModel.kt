@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.carecallapp.domain.model.PersonService.PersonNotificationResponse
 import com.example.carecallapp.domain.model.PersonService.RequestStatus
+import com.example.carecallapp.domain.model.hospital.hospital_notification.HospitalNotificationResponse
 import com.example.carecallapp.domain.repository.MyRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
@@ -19,13 +20,18 @@ class MyPersonRequestsViewModel @Inject constructor(
 ) : ViewModel() {
 
     val requestState = MutableLiveData<RequestsStateShow>()
-    val initCompleteRequestsAdapter = MutableLiveData<List<PersonNotificationResponse?>?>()
-    val initCanceledRequestsAdapter = MutableLiveData<List<PersonNotificationResponse?>?>()
-    val initPendingRequestsAdapter = MutableLiveData<List<PersonNotificationResponse?>?>()
-    val initConfirmedRequestsAdapter = MutableLiveData<List<PersonNotificationResponse?>?>()
+    val initCompleteRequestsAdapter = MutableLiveData<List<Any?>?>()
+    val initCanceledRequestsAdapter = MutableLiveData<List<Any?>?>()
+    val initPendingRequestsAdapter = MutableLiveData<List<Any?>?>()
+    val initConfirmedRequestsAdapter = MutableLiveData<List<Any?>?>()
+
+
+
     private var lastCurrentRequest: PersonNotificationResponse? = null
+
     // Store all requests to filter them later
-    private var allRequests: List<PersonNotificationResponse> = emptyList()
+    private var allPersonRequests: List<PersonNotificationResponse> = emptyList()
+    private var allHospitalRequests: List<HospitalNotificationResponse> = emptyList()
     private var pollingJob: Job? = null
 
     fun startPollingRequests() {
@@ -42,7 +48,7 @@ class MyPersonRequestsViewModel @Inject constructor(
         pollingJob?.cancel()
     }
 
-    fun getAllRequests() {
+    fun getPersonRequests() {
         viewModelScope.launch {
             requestState.postValue(RequestsStateShow.Loading)
             try {
@@ -50,9 +56,27 @@ class MyPersonRequestsViewModel @Inject constructor(
                 if (requests.isEmpty()) {
                     requestState.postValue(RequestsStateShow.IsNotFound)
                 } else {
-                    allRequests = requests
+                    allPersonRequests = requests
                     filterRequestsByStatus(null) // null = All
-                    requestState.postValue(RequestsStateShow.IsGetSuccess(requests))
+                    requestState.postValue(RequestsStateShow.IsGetPersonRequestSuccess(requests))
+                }
+            } catch (e: Exception) {
+                requestState.postValue(RequestsStateShow.ShowError(e.message ?: "Unknown error"))
+            }
+        }
+    }
+
+    fun getHospitalRequests() {
+        viewModelScope.launch {
+            requestState.postValue(RequestsStateShow.Loading)
+            try {
+                val requests = repository.getHospitalRequests()
+                if (requests.isEmpty()) {
+                    requestState.postValue(RequestsStateShow.IsNotFound)
+                } else {
+                    allHospitalRequests = requests
+                    filterRequestsByStatus(null) // null = All
+                    requestState.postValue(RequestsStateShow.IsGetHospitalRequestSuccess(requests))
                 }
             } catch (e: Exception) {
                 requestState.postValue(RequestsStateShow.ShowError(e.message ?: "Unknown error"))
@@ -61,39 +85,63 @@ class MyPersonRequestsViewModel @Inject constructor(
     }
 
     fun filterRequestsByStatus(status: RequestStatus?) {
-        val filtered = if (status == null) {
-            allRequests
+        val filteredHospital = if (status == null) {
+            allHospitalRequests
         } else {
-            allRequests.filter { it.status == status }
+            allHospitalRequests.filter { it.status == status }
         }
-
+        val filteredPerson = if (status == null) {
+            allPersonRequests
+        } else {
+            allPersonRequests.filter { it.status == status }
+        }
 
         when (status) {
-            RequestStatus.Completed -> initCompleteRequestsAdapter.postValue(filtered)
-            RequestStatus.Canceled -> initCanceledRequestsAdapter.postValue(filtered)
-            RequestStatus.Pending -> initPendingRequestsAdapter.postValue(filtered)
-            RequestStatus.Confirmed -> initConfirmedRequestsAdapter.postValue(filtered)
-            else->{}
+            RequestStatus.Completed -> {
+                initCompleteRequestsAdapter.postValue(filteredPerson)
+            }
+
+            RequestStatus.Canceled -> {
+                initCanceledRequestsAdapter.postValue(filteredPerson)
+            }
+
+            RequestStatus.Pending -> {
+                initPendingRequestsAdapter.postValue(filteredPerson)
+            }
+
+            RequestStatus.Confirmed -> {
+                initConfirmedRequestsAdapter.postValue(filteredPerson)
+            }
+
+            else -> {}
         }
 
-        if (filtered.isEmpty()) {
+        if (filteredPerson.isEmpty() && filteredHospital.isEmpty()) {
             requestState.postValue(RequestsStateShow.IsNotFound)
         } else {
-            requestState.postValue(RequestsStateShow.IsFilterSuccess(status, filtered))
+            if (filteredPerson.isNotEmpty())
+            requestState.postValue(RequestsStateShow.IsPersonFilterSuccess(status, filteredPerson))
+            if (filteredHospital.isNotEmpty())
+            requestState.postValue(RequestsStateShow.IsHospitalFilterSuccess(status, filteredHospital))
         }
     }
-
 
     fun getCurrentRequest() {
         viewModelScope.launch {
             try {
                 val current = repository.getCurrentPersonRequest()
-                if (listOf(current).isEmpty() ) {
+                if (listOf(current).isEmpty()) {
                     requestState.postValue(RequestsStateShow.IsNotFound)
                     lastCurrentRequest = null
                 } else if (current != lastCurrentRequest) {
                     lastCurrentRequest = current
-                    requestState.postValue(RequestsStateShow.IsUpdateSuccess(listOf(lastCurrentRequest!!)))
+                    requestState.postValue(
+                        RequestsStateShow.IsUpdateSuccess(
+                            listOf(
+                                lastCurrentRequest!!
+                            )
+                        )
+                    )
 
                 }
             } catch (e: Exception) {
@@ -150,12 +198,18 @@ class MyPersonRequestsViewModel @Inject constructor(
         }
     }
 }
+
 sealed class RequestsStateShow {
     data object Loading : RequestsStateShow()
     data object IsNotFound : RequestsStateShow()
 
-    class IsGetSuccess(val requests: List<PersonNotificationResponse>) : RequestsStateShow()
-    class IsFilterSuccess(
+    class IsGetPersonRequestSuccess(val requests: List<PersonNotificationResponse>) :
+        RequestsStateShow()
+
+    class IsGetHospitalRequestSuccess(val requests: List<HospitalNotificationResponse>) :
+        RequestsStateShow()
+
+    class IsPersonFilterSuccess(
         val status: RequestStatus?,
         val filtered: List<PersonNotificationResponse>
     ) : RequestsStateShow()
@@ -164,5 +218,9 @@ sealed class RequestsStateShow {
     class IsDeleteSuccess(val isSuccess: Boolean) : RequestsStateShow()
     class IsActionSuccess(val action: String, val isSuccess: Boolean) : RequestsStateShow()
     class ShowError(val errorMessage: String) : RequestsStateShow()
+    class IsHospitalFilterSuccess(
+        val status: RequestStatus?,
+      val  filteredHospital: List<HospitalNotificationResponse>
+    ) : RequestsStateShow()
 }
 

@@ -187,7 +187,7 @@
             android:id="@+id/action_personRequestsFragment_to_mapFragment"
             app:destination="@id/mapFragment" />
     </fragment>
-    <action android:id="@+id/global_to_notificationFragment"
+    <action android:id="@+id/global_to_person_notificationFragment"
         app:destination="@id/personRequestsFragment" />
     <activity
         android:id="@+id/mainActivity"
@@ -205,4 +205,24 @@
             android:name="latitude"
             app:argType="float" />
     </fragment>
+    <fragment
+        android:id="@+id/ambulanceProfileFragment"
+        android:name="com.example.carecallapp.ui.ambulance.AmbulanceProfileFragment"
+        android:label="fragment_ambulance_home"
+        tools:layout="@layout/fragment_ambulance_profile" />
+    <fragment
+        android:id="@+id/ambulanceUpdateProfileFragment"
+        android:name="com.example.carecallapp.ui.ambulance.AmbulanceUpdateProfileFragment"
+        android:label="fragment_ambulance_update_profile"
+        tools:layout="@layout/fragment_ambulance_update_profile" />
+    <fragment
+        tools:layout="@layout/fragment_doctor_profile"
+        android:id="@+id/doctorProfileFragment"
+        android:name="com.example.carecallapp.ui.doctor.DoctorProfileFragment"
+        android:label="DoctorProfileFragment" />
+    <fragment
+        tools:layout="@layout/fragment_update_doctor_profile"
+        android:id="@+id/updateDoctorProfileFragment"
+        android:name="com.example.carecallapp.ui.doctor.UpdateDoctorProfileFragment"
+        android:label="UpdateDoctorProfileFragment" />
 </navigation>
