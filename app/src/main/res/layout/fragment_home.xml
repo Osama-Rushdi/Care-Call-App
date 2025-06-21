@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorHome"
-    >
+    android:background="@color/colorHome">
 
 
     <ImageView
         android:id="@+id/bloodItemCD"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:clickable="true"
         android:contentDescription="@string/blood_cd"
         android:focusable="true"
@@ -32,8 +32,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/bloodItemCD"
-        app:layout_constraintStart_toStartOf="@+id/guideline6"
         app:layout_constraintTop_toTopOf="@+id/bloodItemCD"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_emergency" />
 
     <ImageView
@@ -48,28 +48,9 @@
         app:layout_constraintTop_toBottomOf="@+id/bloodItemCD"
         app:srcCompat="@drawable/ic_nicu" />
 
-    <com.google.android.material.card.MaterialCardView
+    <include
         android:id="@+id/supportFabBtn"
-        android:layout_width="78dp"
-        android:layout_height="76dp"
-        android:layout_margin="32dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="200dp"
-        app:cardElevation="100dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:strokeColor="@color/white">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:adjustViewBounds="true"
-            android:clickable="true"
-            android:contentDescription="@string/support"
-            android:focusable="true"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/ic_support" />
-    </com.google.android.material.card.MaterialCardView>
+        layout="@layout/support_fab" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -79,16 +60,17 @@
         app:layout_constraintGuide_percent="0.27189544" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/homeImage"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:contentDescription="@string/home_image"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/group_239141" />
 
     <LinearLayout
@@ -114,16 +96,16 @@
             android:id="@+id/hospitalNameTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="8dp"
+            android:paddingHorizontal="2dp"
             android:textColor="@color/white"
-            android:textSize="24sp"
+            android:textSize="22sp"
+            android:maxLines="1"
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/guideline6"
-
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/servicesTV"
             app:layout_constraintTop_toTopOf="@+id/guideline4"
-            tools:text="AL Salam" />
+            android:text="@string/hospital_manager" />
 
 
     </LinearLayout>
@@ -133,10 +115,10 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="9dp"
-
-        android:background="@drawable/howcanwehelpyou"
+        android:text="@string/how_can_we_help_you"
         android:textColor="@color/white"
-        android:textSize="24sp"
+        android:textSize="22sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@id/linearHelloTexts"
         app:layout_constraintStart_toStartOf="@id/linearHelloTexts"
         app:layout_constraintTop_toBottomOf="@+id/linearHelloTexts" />

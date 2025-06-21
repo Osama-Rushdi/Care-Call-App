@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/loginFragment"
-    >
+    app:startDestination="@id/welcomeAppFragment">
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.carecallapp.ui.auth.login.LoginFragment"
@@ -26,37 +25,37 @@
     </fragment>
     <dialog
         android:id="@+id/dialogSheetAddRoom"
-        android:name="com.example.carecallapp.ui.hospital.hospital_sevices.room_and_nursery.DialogSheetAddRoom"
+        android:name="com.example.carecallapp.ui.roles.hospital.hospital_sevices.room_and_nursery.DialogSheetAddRoom"
         android:label="DialogSheetAddRoom"
         tools:layout="@layout/add_room_dialog_sheet" />
     <dialog
         android:id="@+id/dialogSheetAddBlood"
-        android:name="com.example.carecallapp.ui.hospital.hospital_sevices.blood_bank.DialogSheetAddBlood"
+        android:name="com.example.carecallapp.ui.roles.hospital.hospital_sevices.blood_bank.DialogSheetAddBlood"
         android:label="DialogSheetAddBlood"
         tools:layout="@layout/add_blood_dialog_sheet" />
     <dialog
         android:id="@+id/editBloodDialogSheet"
-        android:name="com.example.carecallapp.ui.hospital.hospital_sevices.blood_bank.EditBloodDialogSheet"
+        android:name="com.example.carecallapp.ui.roles.hospital.hospital_sevices.blood_bank.EditBloodDialogSheet"
         android:label="EditBloodDialogSheet"
         tools:layout="@layout/edit_blood_dialog_sheet" />
     <dialog
         android:id="@+id/editRoomDialogSheet"
-        android:name="com.example.carecallapp.ui.hospital.hospital_sevices.room_and_nursery.EditRoomDialogSheet"
+        android:name="com.example.carecallapp.ui.roles.hospital.hospital_sevices.room_and_nursery.EditRoomDialogSheet"
         android:label="EditRoomDialogSheet"
         tools:layout="@layout/edit_room_dialog_sheet" />
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.carecallapp.ui.hospital.home.HomeFragment"
+        android:name="com.example.carecallapp.ui.roles.hospital.home.HospitalHomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_fragmentAddServices"
-            app:destination="@id/fragmentAddServices">
-        </action>
+            app:destination="@id/fragmentAddServices" />
+
     </fragment>
     <fragment
         android:id="@+id/fragmentAddServices"
-        android:name="com.example.carecallapp.ui.hospital.hospital_sevices.FragmentAddServices"
+        android:name="com.example.carecallapp.ui.roles.hospital.hospital_sevices.FragmentAddServices"
         android:label="FragmentAddServices"
         tools:layout="@layout/add_service_fragment">
         <argument
@@ -66,19 +65,18 @@
     </fragment>
     <fragment
         android:id="@+id/hospitalProfileFragment"
-        android:name="com.example.carecallapp.ui.hospital.profile.HospitalProfileFragment"
+        android:name="com.example.carecallapp.ui.roles.hospital.profile.HospitalProfileFragment"
         android:label="HospitalProfileFragment"
         tools:layout="@layout/fragment_hospital_profile">
         <action
             android:id="@+id/action_hospitalProfileFragment_to_hospitalUpdateProfileFragment"
-            app:destination="@id/hospitalUpdateProfileFragment" >
-              </action>
+            app:destination="@id/hospitalUpdateProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/hospitalUpdateProfileFragment"
-        android:name="com.example.carecallapp.ui.hospital.profile.HospitalUpdateProfileFragment"
+        android:name="com.example.carecallapp.ui.roles.hospital.profile.HospitalUpdateProfileFragment"
         android:label="HospitalUpdateProfileFragment"
-        tools:layout="@layout/fragment_hospital_update_profile" >
+        tools:layout="@layout/fragment_hospital_update_profile">
         <argument
             android:name="hospitalProfile"
             app:argType="com.example.carecallapp.domain.model.hospital.hospital_profile.HospitalResponse" />
@@ -87,17 +85,16 @@
         android:id="@+id/doctorRegisterFragment"
         android:name="com.example.carecallapp.ui.auth.register.DoctorRegisterFragment"
         android:label="doctorRegisterFragment"
-        tools:layout="@layout/fragment_doctor_register" >
+        tools:layout="@layout/fragment_doctor_register">
         <action
             android:id="@+id/action_doctorRegisterFragment_to_medicalServicesFragment"
             app:destination="@id/medicalServicesFragment"
             app:popUpTo="@id/doctorRegisterFragment"
-            app:popUpToInclusive="true"
-            />
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/medicalServicesFragment"
-        android:name="com.example.carecallapp.ui.hospital.emergency_services.MedicalServicesFragment"
+        android:name="com.example.carecallapp.ui.roles.hospital.emergency_services.MedicalServicesFragment"
         android:label="fragment_medical_services"
         tools:layout="@layout/fragment_medical_services">
         <action
@@ -109,7 +106,7 @@
     </fragment>
     <fragment
         android:id="@+id/roomFragment"
-        android:name="com.example.carecallapp.ui.hospital.hospital_sevices.room_and_nursery.RoomFragment"
+        android:name="com.example.carecallapp.ui.roles.hospital.hospital_sevices.room_and_nursery.RoomFragment"
         android:label="fragment_room"
         tools:layout="@layout/fragment_room">
         <action
@@ -124,7 +121,7 @@
     </fragment>
     <fragment
         android:id="@+id/bloodBankFragment"
-        android:name="com.example.carecallapp.ui.hospital.hospital_sevices.blood_bank.BloodBankFragment"
+        android:name="com.example.carecallapp.ui.roles.hospital.hospital_sevices.blood_bank.BloodBankFragment"
         android:label="fragment_blood_bank"
         tools:layout="@layout/fragment_blood_bank">
         <action
@@ -140,54 +137,47 @@
         android:id="@+id/ambulanceRegisterFragment"
         android:name="com.example.carecallapp.ui.auth.register.AmbulanceRegisterFragment"
         android:label="fragment_ambulance_register"
-        tools:layout="@layout/fragment_ambulance_register" >
+        tools:layout="@layout/fragment_ambulance_register">
         <action
             android:id="@+id/action_ambulanceRegisterFragment_to_medicalServicesFragment"
             app:destination="@id/medicalServicesFragment"
             app:popUpTo="@id/ambulanceRegisterFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/ambulanceHomeFragment"
-        android:name="com.example.carecallapp.ui.ambulance.AmbulanceHomeFragment"
+        android:name="com.example.carecallapp.ui.roles.ambulance.AmbulanceHomeFragment"
         android:label="fragment_ambulance_home"
-        tools:layout="@layout/fragment_ambulance_home" >
+        tools:layout="@layout/fragment_ambulance_home">
         <action
             android:id="@+id/action_ambulanceHomeFragment_to_personRequestsFragment"
             app:destination="@id/personRequestsFragment" />
     </fragment>
     <fragment
         android:id="@+id/doctorHomeFragment"
-        android:name="com.example.carecallapp.ui.doctor.DoctorHomeFragment"
+        android:name="com.example.carecallapp.ui.roles.doctor.DoctorHomeFragment"
         android:label="fragment_doctor_home"
         tools:layout="@layout/fragment_doctor_home" />
     <fragment
         android:id="@+id/adminFragment"
-        android:name="com.example.carecallapp.ui.admin.AdminFragment"
+        android:name="com.example.carecallapp.ui.roles.admin.AdminFragment"
         android:label="fragment_admin"
         tools:layout="@layout/fragment_admin" />
-    <action
-        android:id="@+id/action_global_to_bloodBankFragment"
-        app:destination="@id/bloodBankFragment" />
-    <action
-        android:id="@+id/action_global_to_roomFragment"
-        app:destination="@id/roomFragment">
-    </action>
-    <fragment
-        android:id="@+id/hospitalRequistsFragment"
-        android:name="com.example.carecallapp.ui.hospital.requests.HospitalRequestsFragment"
-        android:label="fragment_hospital_requists"
-        tools:layout="@layout/fragment_hospital_requists" />
+
     <fragment
         android:id="@+id/personRequestsFragment"
-        android:name="com.example.carecallapp.ui.ambulance.PersonRequestsFragment"
+        android:name="com.example.carecallapp.ui.roles.ambulance.PersonRequestsFragment"
         android:label="fragment_person_requests"
-        tools:layout="@layout/fragment_person_requests" >
+        tools:layout="@layout/fragment_person_requests">
         <action
-            android:id="@+id/action_personRequestsFragment_to_mapFragment"
-            app:destination="@id/mapFragment" />
+            android:id="@+id/action_personRequestsFragment_to_showPersonRequestDetailsDialogSheet"
+            app:destination="@id/showPersonRequestDetailsDialogSheet" />
+        <action
+            android:id="@+id/action_personRequestsFragment_to_showHospitalRequestDetailsDialogSheet"
+            app:destination="@id/showHospitalRequestDetailsDialogSheet" />
     </fragment>
-    <action android:id="@+id/global_to_person_notificationFragment"
+    <action
+        android:id="@+id/global_to_person_notificationFragment"
         app:destination="@id/personRequestsFragment" />
     <activity
         android:id="@+id/mainActivity"
@@ -195,9 +185,9 @@
         android:label="MainActivity" />
     <fragment
         android:id="@+id/mapFragment"
-        android:name="com.example.carecallapp.ui.doctor.MapFragment"
+        android:name="com.example.carecallapp.ui.roles.doctor.MapFragment"
         android:label="MapFragment"
-        tools:layout="@layout/fragment_map" >
+        tools:layout="@layout/fragment_map">
         <argument
             android:name="longtude"
             app:argType="float" />
@@ -207,22 +197,98 @@
     </fragment>
     <fragment
         android:id="@+id/ambulanceProfileFragment"
-        android:name="com.example.carecallapp.ui.ambulance.AmbulanceProfileFragment"
+        android:name="com.example.carecallapp.ui.roles.ambulance.AmbulanceProfileFragment"
         android:label="fragment_ambulance_home"
-        tools:layout="@layout/fragment_ambulance_profile" />
+        tools:layout="@layout/fragment_ambulance_profile">
+        <action
+            android:id="@+id/action_ambulanceProfileFragment_to_ambulanceUpdateProfileFragment"
+            app:destination="@id/ambulanceUpdateProfileFragment" />
+    </fragment>
     <fragment
         android:id="@+id/ambulanceUpdateProfileFragment"
-        android:name="com.example.carecallapp.ui.ambulance.AmbulanceUpdateProfileFragment"
+        android:name="com.example.carecallapp.ui.roles.ambulance.AmbulanceUpdateProfileFragment"
         android:label="fragment_ambulance_update_profile"
         tools:layout="@layout/fragment_ambulance_update_profile" />
     <fragment
-        tools:layout="@layout/fragment_doctor_profile"
         android:id="@+id/doctorProfileFragment"
-        android:name="com.example.carecallapp.ui.doctor.DoctorProfileFragment"
-        android:label="DoctorProfileFragment" />
+        android:name="com.example.carecallapp.ui.roles.doctor.DoctorProfileFragment"
+        android:label="DoctorProfileFragment"
+        tools:layout="@layout/fragment_doctor_profile">
+        <action
+            android:id="@+id/action_doctorProfileFragment_to_updateDoctorProfileFragment"
+            app:destination="@id/updateDoctorProfileFragment" />
+    </fragment>
     <fragment
-        tools:layout="@layout/fragment_update_doctor_profile"
         android:id="@+id/updateDoctorProfileFragment"
-        android:name="com.example.carecallapp.ui.doctor.UpdateDoctorProfileFragment"
-        android:label="UpdateDoctorProfileFragment" />
+        android:name="com.example.carecallapp.ui.roles.doctor.UpdateDoctorProfileFragment"
+        android:label="UpdateDoctorProfileFragment"
+        tools:layout="@layout/fragment_update_doctor_profile">
+        <argument
+            android:name="doctor"
+            app:argType="com.example.carecallapp.domain.model.person_service.doctor.DoctorProfile" />
+    </fragment>
+    <dialog
+        android:id="@+id/dialogSheetTechnicalSupport"
+        android:name="com.example.carecallapp.ui.roles.hospital.home.DialogSheetTechnicalSupport"
+        android:label="DialogSheetTechnicalSupport"
+        tools:layout="@layout/fragment_technical_support" />
+    <fragment
+        android:id="@+id/aboutUsFragment"
+        android:name="com.example.carecallapp.ui.roles.AboutUsFragment"
+        android:label="fragment_about_us"
+        tools:layout="@layout/fragment_about_us" />
+    <action
+        android:id="@+id/action_global_to_aboutUsFragment"
+        app:destination="@id/aboutUsFragment" />
+    <action
+        android:id="@+id/action_fragmentAddServices_to_roomFragment"
+        app:destination="@id/roomFragment" />
+    <action
+        android:id="@+id/action_fragmentAddServices_to_bloodBankFragment"
+        app:destination="@id/bloodBankFragment" />
+    <action
+        android:id="@+id/action_homeFragment_to_roomFragment"
+        app:destination="@id/roomFragment" />
+    <action
+        android:id="@+id/action_homeFragment_to_bloodBankFragment"
+        app:destination="@id/bloodBankFragment" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.carecallapp.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+    <action
+        android:id="@+id/action_global_to_dialogSheetTechnicalSupport"
+        app:destination="@id/dialogSheetTechnicalSupport" />
+    <dialog
+        android:id="@+id/showPersonRequestDetailsDialogSheet"
+        android:name="com.example.carecallapp.ui.roles.doctor.ShowPersonRequestDetailsDialogSheet"
+        android:label="ShowPersonRequestDetailsDialogSheet"
+        tools:layout="@layout/fragment_show_person_request_details_dialog_sheet">
+        <action
+            android:id="@+id/action_showPersonRequestDetailsDialogSheet_to_mapFragment"
+            app:destination="@id/mapFragment" />
+        <argument
+            android:name="request"
+            app:argType="com.example.carecallapp.domain.model.person_service.PersonNotificationResponse" />
+
+    </dialog>
+    <dialog
+        android:id="@+id/showHospitalRequestDetailsDialogSheet"
+        android:name="com.example.carecallapp.ui.roles.hospital.requests.ShowHospitalRequestDetailsDialogSheet"
+        android:label="ShowHospitalRequestDetailsDialogSheet"
+        tools:layout="@layout/fragment_show_hospital_request_details_dialog_sheet">
+        <argument
+            android:name="request"
+            app:argType="com.example.carecallapp.domain.model.hospital.hospital_notification.HospitalNotificationResponse" />
+    </dialog>
+    <fragment
+        android:id="@+id/welcomeAppFragment"
+        android:name="com.example.carecallapp.ui.WelcomeAppFragment"
+        android:label="WelcomeAppFragment"
+        tools:layout="@layout/fragment_welcome_app">
+        <action
+            android:id="@+id/action_welcomeAppFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 </navigation>

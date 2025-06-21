@@ -1,11 +1,10 @@
 package com.example.carecallapp.data.repository.data_sources.remote_data_source
 
-import com.example.carecallapp.data.model.hospital.hospital_notification.HospitalNotificationResponseDM
-import com.example.carecallapp.domain.model.PersonService.LocationRequest
-import com.example.carecallapp.domain.model.PersonService.MapRouteDomain
-import com.example.carecallapp.domain.model.PersonService.PersonNotificationResponse
-import com.example.carecallapp.domain.model.PersonService.ambulance.AmbulanceProfile
-import com.example.carecallapp.domain.model.PersonService.doctor.DoctorProfile
+import com.example.carecallapp.domain.model.person_service.LocationRequest
+import com.example.carecallapp.domain.model.person_service.MapRouteDomain
+import com.example.carecallapp.domain.model.person_service.PersonNotificationResponse
+import com.example.carecallapp.domain.model.person_service.ambulance.AmbulanceProfile
+import com.example.carecallapp.domain.model.person_service.doctor.DoctorProfile
 import com.example.carecallapp.domain.model.auth.AmbulanceRegisterRequest
 import com.example.carecallapp.domain.model.auth.DoctorRegisterRequest
 import com.example.carecallapp.domain.model.auth.HospitalRegisterRequest
@@ -19,7 +18,6 @@ import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceRes
 import com.example.carecallapp.domain.model.hospital.hospital_notification.HospitalNotificationResponse
 import com.example.carecallapp.domain.model.hospital.hospital_profile.HospitalResponse
 import com.google.android.gms.maps.model.LatLng
-import retrofit2.Response
 
 
 interface RemoteDataSource {
@@ -68,7 +66,6 @@ interface RemoteDataSource {
     suspend fun confirmPersonRequest(id: Int): Boolean
     suspend fun completePersonRequest(id: Int): Boolean
     suspend fun cancelPersonRequest(id: Int): Boolean
-    suspend fun deletePersonRequest(id: Int): Boolean
     suspend fun getHospitalRequests(): List<HospitalNotificationResponse>
 
     //DOCTOR

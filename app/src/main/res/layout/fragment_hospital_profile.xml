@@ -74,15 +74,13 @@
                         app:layout_constraintStart_toStartOf="@id/ivProfilePicture"
                         app:layout_constraintTop_toTopOf="@id/ivProfilePicture" />
 
-                    <de.hdodenhof.circleimageview.CircleImageView
+                    <include
                         android:id="@+id/ivProfilePicture"
+                        layout="@layout/circular_profile_image"
                         android:layout_width="120dp"
                         android:layout_height="120dp"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="16dp"
-                        android:src="@drawable/ic_hospital"
-                        app:civ_border_color="@color/white"
-                        app:civ_border_width="4dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -180,7 +178,7 @@
                             android:layout_marginStart="8dp"
                             android:gravity="center_horizontal"
                             android:linksClickable="true"
-                            android:textColor="@color/primary"
+                            android:textColor="@color/colorPrimary"
                             android:textSize="14sp"
                             tools:text="www.cityhospital.com" />
                     </LinearLayout>

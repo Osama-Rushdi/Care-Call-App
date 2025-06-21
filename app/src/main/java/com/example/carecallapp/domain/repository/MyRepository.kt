@@ -1,10 +1,10 @@
 package com.example.carecallapp.domain.repository
 
-import com.example.carecallapp.domain.model.PersonService.LocationRequest
-import com.example.carecallapp.domain.model.PersonService.MapRouteDomain
-import com.example.carecallapp.domain.model.PersonService.PersonNotificationResponse
-import com.example.carecallapp.domain.model.PersonService.ambulance.AmbulanceProfile
-import com.example.carecallapp.domain.model.PersonService.doctor.DoctorProfile
+import com.example.carecallapp.domain.model.person_service.LocationRequest
+import com.example.carecallapp.domain.model.person_service.MapRouteDomain
+import com.example.carecallapp.domain.model.person_service.PersonNotificationResponse
+import com.example.carecallapp.domain.model.person_service.ambulance.AmbulanceProfile
+import com.example.carecallapp.domain.model.person_service.doctor.DoctorProfile
 import com.example.carecallapp.domain.model.auth.LoginRequest
 import com.example.carecallapp.domain.model.auth.AmbulanceRegisterRequest
 import com.example.carecallapp.domain.model.auth.DoctorRegisterRequest
@@ -63,7 +63,6 @@ interface MyRepository {
     suspend fun confirmPersonRequest(id: Int): Boolean
     suspend fun completePersonRequest(id: Int): Boolean
     suspend fun cancelPersonRequest(id: Int): Boolean
-    suspend fun deletePersonRequest(id: Int): Boolean
     suspend fun getHospitalRequests(): List<HospitalNotificationResponse>
 
 

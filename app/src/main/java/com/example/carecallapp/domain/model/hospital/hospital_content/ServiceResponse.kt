@@ -4,7 +4,6 @@ import java.io.Serializable
 
 
 data class ServiceResponse(
-
     val serviceType: String,
     val price: Int = 0,
     val name: String = "",
@@ -13,6 +12,6 @@ data class ServiceResponse(
     val id: Int,
 )
 
-enum class ServiceType :Serializable{
+enum class ServiceType : Serializable{
     Ambulance, Doctor, Nursery,BloodBank,ICU
 }

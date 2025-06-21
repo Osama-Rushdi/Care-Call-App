@@ -1,6 +1,6 @@
 package com.example.carecallapp.domain.use_cases
 
-import com.example.carecallapp.domain.model.PersonService.MapRouteDomain
+import com.example.carecallapp.domain.model.person_service.MapRouteDomain
 import com.example.carecallapp.domain.repository.MyRepository
 import com.google.android.gms.maps.model.LatLng
 import javax.inject.Inject

@@ -43,11 +43,12 @@
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main"
         app:itemIconSize="30dp"
-        app:itemIconTint="@color/black"
+        app:itemIconTint="@color/primary_dark"
         app:itemRippleColor="@color/colorPrimary"
         app:itemTextAppearance="@style/text18BlackBold"
         app:itemTextColor="@color/black"
         app:itemVerticalPadding="12dp"
+        app:itemBackground="@drawable/select_item_shape"
         app:menu="@menu/nav_menu"
         tools:visibility="visible" />
 </androidx.drawerlayout.widget.DrawerLayout>

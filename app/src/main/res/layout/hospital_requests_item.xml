@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/request_type"
-            android:textColor="@color/primary"
+            android:textColor="@color/colorPrimary"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +40,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingHorizontal="8dp"
-            android:textColor="@color/primary"
+            android:textColor="@color/colorPrimary"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/requestTypeConst"
@@ -119,19 +119,34 @@
             app:strokeColor="@color/green" />
 
         <com.google.android.material.button.MaterialButton
+            android:id="@+id/completeBtn"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/complete"
+            android:textColor="@android:color/white"
+            app:backgroundTint="@color/colorPrimary"
+            app:cornerRadius="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/countOfBagsTvVar"
+            app:strokeColor="@color/green" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/rejectBtn"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:text="@string/reject"
-            android:textColor="@color/primary"
+            android:textColor="@color/colorPrimary"
             app:backgroundTint="@android:color/white"
             app:cornerRadius="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/acceptBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/acceptBtn"
-            app:strokeColor="@color/primary"
+            app:strokeColor="@color/colorPrimary"
             app:strokeWidth="1dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

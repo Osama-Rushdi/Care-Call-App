@@ -17,11 +17,11 @@ import com.example.carecallapp.data.mappers.toLoginDM
 import com.example.carecallapp.data.mappers.toLoginResponse
 import com.example.carecallapp.data.mappers.toPeopleService
 import com.example.carecallapp.data.mappers.toRoomAndNurseryDM
-import com.example.carecallapp.domain.model.PersonService.LocationRequest
-import com.example.carecallapp.domain.model.PersonService.MapRouteDomain
-import com.example.carecallapp.domain.model.PersonService.PersonNotificationResponse
-import com.example.carecallapp.domain.model.PersonService.ambulance.AmbulanceProfile
-import com.example.carecallapp.domain.model.PersonService.doctor.DoctorProfile
+import com.example.carecallapp.domain.model.person_service.LocationRequest
+import com.example.carecallapp.domain.model.person_service.MapRouteDomain
+import com.example.carecallapp.domain.model.person_service.PersonNotificationResponse
+import com.example.carecallapp.domain.model.person_service.ambulance.AmbulanceProfile
+import com.example.carecallapp.domain.model.person_service.doctor.DoctorProfile
 import com.example.carecallapp.domain.model.auth.AmbulanceRegisterRequest
 import com.example.carecallapp.domain.model.auth.DoctorRegisterRequest
 import com.example.carecallapp.domain.model.auth.HospitalRegisterRequest
@@ -37,7 +37,6 @@ import com.example.carecallapp.domain.model.hospital.hospital_profile.HospitalRe
 import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.qualifiers.ApplicationContext
 import org.json.JSONObject
-import java.net.URL
 import javax.inject.Inject
 
 class RemoteDataSourceImpl @Inject constructor(
@@ -216,7 +215,7 @@ class RemoteDataSourceImpl @Inject constructor(
         if (response.isSuccessful) {
             return true
         } else {
-            throw Exception("confirm Person Request: ${response.code()}")
+            throw Exception("confirm Person Request: ${response.errorBody()}")
         }
     }
 
@@ -226,7 +225,15 @@ class RemoteDataSourceImpl @Inject constructor(
         if (response.isSuccessful) {
             return true
         } else {
-            throw Exception("complete Person Request: ${response.code()}")
+            val errorJson = response.errorBody()?.string()
+            val errorMessage = try {
+                JSONObject(errorJson ?: "{}").optString("error", "Unknown error")
+            } catch (e: Exception) {
+                "Error parsing error message"
+            }
+
+            Log.e("kkk", "Error: $errorMessage")
+            throw Exception(errorMessage)
         }
     }
 
@@ -240,15 +247,6 @@ class RemoteDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun deletePersonRequest(id: Int): Boolean {
-        val response = webServices.deletePersonRequest(id)
-        Log.d("kkk", "delete Person Request:$response ")
-        if (response.isSuccessful) {
-            return true
-        } else {
-            throw Exception("delete Person Request: ${response.code()}")
-        }
-    }
 
     override suspend fun getHospitalRequests(): List<HospitalNotificationResponse> {
         val response = webServices.getHospitalRequests()
@@ -258,7 +256,7 @@ class RemoteDataSourceImpl @Inject constructor(
         } else
             throw Exception("get Hospital Requests failed with code: ${response.code()}")
 
-}
+    }
 
     //--------------DOCTOR------------------
     override suspend fun getDoctorDetails(doctorId: String): DoctorProfile? {

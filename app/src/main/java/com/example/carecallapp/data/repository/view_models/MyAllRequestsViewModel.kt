@@ -3,8 +3,9 @@ package com.example.carecallapp.data.repository.view_models
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.carecallapp.domain.model.PersonService.PersonNotificationResponse
-import com.example.carecallapp.domain.model.PersonService.RequestStatus
+import com.example.carecallapp.domain.model.person_service.PersonNotificationResponse
+import com.example.carecallapp.domain.model.person_service.RequestStatus
+import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceType
 import com.example.carecallapp.domain.model.hospital.hospital_notification.HospitalNotificationResponse
 import com.example.carecallapp.domain.repository.MyRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,10 +25,9 @@ class MyPersonRequestsViewModel @Inject constructor(
     val initCanceledRequestsAdapter = MutableLiveData<List<Any?>?>()
     val initPendingRequestsAdapter = MutableLiveData<List<Any?>?>()
     val initConfirmedRequestsAdapter = MutableLiveData<List<Any?>?>()
+    val budgeCount = MutableLiveData(Budge(0, 0))
 
-
-
-    private var lastCurrentRequest: PersonNotificationResponse? = null
+//    private var lastCurrentRequest: PersonNotificationResponse? = null
 
     // Store all requests to filter them later
     private var allPersonRequests: List<PersonNotificationResponse> = emptyList()
@@ -74,9 +74,10 @@ class MyPersonRequestsViewModel @Inject constructor(
                 if (requests.isEmpty()) {
                     requestState.postValue(RequestsStateShow.IsNotFound)
                 } else {
-                    allHospitalRequests = requests
-                    filterRequestsByStatus(null) // null = All
-                    requestState.postValue(RequestsStateShow.IsGetHospitalRequestSuccess(requests))
+                    allHospitalRequests = requests.filter {
+                        it.service!!.name != "Docotr" && it.service.name != ServiceType.Ambulance.name.lowercase()}
+                    filterRequestsByStatus(null)
+                    requestState.postValue(RequestsStateShow.IsGetHospitalRequestSuccess(allHospitalRequests))
                 }
             } catch (e: Exception) {
                 requestState.postValue(RequestsStateShow.ShowError(e.message ?: "Unknown error"))
@@ -85,11 +86,14 @@ class MyPersonRequestsViewModel @Inject constructor(
     }
 
     fun filterRequestsByStatus(status: RequestStatus?) {
-        val filteredHospital = if (status == null) {
-            allHospitalRequests
-        } else {
-            allHospitalRequests.filter { it.status == status }
-        }
+        val filteredHospital =
+            if (status == null) {
+                allHospitalRequests
+            } else {
+                allHospitalRequests.filter {
+                    it.status == status
+                }
+            }
         val filteredPerson = if (status == null) {
             allPersonRequests
         } else {
@@ -106,10 +110,12 @@ class MyPersonRequestsViewModel @Inject constructor(
             }
 
             RequestStatus.Pending -> {
+
                 initPendingRequestsAdapter.postValue(filteredPerson)
             }
 
             RequestStatus.Confirmed -> {
+
                 initConfirmedRequestsAdapter.postValue(filteredPerson)
             }
 
@@ -118,12 +124,21 @@ class MyPersonRequestsViewModel @Inject constructor(
 
         if (filteredPerson.isEmpty() && filteredHospital.isEmpty()) {
             requestState.postValue(RequestsStateShow.IsNotFound)
-        } else {
-            if (filteredPerson.isNotEmpty())
-            requestState.postValue(RequestsStateShow.IsPersonFilterSuccess(status, filteredPerson))
-            if (filteredHospital.isNotEmpty())
-            requestState.postValue(RequestsStateShow.IsHospitalFilterSuccess(status, filteredHospital))
         }
+        else if (filteredPerson.isNotEmpty()) {
+            requestState.postValue(
+                RequestsStateShow.IsPersonFilterSuccess(
+                    status,
+                    filteredPerson
+                )
+            )
+        } else
+            requestState.postValue(
+                RequestsStateShow.IsHospitalFilterSuccess(
+                    status,
+                    filteredHospital
+                )
+            )
     }
 
     fun getCurrentRequest() {
@@ -132,20 +147,23 @@ class MyPersonRequestsViewModel @Inject constructor(
                 val current = repository.getCurrentPersonRequest()
                 if (listOf(current).isEmpty()) {
                     requestState.postValue(RequestsStateShow.IsNotFound)
-                    lastCurrentRequest = null
-                } else if (current != lastCurrentRequest) {
-                    lastCurrentRequest = current
+                } else {
                     requestState.postValue(
                         RequestsStateShow.IsUpdateSuccess(
                             listOf(
-                                lastCurrentRequest!!
+                                current
                             )
                         )
                     )
 
                 }
+
             } catch (e: Exception) {
-                requestState.postValue(RequestsStateShow.ShowError(e.message ?: "Unknown error"))
+                requestState.postValue(
+                    RequestsStateShow.ShowError(
+                        e.message ?: "Unknown error"
+                    )
+                )
             }
         }
     }
@@ -157,7 +175,11 @@ class MyPersonRequestsViewModel @Inject constructor(
                 val success = repository.confirmPersonRequest(id)
                 requestState.postValue(RequestsStateShow.IsActionSuccess("Confirmed", success))
             } catch (e: Exception) {
-                requestState.postValue(RequestsStateShow.ShowError(e.message ?: "Unknown error"))
+                requestState.postValue(
+                    RequestsStateShow.ShowError(
+                        e.message ?: "Unknown error"
+                    )
+                )
             }
         }
     }
@@ -169,7 +191,11 @@ class MyPersonRequestsViewModel @Inject constructor(
                 val success = repository.completePersonRequest(id)
                 requestState.postValue(RequestsStateShow.IsActionSuccess("Completed", success))
             } catch (e: Exception) {
-                requestState.postValue(RequestsStateShow.ShowError(e.message ?: "Unknown error"))
+                requestState.postValue(
+                    RequestsStateShow.ShowError(
+                        e.message ?: "Unknown error"
+                    )
+                )
             }
         }
     }
@@ -181,22 +207,15 @@ class MyPersonRequestsViewModel @Inject constructor(
                 val success = repository.cancelPersonRequest(id)
                 requestState.postValue(RequestsStateShow.IsActionSuccess("Canceled", success))
             } catch (e: Exception) {
-                requestState.postValue(RequestsStateShow.ShowError(e.message ?: "Unknown error"))
+                requestState.postValue(
+                    RequestsStateShow.ShowError(
+                        e.message ?: "Unknown error"
+                    )
+                )
             }
         }
     }
 
-    fun deleteRequest(id: Int) {
-        viewModelScope.launch {
-            requestState.postValue(RequestsStateShow.Loading)
-            try {
-                val success = repository.deletePersonRequest(id)
-                requestState.postValue(RequestsStateShow.IsDeleteSuccess(success))
-            } catch (e: Exception) {
-                requestState.postValue(RequestsStateShow.ShowError(e.message ?: "Unknown error"))
-            }
-        }
-    }
 }
 
 sealed class RequestsStateShow {
@@ -220,7 +239,8 @@ sealed class RequestsStateShow {
     class ShowError(val errorMessage: String) : RequestsStateShow()
     class IsHospitalFilterSuccess(
         val status: RequestStatus?,
-      val  filteredHospital: List<HospitalNotificationResponse>
+        val filteredHospital: List<HospitalNotificationResponse>
     ) : RequestsStateShow()
 }
 
+data class Budge(var count: Int, var position: Int)

@@ -1,6 +1,5 @@
 package com.example.carecallapp.ui.auth.login
 
-import android.app.AlertDialog
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -20,7 +19,9 @@ import com.example.carecallapp.data.repository.view_models.MyAuthViewModel
 import com.example.carecallapp.databinding.FragmentLoginBinding
 import com.example.carecallapp.domain.model.auth.LoginRequest
 import com.example.carecallapp.domain.model.auth.Role
+import com.example.carecallapp.ui.MainActivity.Companion.role
 import com.example.carecallapp.ui.utils.Constants
+import com.example.carecallapp.ui.utils.ShowState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,8 +30,9 @@ class LoginFragment : Fragment() {
     private val binding get() = _binding!!
     private val authViewModel: MyAuthViewModel by viewModels()
     private lateinit var saveToken: SharedPreferences
-
-
+    private lateinit var showState: ShowState
+    private lateinit var isFirstSharedPreferences: SharedPreferences
+    private var isFirst: Boolean = true
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,9 +44,14 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        showState = ShowState(requireContext())
 
         saveToken = requireActivity().getSharedPreferences(
             Constants.SHARED_TOKEN_NAME,
+            Context.MODE_PRIVATE
+        )
+        isFirstSharedPreferences = requireActivity().getSharedPreferences(
+            Constants.IS_FIRST_NAME,
             Context.MODE_PRIVATE
         )
 
@@ -56,17 +63,37 @@ class LoginFragment : Fragment() {
     private fun navigateOnRole() {
         if (saveToken.getString(Constants.SHARED_TOKEN_KEY, null) != null) {
             when (saveToken.getString(Constants.USER_ROLE_KEY, null)) {
-                Role.Hospital.name -> navigateAndClearBackStack(R.id.homeFragment)
-                Role.Doctor.name ->  navigateAndClearBackStack(R.id.doctorHomeFragment)
-                Role.Ambulance.name ->  navigateAndClearBackStack(R.id.ambulanceHomeFragment)
-                Role.Admin.name ->  navigateAndClearBackStack(R.id.adminFragment)
+                Role.Hospital.name -> {
+                    role.value = Role.Hospital.name
+                    navigateAndClearBackStack(R.id.homeFragment)
+                }
+
+                Role.Doctor.name -> {
+                    role.value = Role.Doctor.name
+                    navigateAndClearBackStack(R.id.doctorHomeFragment)
+                }
+
+                Role.Ambulance.name -> {
+                    role.value = Role.Ambulance.name
+
+                    navigateAndClearBackStack(R.id.ambulanceHomeFragment)
+                }
+
+                Role.Admin.name -> {
+                    role.value = Role.Admin.name
+
+                    navigateAndClearBackStack(R.id.adminFragment)
+                }
+
                 else -> {
                     Toast.makeText(requireContext(), "patient not available ", Toast.LENGTH_SHORT)
                         .show()
                 }
             }
+            isFirstSharedPreferences.edit().putBoolean(Constants.IS_FIRST_KEY,false).apply()
         }
     }
+
     private fun navigateAndClearBackStack(destinationId: Int) {
         val navOptions = NavOptions.Builder()
             .setPopUpTo(R.id.loginFragment, true) // مسح LoginFragment
@@ -123,14 +150,13 @@ class LoginFragment : Fragment() {
                 is AuthStateShow.ShowError -> {
                     binding.loading?.isVisible = false
                     binding.signInBtn?.isEnabled = true
-                    showError(state.errorMessage)
+                    showState.showError(state.errorMessage)
                 }
 
                 else -> {}
             }
         }
     }
-
 
 
     private fun isValidLogin(email: String, password: String): Boolean {
@@ -155,13 +181,6 @@ class LoginFragment : Fragment() {
         return isValid
     }
 
-    private fun showError(message: String) {
-        AlertDialog.Builder(requireContext())
-            .setTitle(getString(R.string.error))
-            .setMessage(message)
-            .setPositiveButton(getString(R.string.ok)) { dialog, _ -> dialog.dismiss() }
-            .show()
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -1,7 +1,6 @@
 package com.example.carecallapp.ui.auth.register
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.content.Context
 import android.content.SharedPreferences
@@ -22,6 +21,7 @@ import com.example.carecallapp.data.repository.view_models.MyAuthViewModel
 import com.example.carecallapp.databinding.FragmentAmbulanceRegisterBinding
 import com.example.carecallapp.domain.model.auth.AmbulanceRegisterRequest
 import com.example.carecallapp.ui.utils.Constants
+import com.example.carecallapp.ui.utils.ShowState
 import com.google.android.material.internal.ViewUtils.hideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
@@ -33,6 +33,8 @@ class AmbulanceRegisterFragment : Fragment() {
     private val binding get() = _binding!!
     private val authViewModel: MyAuthViewModel by viewModels()
     private lateinit var sharedPref: SharedPreferences
+    lateinit var showState: ShowState
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,6 +46,7 @@ class AmbulanceRegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        showState = ShowState(requireContext())
         sharedPref =
             requireContext().getSharedPreferences(Constants.SHARED_TOKEN_NAME, Context.MODE_PRIVATE)
         initGenderDropdown()
@@ -244,7 +247,7 @@ class AmbulanceRegisterFragment : Fragment() {
                 is AuthStateShow.ShowError -> {
                     binding.loading.root.isVisible = false
                     binding.signUpBtn.isEnabled = true
-                    showError(state.errorMessage)
+                    showState.showError(state.errorMessage)
                 }
 
                 else -> {}
@@ -258,13 +261,7 @@ class AmbulanceRegisterFragment : Fragment() {
         findNavController().navigate(action)
     }
 
-    private fun showError(message: String) {
-        AlertDialog.Builder(requireContext())
-            .setTitle(getString(R.string.error))
-            .setMessage(message)
-            .setPositiveButton(getString(R.string.ok)) { dialog, _ -> dialog.dismiss() }
-            .show()
-    }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

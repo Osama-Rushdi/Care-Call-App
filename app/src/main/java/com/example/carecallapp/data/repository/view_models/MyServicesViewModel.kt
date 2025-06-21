@@ -25,7 +25,7 @@ open class MyServicesViewModel @Inject constructor(
 
 ) : ViewModel() {
     val stateShow = MutableLiveData<ServiceStateShow>()
-    val initServiceAdapter = MutableLiveData<List<ServiceResponse>>()
+    private val initServiceAdapter = MutableLiveData<List<ServiceResponse>>()
 
     fun searchServiceByNameUseCase(name:String) {
         viewModelScope.launch {

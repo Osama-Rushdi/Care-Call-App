@@ -53,8 +53,8 @@ dependencies {
     implementation(libs.androidx.navigation.ui.ktx)
     implementation(libs.androidx.legacy.support.v4)
     implementation(libs.androidx.recyclerview)
-    implementation ("androidx.navigation:navigation-ui-ktx:2.7.7") // أو آخر إصدار عندك
-
+    implementation (libs.androidx.navigation.ui.ktx.v277) // أو آخر إصدار عندك
+    implementation (libs.material.v1100)
 
 
     //retrofit

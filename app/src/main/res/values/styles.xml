@@ -87,6 +87,9 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-
-
+    <style name="SwitchTheme">
+        <item name="colorControlActivated">@color/accent</item>
+        <item name="colorSwitchThumbNormal">@android:color/white</item>
+        <item name="android:colorForeground">@color/colorPrimary</item>
+    </style>
 </resources>

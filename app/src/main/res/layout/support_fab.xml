@@ -1,0 +1,23 @@
+<com.google.android.material.card.MaterialCardView android:layout_width="78dp"
+    android:layout_height="76dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="32dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="200dp"
+    app:cardElevation="100dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:strokeColor="@color/white"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:id="@+id/supportFabBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="true"
+        android:clickable="true"
+        android:contentDescription="@string/support"
+        android:focusable="true"
+        android:scaleType="centerInside"
+        app:srcCompat="@drawable/ic_support" />
+</com.google.android.material.card.MaterialCardView>

@@ -15,7 +15,6 @@
     <color name="green">#029B17</color>
     <color name="grey">#73CECDCD</color>
     <color name="nile_color">#E507489E</color>
-    <color name="primary">#1A237E</color>
     <color name="primary_dark">#0D1565</color>
     <color name="primary_light">#3F51B5</color>
     <color name="accent">#FF4081</color>
@@ -23,4 +22,14 @@
     <color name="card_stroke">#E0E0E0</color>
     <color name="text_primary">#212121</color>
     <color name="text_secondary">#757575</color>
+    <color name="primary_color">#2196F3</color>
+    <color name="card_background">#FFFFFF</color>
+    <color name="icon_tint">#9E9E9E</color>
+    <color name="blood_red">#F44336</color>
+    <color name="price_green">#4CAF50</color>
+    <color name="error_color">#F44336</color>
+    <color name="status_active">#4CAF50</color>
+    <color name="status_pending">#FF9800</color>
+    <color name="status_completed">#2196F3</color>
+
 </resources>

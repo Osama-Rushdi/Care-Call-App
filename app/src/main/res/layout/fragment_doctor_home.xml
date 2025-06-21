@@ -9,8 +9,11 @@
         android:id="@+id/textureView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="docoter home"
+        android:text="Welcome Doctor!"
         />
+    <include
+        layout="@layout/support_fab"
+        android:id="@+id/supportFabBtn"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

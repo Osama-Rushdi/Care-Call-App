@@ -127,22 +127,17 @@ interface WebServices {
 
     @PUT("api/Request/confirm-request")
     suspend fun confirmPersonRequest(
-        @Query("id") id: Int,
+        @Query("requestId") id: Int,
     ): Response<Unit>
 
     @PUT("api/Request/complete-request")
     suspend fun completePersonRequest(
-        @Query("id") id: Int,
+        @Query("requestId") id: Int,
     ): Response<Unit>
 
-    @PUT("api/Request/Cancel-request")
+    @DELETE("api/Request/Cancel-request")
     suspend fun cancelPersonRequest(
-        @Query("id") id: Int
-    ): Response<Unit>
-
-    @DELETE("api/Request/Delete-request")
-    suspend fun deletePersonRequest(
-        @Query("id") id: Int
+        @Query("requestId") id: Int
     ): Response<Unit>
 
 
@@ -173,6 +168,5 @@ interface WebServices {
 
     @PUT("api/Ambulance/UpdateLocation")
     suspend fun updateAmbulanceLocation(@Body locationRequest: LocationRequestDM): Response<Unit>
-
 
 }

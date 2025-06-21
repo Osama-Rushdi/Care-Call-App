@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="supported_languages" translatable="true">
+        <item>عربي</item>
+        <item>انجليزي</item>
+    </string-array>
+
+    <string-array name="call_modes" translatable="true">
+        <item>الوضع الليلي</item>
+        <item>الوضع النهاري</item>
+    </string-array>
+</resources>

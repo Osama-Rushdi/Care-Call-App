@@ -1,4 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:layout_constraintHeight_percent=".1"
@@ -26,7 +27,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:orientation="horizontal"
-        android:gravity="end">
+        android:gravity="end"
+        tools:ignore="UselessLeaf">
 
     </LinearLayout>
     <LinearLayout
@@ -45,14 +47,14 @@
             android:layout_marginHorizontal="30dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Cancle" />
+            android:text="@string/cancel" />
 
         <com.google.android.material.button.MaterialButton
             app:cornerRadius="8dp"
             android:id="@+id/delete_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Delete"
+            android:text="@string/delete"
             android:backgroundTint="#D50101"
             android:layout_marginHorizontal="30dp"
             android:layout_weight="1"

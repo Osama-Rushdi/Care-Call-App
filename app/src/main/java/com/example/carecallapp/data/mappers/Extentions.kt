@@ -18,28 +18,29 @@ import com.example.carecallapp.data.model.hospital.hospital_services.BloodBagDM
 import com.example.carecallapp.data.model.hospital.hospital_services.RoomAndNurseryResponseDM
 import com.example.carecallapp.data.model.hospital.hospital_services.ServiceRequestDM
 import com.example.carecallapp.data.model.hospital.hospital_services.ServiceResponseDM
-import com.example.carecallapp.domain.model.PersonService.LocationRequest
-import com.example.carecallapp.domain.model.PersonService.PersonNotificationResponse
-import com.example.carecallapp.domain.model.PersonService.RequestStatus
-import com.example.carecallapp.domain.model.PersonService.MapRouteDomain
-import com.example.carecallapp.domain.model.PersonService.ambulance.AmbulanceProfile
-import com.example.carecallapp.domain.model.PersonService.doctor.DoctorProfile
-import com.example.carecallapp.domain.model.hospital.hospital_accounts.PersonServiceResponse
-import com.example.carecallapp.domain.model.hospital.hospital_content.BloodBag
-import com.example.carecallapp.domain.model.hospital.hospital_content.RoomAndNursery
-import com.example.carecallapp.domain.model.hospital.hospital_content.RoomType
-import com.example.carecallapp.domain.model.hospital.hospital_content.RoomStatus
-import com.example.carecallapp.domain.model.hospital.hospital_profile.HospitalResponse
+import com.example.carecallapp.domain.model.person_service.LocationRequest
+import com.example.carecallapp.domain.model.person_service.MapRouteDomain
+import com.example.carecallapp.domain.model.person_service.PersonNotificationResponse
+import com.example.carecallapp.domain.model.person_service.RequestStatus
+import com.example.carecallapp.domain.model.person_service.ambulance.AmbulanceProfile
+import com.example.carecallapp.domain.model.person_service.doctor.DoctorProfile
 import com.example.carecallapp.domain.model.auth.AmbulanceRegisterRequest
 import com.example.carecallapp.domain.model.auth.DoctorRegisterRequest
 import com.example.carecallapp.domain.model.auth.HospitalRegisterRequest
 import com.example.carecallapp.domain.model.auth.LoginRequest
 import com.example.carecallapp.domain.model.auth.Role
 import com.example.carecallapp.domain.model.auth.TokenResponse
+import com.example.carecallapp.domain.model.hospital.hospital_accounts.PersonServiceResponse
+import com.example.carecallapp.domain.model.hospital.hospital_content.BloodBag
+import com.example.carecallapp.domain.model.hospital.hospital_content.RoomAndNursery
+import com.example.carecallapp.domain.model.hospital.hospital_content.RoomStatus
+import com.example.carecallapp.domain.model.hospital.hospital_content.RoomType
 import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceRequest
 import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceResponse
+import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceType
 import com.example.carecallapp.domain.model.hospital.hospital_notification.HospitalNotificationResponse
 import com.example.carecallapp.domain.model.hospital.hospital_notification.Service
+import com.example.carecallapp.domain.model.hospital.hospital_profile.HospitalResponse
 import com.google.android.gms.maps.model.LatLng
 
 //----------------HOSPITAL---------------------
@@ -225,7 +226,6 @@ fun TokenResponseDM.toLoginResponse(): TokenResponse {
 }
 
 
-
 //NOTIFICATION REQUESTES
 
 fun PersonNotificationResponseDM.toDomain(): PersonNotificationResponse {
@@ -265,14 +265,23 @@ fun LocationRequest.toDataModel(): LocationRequestDM {
 
         )
 }
+
 // ServiceDM.kt
 fun ServiceDM.toDomain(): Service {
     return Service(
-        serviceType = this.serviceType?.toString(),  // عشان هو Any؟
+        name = name?:"",
+        serviceType = when (this.serviceType) {
+            "Ambulance" -> ServiceType.Ambulance
+            "Doctor" -> ServiceType.Doctor
+            "Nursery" -> ServiceType.Nursery
+            "BloodBank" -> ServiceType.BloodBank
+            "ICU" -> ServiceType.ICU
+            else -> ServiceType.Ambulance // عشان هو Any؟
+        },
         id = this.id
     )
 }
-// HospitalNotificationResponseDM.kt
+
 fun HospitalNotificationResponseDM.toDomain(): HospitalNotificationResponse {
     return HospitalNotificationResponse(
         id = this.id ?: 0,
@@ -282,9 +291,9 @@ fun HospitalNotificationResponseDM.toDomain(): HospitalNotificationResponse {
         bloodType = this.bloodType?.toString(),
         phoneNumber = this.phoneNumber?.toString(),
         price = this.price,
-        service=service,
+        service = service?.toDomain(),
         caseDescription = this.jsonMemberCase?.toString(),
-        status = when(this.status){
+        status = when (this.status) {
             "Pending" -> RequestStatus.Pending
             "Accepted" -> RequestStatus.Accepted
             "Rejected" -> RequestStatus.Rejected
@@ -318,6 +327,7 @@ fun DoctorProfile.toDataModel(): DoctorProfileDM {
         status = this.status
     )
 }
+
 fun DoctorProfileDM.toDomainModel(): DoctorProfile {
     return DoctorProfile(
         lastName = this.lastName,
@@ -369,8 +379,6 @@ fun AmbulanceProfileDM.toDomainModel(): AmbulanceProfile {
         status = this.status
     )
 }
-
-
 
 
 // MAP ROUTE

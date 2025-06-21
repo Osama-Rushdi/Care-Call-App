@@ -1,105 +1,249 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
-    card_view:cardCornerRadius="12dp"
-    card_view:cardElevation="4dp">
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginBottom="16dp"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    card_view:cardCornerRadius="20dp"
+    card_view:cardElevation="8dp"
+    card_view:cardMaxElevation="12dp"
+    card_view:cardUseCompatPadding="true"
+    card_view:cardPreventCornerOverlap="false">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:background="@drawable/gradient_background">
 
-        <TextView
-            android:id="@+id/textViewName"
-            android:layout_width="wrap_content"
+        <!-- Header Section with Status Indicator -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Name"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:padding="20dp"
+            android:paddingBottom="12dp">
 
-        <TextView
-            android:id="@+id/textViewDate"
-            android:layout_width="wrap_content"
+            <View
+                android:id="@+id/statusIndicator"
+                android:layout_width="4dp"
+                android:layout_height="40dp"
+                android:layout_alignParentStart="true"
+
+                android:layout_centerVertical="true"
+                android:background="@drawable/gradient_background"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="@+id/linearLayout2" />
+
+            <ImageView
+                android:id="@+id/deleteRequest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@android:drawable/ic_menu_delete"
+                app:tint="@color/red" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/statusIndicator"
+                android:orientation="vertical"
+                card_view:layout_constraintStart_toStartOf="parent"
+                card_view:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/textViewName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginBottom="4dp"
+                    android:letterSpacing="0.02"
+                    tools:text="Premium Coffee Blend"
+                    android:textColor="@color/text_primary"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/divider_gradient" />
+
+        <!-- Details Section -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Date" />
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp">
 
-        <TextView
-            android:id="@+id/textViewQuantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Quantity" />
+            <!-- Date and Quantity Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="12dp">
 
-        <TextView
-            android:id="@+id/textViewPhone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Phone Number" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="start|center_vertical">
 
-        <TextView
-            android:id="@+id/textViewPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Price" />
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:src="@android:drawable/ic_menu_my_calendar"
+                        app:tint="@color/icon_tint"
+                        android:layout_marginEnd="8dp" />
 
-        <TextView
-            android:id="@+id/textViewNationalId"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="National ID" />
+                    <TextView
+                        android:id="@+id/textViewDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="Jun 15, 2025"
+                        android:maxLines="1"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_secondary" />
+                </LinearLayout>
 
-        <TextView
-            android:id="@+id/textViewDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Description" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    android:gravity="end|center_vertical">
 
-        <TextView
-            android:id="@+id/textViewStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Status" />
 
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/quantity_request"
+                        android:paddingEnd="5dp"
+                        android:textSize="14sp"
+                        android:textColor="@color/text_secondary"
+                        tools:ignore="RtlSymmetry" />
+
+                    <TextView
+                        android:id="@+id/textViewQuantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="5"
+                        android:maxLines="1"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Phone Number Row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="start|center_vertical">
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:src="@drawable/ic_phone"
+                    app:tint="@color/icon_tint"
+                    android:layout_marginEnd="8dp" />
+
+                <TextView
+                    android:id="@+id/textViewPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+20 123 456 7890"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_secondary"
+                     />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Action Buttons Section -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="end"
-            android:weightSum="4"
-            android:layout_marginTop="12dp">
+            android:padding="12dp"
+            android:paddingTop="0dp"
+            android:gravity="center">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnConfirm"
+                style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_weight="1"
-                android:text="Confirm" />
+                android:layout_marginEnd="6dp"
+                android:text="Confirm"
+                android:textSize="8sp"
+                android:textAllCaps="false"
+                android:backgroundTint="@color/status_active"
+                app:cornerRadius="12dp"
+                app:elevation="2dp"
+                app:icon="@drawable/ic_help"
+                app:iconSize="16dp"
+                app:iconGravity="textStart" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnComplete"
+                style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_weight="1"
-                android:text="Complete" />
+                android:layout_marginEnd="6dp"
+                android:layout_marginStart="6dp"
+                android:text="Complete"
+                android:textSize="8sp"
+                android:textAllCaps="false"
+                android:backgroundTint="@color/colorHome"
+                app:cornerRadius="12dp"
+                app:elevation="2dp"
+                app:icon="@drawable/baseline_done_24"
+                app:iconSize="16dp"
+                app:iconGravity="textStart" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnCancel"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="48dp"
                 android:layout_weight="1"
-                android:text="Cancel" />
+                android:layout_marginEnd="6dp"
+                android:layout_marginStart="6dp"
+                android:text="Cancel"
+                android:textSize="12sp"
+                android:textAllCaps="false"
+                app:strokeColor="@color/red"
+                app:strokeWidth="1dp"
+                app:cornerRadius="12dp"
+                app:icon="@android:drawable/ic_menu_close_clear_cancel"
+                app:iconSize="16dp"
+                app:iconGravity="textStart" />
 
-            <Button
-                android:id="@+id/btnDelete"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="Delete"
-                android:textColor="@android:color/holo_red_dark" />
+
         </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

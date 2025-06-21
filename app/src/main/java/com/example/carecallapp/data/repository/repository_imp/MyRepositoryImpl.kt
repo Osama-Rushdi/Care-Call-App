@@ -2,11 +2,11 @@ package com.example.carecallapp.data.repository.repository_imp
 
 import com.example.carecallapp.data.repository.Connectivity
 import com.example.carecallapp.data.repository.data_sources.remote_data_source.RemoteDataSource
-import com.example.carecallapp.domain.model.PersonService.LocationRequest
-import com.example.carecallapp.domain.model.PersonService.MapRouteDomain
-import com.example.carecallapp.domain.model.PersonService.PersonNotificationResponse
-import com.example.carecallapp.domain.model.PersonService.ambulance.AmbulanceProfile
-import com.example.carecallapp.domain.model.PersonService.doctor.DoctorProfile
+import com.example.carecallapp.domain.model.person_service.LocationRequest
+import com.example.carecallapp.domain.model.person_service.MapRouteDomain
+import com.example.carecallapp.domain.model.person_service.PersonNotificationResponse
+import com.example.carecallapp.domain.model.person_service.ambulance.AmbulanceProfile
+import com.example.carecallapp.domain.model.person_service.doctor.DoctorProfile
 import com.example.carecallapp.domain.model.auth.AmbulanceRegisterRequest
 import com.example.carecallapp.domain.model.auth.DoctorRegisterRequest
 import com.example.carecallapp.domain.model.auth.HospitalRegisterRequest
@@ -214,14 +214,6 @@ class MyRepositoryImpl @Inject constructor(
     override suspend fun cancelPersonRequest(id: Int): Boolean {
         return if (connectivity.isOnline()) {
             remoteDataSource.cancelPersonRequest(id)
-        } else {
-            throw Exception("No internet connection")
-        }
-    }
-
-    override suspend fun deletePersonRequest(id: Int): Boolean {
-        return if (connectivity.isOnline()) {
-            remoteDataSource.deletePersonRequest(id)
         } else {
             throw Exception("No internet connection")
         }
