@@ -182,6 +182,7 @@ class DoctorRegisterFragment : Fragment() {
             username = binding.usernameLayout.editText?.text.toString().trim(),
             email = binding.emailLayout.editText?.text.toString().trim(),
             password = binding.passwordLayout.editText?.text.toString().trim(),
+            confirmPassword = binding.passwordLayout.editText?.text.toString().trim(),
             firstName = binding.firstNameLayout.editText?.text.toString().trim(),
             lastName = binding.lastNameLayout.editText?.text.toString().trim(),
             gender = binding.genderLayout.editText?.text.toString().trim(),
@@ -191,8 +192,7 @@ class DoctorRegisterFragment : Fragment() {
             specialty = binding.specialtyLayout.editText?.text.toString().trim(),
             bio = binding.bioLayout.editText?.text.toString().trim(),
             licenseNumber = binding.licenseNumberLayout.editText?.text.toString().trim(),
-            hospitalId = sharedPref.getString(Constants.USER_ID_KEY, null)!!,
-        )
+            hospitalId = sharedPref.getString(Constants.USER_ID_KEY, null)!!)
         authViewModel.doctorRegister(doctorRequest)
     }
 

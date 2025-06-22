@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.example.carecallapp.data.repository.view_models.MyPersonViewModel
 import com.example.carecallapp.data.repository.view_models.PersonStateShow
 import com.example.carecallapp.databinding.FragmentAmbulanceProfileBinding
 import com.example.carecallapp.domain.model.person_service.ambulance.AmbulanceProfile
 import com.example.carecallapp.ui.utils.ShowState
+import com.example.carecallapp.ui.utils.toBitMap
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -59,12 +61,13 @@ class AmbulanceProfileFragment : Fragment() {
     }
 
     private fun initListeners() {
-//        binding.editAmbulanceBtn.setOnClickListener {
+       // binding.editAmbulanceBtn.setOnClickListener {
 //            val action = AmbulanceProfileFragmentDirections
 //                .actionAmbulanceProfileFragmentToAmbulanceUpdateProfileFragment(ambulanceProfile)
 //            findNavController().navigate(action)
 //        }
     }
+
 
     private fun initProfileUI(profile: AmbulanceProfile) {
         binding.tvAmbulanceName.text = profile.username
@@ -73,6 +76,10 @@ class AmbulanceProfileFragment : Fragment() {
         binding.tvGender.text = profile.gender
         binding.tvNationalId.text = profile.nationalId
         binding.tvUsername.text = profile.username
+
+        if (!profile.profilePicture.isNullOrEmpty()) {
+            binding.ivAmbulancePicture.root.setImageBitmap(profile.profilePicture.toBitMap())
+        }
     }
 
     private fun showLoading(show: Boolean) {

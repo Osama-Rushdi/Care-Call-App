@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -33,9 +34,9 @@ class HospitalHomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel.getAllServices()
         initListeners()
         observe()
-
     }
 
     private fun observe() {
@@ -47,8 +48,7 @@ class HospitalHomeFragment : Fragment() {
                             ServiceType.Nursery -> {
                                 val action = HospitalHomeFragmentDirections
                                     .actionHomeFragmentToRoomFragment(RoomType.Nursery)
-                                findNavController().navigate(action)
-                            }
+                                findNavController().navigate(action) }
 
                             ServiceType.BloodBank -> {
                                 val action = HospitalHomeFragmentDirections
@@ -61,15 +61,14 @@ class HospitalHomeFragment : Fragment() {
                                     .actionHomeFragmentToRoomFragment(RoomType.ICU)
                                 findNavController().navigate(action)
                             }
-
-                            else -> {}
+                            else -> {
+                                Toast.makeText(requireContext(), "please add service", Toast.LENGTH_SHORT).show()
+                            }
                         }
 
                     } else {
                         val action =
-                            HospitalHomeFragmentDirections.actionHomeFragmentToFragmentAddServices(
-                                type
-                            )
+                            HospitalHomeFragmentDirections.actionHomeFragmentToFragmentAddServices(type)
                         findNavController().navigate(action)
                     }
                 }
@@ -86,6 +85,7 @@ class HospitalHomeFragment : Fragment() {
         binding.nurseryCD.setOnClickListener {
             type = ServiceType.Nursery
             viewModel.searchServiceByNameUseCase(type.name)
+
         }
         binding.emergencyRoomCD.setOnClickListener {
             type = ServiceType.ICU

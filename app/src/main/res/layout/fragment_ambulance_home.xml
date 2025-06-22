@@ -3,14 +3,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.roles.ambulance.AmbulanceProfileFragment">
 
     <TextView
+        android:id="@+id/textureView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/welcome_ambulance"
+        android:layout_marginTop="20dp"
+        android:textSize="24sp"
+        android:textColor="@color/primary_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/ambulanceLottie"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/ambulance_profile" />
-
-    <include
-        android:id="@+id/supportFabBtn"
-        layout="@layout/support_fab" />
+        android:padding="20dp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/ambulance_anim1"
+       />
+<include layout="@layout/support_fab"
+    android:id="@+id/supportFabBtn"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

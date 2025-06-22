@@ -164,7 +164,7 @@
                         android:orientation="horizontal">
 
                         <com.airbnb.lottie.LottieAnimationView
-                            android:id="@+id/lottieWebsite"
+                            android:id="@+id/ambulanceLottie"
                             android:layout_width="90dp"
                             android:layout_height="70dp"
                             app:lottie_autoPlay="true"

@@ -5,7 +5,7 @@ import javax.inject.Inject
 
 
 class SearchServiceByNameUseCase @Inject constructor() {
-    suspend fun execute(name: String, list: List<ServiceResponse>): Boolean {
+     fun execute(name: String, list: List<ServiceResponse>): Boolean {
          list.forEach {
              return it.name == name
          }

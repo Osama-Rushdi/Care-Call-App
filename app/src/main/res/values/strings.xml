@@ -21,7 +21,6 @@
     <string name="ambulances">Ambulances</string>
     <string name="doctors">Doctors</string>
     <string name="add_accounts">add Accounts</string>
-    <string name="title_activity_main">LoginActivity</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
@@ -217,6 +216,10 @@
     <string name="welcome_subtitle">Wolcome!</string>
     <string name="get_started">Get Started</string>
     <string name="already_have_account">Already Have Account</string>
+    <string name="welcome_doctor">Welcome Doctor!</string>
+    <string name="description">Description</string>
+    <string name="not_found_any_items">not found any Items</string>
+    <string name="welcome_ambulance">Welcome Ambulance!</string>
 
     <!-- Labels -->
 </resources>

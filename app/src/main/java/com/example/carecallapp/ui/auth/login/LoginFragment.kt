@@ -32,7 +32,7 @@ class LoginFragment : Fragment() {
     private lateinit var saveToken: SharedPreferences
     private lateinit var showState: ShowState
     private lateinit var isFirstSharedPreferences: SharedPreferences
-    private var isFirst: Boolean = true
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -158,7 +158,6 @@ class LoginFragment : Fragment() {
         }
     }
 
-
     private fun isValidLogin(email: String, password: String): Boolean {
         var isValid = true
 
@@ -181,9 +180,9 @@ class LoginFragment : Fragment() {
         return isValid
     }
 
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
 }

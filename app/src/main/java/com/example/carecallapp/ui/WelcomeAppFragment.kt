@@ -19,7 +19,8 @@ class WelcomeAppFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View
+    {
         binding = FragmentWelcomeAppBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -63,12 +64,13 @@ class WelcomeAppFragment : Fragment() {
         val sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE)
         val isFirstTime = sharedPref.getBoolean("is_first_time", true)
 
-        if (!isFirstTime) {
-            binding.skipText.visibility = View.GONE
-        } else {
-            sharedPref.edit().putBoolean("is_first_time", false).apply()
+        when {
+            !isFirstTime -> {
+            }
+            else -> {
+                sharedPref.edit().putBoolean("is_first_time", false).apply()
+            }
         }
     }
-
 
 }

@@ -8,10 +8,8 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.carecallapp.R
 import com.example.carecallapp.data.repository.view_models.MyServicesViewModel
 import com.example.carecallapp.data.repository.view_models.ServiceStateShow
 import com.example.carecallapp.databinding.AddServiceFragmentBinding
@@ -21,7 +19,6 @@ import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceReq
 import com.example.carecallapp.domain.model.hospital.hospital_content.ServiceType
 import com.example.carecallapp.ui.utils.ShowState
 import dagger.hilt.android.AndroidEntryPoint
-
 @AndroidEntryPoint
 class FragmentAddServices : Fragment() {
     private var _binding: AddServiceFragmentBinding? = null
@@ -29,7 +26,6 @@ class FragmentAddServices : Fragment() {
     private val viewModel: MyServicesViewModel by viewModels()
     private lateinit var serviceType: ServiceType
     lateinit var showState: ShowState
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -102,7 +98,6 @@ class FragmentAddServices : Fragment() {
     private fun showLoading(isVisible: Boolean) {
         binding.addServiceLoading.root.isVisible = isVisible
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

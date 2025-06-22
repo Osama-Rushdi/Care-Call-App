@@ -80,9 +80,12 @@ class DoctorProfileFragment : Fragment() {
         binding.tvDoctorGender.text = profile.gender
         binding.tvDoctorDateOfBirth.text = profile.dateOfBirth
         binding.tvDoctorNationalId.text = profile.nationalId
-        if (profile.profilePicture!!.isNotEmpty()) {
+        binding.tvDoctorBio.text=profile.bio
+        binding.tvSpecialization.text=profile.specialty
+        if (!profile.profilePicture.isNullOrEmpty()) {
             binding.ivDoctorPicture.root.setImageBitmap(profile.profilePicture.toBitMap())
-        }    }
+        }
+    }
 
     private fun showLoading(show: Boolean) {
         binding.profileProgressBar.root.isVisible = show

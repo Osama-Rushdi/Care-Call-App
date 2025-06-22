@@ -25,11 +25,12 @@ class MyPersonRequestsViewModel @Inject constructor(
     val initCanceledRequestsAdapter = MutableLiveData<List<Any?>?>()
     val initPendingRequestsAdapter = MutableLiveData<List<Any?>?>()
     val initConfirmedRequestsAdapter = MutableLiveData<List<Any?>?>()
+
     val budgeCount = MutableLiveData(Budge(0, 0))
 
-//    private var lastCurrentRequest: PersonNotificationResponse? = null
-
+    //  private var lastCurrentRequest: PersonNotificationResponse? = null
     // Store all requests to filter them later
+
     private var allPersonRequests: List<PersonNotificationResponse> = emptyList()
     private var allHospitalRequests: List<HospitalNotificationResponse> = emptyList()
     private var pollingJob: Job? = null

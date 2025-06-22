@@ -30,15 +30,19 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
     lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
     private lateinit var sharedPreferences: SharedPreferences
+
     private lateinit var featureSharedPreferences: SharedPreferences
     private lateinit var isFirstSharedPreferences: SharedPreferences
-    private var isFirst: Boolean=true
+    private var isFirst: Boolean?=null
+
     private var json: String? = null
     private var token: String? = null
-    private lateinit var locale: Locale
+    private var locale: Locale = Locale.getDefault()
+
 
     companion object {
         val role = MutableLiveData(Role.Hospital.name)
@@ -103,10 +107,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showAndHideViewsByRole() {
-        if (token == null && !isFirst) {
+        if (token == null && isFirst == true) {
             navToLogin()
             return
-        } else {
+        } else if(isFirst!!) {
             navToWelcome()
         }
         roleObserver()
@@ -276,7 +280,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun showNavDrawerInScreens(id: Int) {
+    private fun showNavDrawerInScreens(id: Int)  {
         when (id) {
             R.id.loginFragment, R.id.doctorRegisterFragment, R.id.ambulanceRegisterFragment,R.id.welcomeAppFragment -> {
                 binding.toolBar.toolBarFile.isVisible = false
@@ -291,7 +295,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateRequestsCountObserve() {
+    private fun updateRequestsCountObserve()  {
         updateRequestsCount.observe(this) {
             binding.toolBar.notificationBadgeCount.isVisible = it > 0
             if (updateRequestsCount.value != 0) {

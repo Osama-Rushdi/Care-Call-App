@@ -63,6 +63,8 @@ class HospitalProfileFragment : Fragment() {
                     showState.showError(it.errorMessage)
                     binding.editProfileBtn.isClickable = false
                 }
+
+                else -> {}
             }
         }
     }

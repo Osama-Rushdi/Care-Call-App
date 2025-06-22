@@ -127,7 +127,7 @@ interface WebServices {
 
     @PUT("api/Request/confirm-request")
     suspend fun confirmPersonRequest(
-        @Query("requestId") id: Int,
+        @Query("id") id: Int,
     ): Response<Unit>
 
     @PUT("api/Request/complete-request")
